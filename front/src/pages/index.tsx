@@ -1,1 +1,10 @@
-export {Home as default} from '../components/pages/index'
+const Home = () => {
+    return (
+        <div>
+        </div>
+    );
+};
+
+export default Home;
+
+
