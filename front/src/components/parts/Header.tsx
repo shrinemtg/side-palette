@@ -30,13 +30,15 @@ const Header: React.FC = () => {
   export default Header;
 
 const HeaderContainer = styled.header`
-  background: linear-gradient(90deg,
-    #ff9a9e 0%,
-    #fad0c4 20%,
-    #fad0c4 40%,
-    #a1c4fd 60%,
-    #81d6e6 80%,
-    #92fe9d 100%
+  background: linear-gradient(120deg,
+    #ff85ca 0%,
+    #ff826a 15%,
+    #ff9b60 25%,
+    #ffaf80 35%,
+    #c197ff 50%,
+    #85eaff 65%,
+    #c7eb65 80%,
+    #ffd96a 100%
   );
   padding: 1rem 2rem;
   display: flex;

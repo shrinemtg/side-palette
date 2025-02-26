@@ -23,7 +23,6 @@ const Margin = styled.div`
 
 const Content = styled.main`
   flex: 1;
-  padding: 20px;
 `;
 
 const ButtonContainer = styled.div`
@@ -102,7 +101,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const leftCanvasRef = React.useRef<HTMLCanvasElement>(null);
   const rightCanvasRef = React.useRef<HTMLCanvasElement>(null);
   const [lastPos, setLastPos] = useState({ x: 0, y: 0 });
-  const [currentColor, setCurrentColor] = useState('#ff9a9e');
+  const [currentColor, setCurrentColor] = useState('#ffd96a');
   const [isEraser, setIsEraser] = useState(false);
   const [isDrawingEnabled, setIsDrawingEnabled] = useState(true);
   const [lineWidth, setLineWidth] = useState(8);
@@ -206,30 +205,45 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <span style={{ color: '#4b5563', fontSize: '12px' }}>{lineWidth}px</span>
         </SliderContainer>
         <ColorButton
-          color="#ff9a9e"
-          onClick={() => handleToolChange('#ff9a9e')}
-          title="ピンク"
-          style={{ opacity: !isEraser && currentColor === '#ff9a9e' ? 1 : 0.6 }}
+          color="#ffd96a"
+          onClick={() => handleToolChange('#ffd96a')}
+          title="イエロー"
+          style={{ opacity: !isEraser && currentColor === '#ffd96a' ? 1 : 0.6 }}
         />
         <ColorButton
-          color="#fad0c4"
-          onClick={() => handleToolChange('#fad0c4')}
-          title="ライトピンク"
+          color="#c7eb65"
+          onClick={() => handleToolChange('#c7eb65')}
+          title="ライムグリーン"
         />
         <ColorButton
-          color="#a1c4fd"
-          onClick={() => handleToolChange('#a1c4fd')}
-          title="ライトブルー"
-        />
-        <ColorButton
-          color="#81d6e6"
-          onClick={() => handleToolChange('#81d6e6')}
+          color="#85eaff"
+          onClick={() => handleToolChange('#85eaff')}
           title="スカイブルー"
         />
         <ColorButton
-          color="#92fe9d"
-          onClick={() => handleToolChange('#92fe9d')}
-          title="ライトグリーン"
+          color="#c197ff"
+          onClick={() => handleToolChange('#c197ff')}
+          title="パープル"
+        />
+        <ColorButton
+          color="#ff9b60"
+          onClick={() => handleToolChange('#ff9b60')}
+          title="オレンジ"
+        />
+        <ColorButton
+          color="#ffaf80"
+          onClick={() => handleToolChange('#ffaf80')}
+          title="ライトオレンジ"
+        />
+        <ColorButton
+          color="#ff826a"
+          onClick={() => handleToolChange('#ff826a')}
+          title="コーラル"
+        />
+        <ColorButton
+          color="#ff85ca"
+          onClick={() => handleToolChange('#ff85ca')}
+          title="ピンク"
         />
         <EraserButton
           color="transparent"
