@@ -12,6 +12,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.13.0",
     "framer-motion": "^12.4.7",
+    "gsap": "^3.12.7",
     "next": "^15.1.7",
     "normalize.css": "^8.0.1",
     "react": "19.0.0-rc-02c0e824-20241028",
