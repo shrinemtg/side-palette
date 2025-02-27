@@ -148,14 +148,16 @@ const HeroSection = () => {
 
 // コンテナのスタイル
 const HeroContainer = styled.section`
-  height: 60vh; // デフォルトの高さ
+  height: 70vh; // デフォルトの高さ
   width: 80%; // 幅を100%に設定
   margin: 0 auto; // 左右に均等に配置
   border-radius: 20px; // 角を丸くする
   position: relative; // 相対配置
   overflow: hidden; // はみ出た要素を非表示にする
-  background-color: #000; // 背景色を黒に設定
-  margin-top: 160px; // 上部に60pxのマージンを設定
+  background-color:#EAEAEA;
+  // background-color:#000;
+  margin-top: 80px; // 上部に80pxのマージンを設定
+
 `;
 
 // カルーセルのスタイル
@@ -164,7 +166,7 @@ const CarouselWrapper = styled.div`
   top: 30%; // 上部から50%の位置に配置
   transform: translateY(-50%); // 垂直方向に50%移動
   width: 100%; // 幅を100%に設定
-  height: 80vh; // 高さを80vhに設定
+  height: 100vh; // 高さを80vhに設定
   overflow: hidden; // はみ出た要素を非表示にする
   mask-image: linear-gradient(// マスクを設定
     to right,// 右から左に向かって
@@ -188,10 +190,20 @@ const CarouselInner = styled.div`
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    gap: 2rem; // グリッド内の余白を統一
-    min-width: calc(100vw - 6rem); // パディングを考慮して調整
+    gap: 2rem;
+    min-width: calc(100vw - 6rem);
     flex-shrink: 0;
-    place-items: center; // グリッドアイテムを中央揃えに
+    place-items: center;
+  }
+
+  // スクロールアニメーションのキーフレーム
+  @keyframes scroll {
+    0% {
+      transform: translateX(calc(-100% / 3));
+    }
+    100% {
+      transform: translateX(calc(-100% * 2 / 3));
+    }
   }
 `;
 
@@ -209,7 +221,7 @@ const GridItem = styled.div`
     height: 100%;// 高さを100%に設定
     object-fit: cover;// オブジェクトをカバーする
     filter: brightness(0.8) contrast(1.2);// 明るさを0.8倍にし、コントラストを1.2倍にする
-    margin-bottom: 5rem;// 下部に1remのマージンを設定
+    margin-bottom: 1rem;// 下部に1remのマージンを設定
   }
 `;
 
