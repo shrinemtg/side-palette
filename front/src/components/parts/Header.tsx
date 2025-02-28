@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const StyledImage = styled(Image)`
   filter: brightness(0) invert(1);

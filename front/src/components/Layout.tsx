@@ -40,6 +40,13 @@ const ButtonContainer = styled.div`
   gap: 8px;
   align-items: center;
   z-index: 1000;
+
+`;
+
+const PaletteWrapper = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
 `;
 
 const ColorButton = styled.button<{ color: string }>`
@@ -51,37 +58,42 @@ const ColorButton = styled.button<{ color: string }>`
   cursor: url("/images/hude.svg") 0 20, pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
+  border-bottom: 1px solid gray;
+  border-radius: 20px;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.5);
   }
 `;
 
-const EraserButton = styled(ColorButton)`
-  width: 24px;
-  height: 24px;
-  background-color: white;
-  border: 2px solid #e5e7eb;
+const EraserButton = styled.button`
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: white;
+  cursor: url("/images/hude.svg") 0 20, pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   &::before {
     content: '';
-    width: 100%;
-    height: 100%;
+    width: 24px;
+    height: 24px;
     background-image: url('/images/eraser.svg');
-    background-size: 100%;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     opacity: 0.7;
+    transition: all 0.3s ease;
   }
 
   &:hover {
-    background-color: #f9fafb;
-    transform: scale(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 
     &::before {
       opacity: 1;
@@ -89,7 +101,7 @@ const EraserButton = styled(ColorButton)`
   }
 
   &:active {
-    transform: scale(1);
+    transform: translateY(0);
   }
 `;
 
@@ -104,7 +116,8 @@ const ResetButton = styled.button`
   background: white;
   cursor: url("/images/hude.svg") 0 20, pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0  2px 4px rgba(0, 0, 0, 0.2);
+
 
   &::before {
     content: '';
@@ -120,7 +133,7 @@ const ResetButton = styled.button`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 
     &::before {
       opacity: 1;
@@ -143,11 +156,11 @@ const SliderContainer = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input<{ value: number }>`
   width: 120px;
   height: 4px;
   -webkit-appearance: none;
-  background: linear-gradient(to right, #00e5c5 0%, #00e5c5 ${props => (props.value - 1) * 5.26}%, #e5e7eb ${props => (props.value - 1) * 5.26}%, #e5e7eb 100%);
+  background: linear-gradient(to right, #00e5c5 0%, #00e5c5 ${props => props.value * 5.26}%, #e5e7eb ${props => props.value * 5.26}%, #e5e7eb 100%);
   outline: none;
   border-radius: 2px;
   cursor: url("/images/hude.svg") 0 20, pointer;
@@ -198,7 +211,7 @@ const LightButton = styled.button<{ isOn: boolean }>`
   cursor: url("/images/hude.svg") 0 20, pointer;
   transition: all 0.3s ease;
   margin-right: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   svg {
     width: 24px;
@@ -211,7 +224,58 @@ const LightButton = styled.button<{ isOn: boolean }>`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+`;
+
+const PaletteContainer = styled.div<{ isOpen: boolean }>`
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 8px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  width: ${props => props.isOpen ? 'auto' : '0'};
+  opacity: ${props => props.isOpen ? '1' : '0'};
+`;
+
+const PaletteButton = styled.button`
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  cursor: url("/images/hude.svg") 0 20, pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  &::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    background-image: url('/images/palette.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    filter: invert(63%) sepia(0%) saturate(0%) hue-rotate(153deg) brightness(99%) contrast(90%);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+
+    &::before {
+      opacity: 1;
+    }
   }
 
   &:active {
@@ -232,6 +296,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isDrawingEnabled, setIsDrawingEnabled] = useState(true);
   const [lineWidth, setLineWidth] = useState(8);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [isPaletteOpen, setIsPaletteOpen] = useState(true);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isDrawingEnabled) return;
@@ -286,10 +351,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     ctx.stroke();
 
     setLastPos({ x, y });
-  };
-
-  const handleMouseLeave = () => {
-    setLastPos({ x: 0, y: 0 });
   };
 
   const handleReset = () => {
@@ -357,7 +418,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           onMouseDown={handleMouseDown}
           onMouseMove={(e) => draw(e, leftCanvasRef.current)}
           onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
         >
           <canvas ref={leftCanvasRef} />
         </Margin>
@@ -369,67 +429,77 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           onMouseDown={handleMouseDown}
           onMouseMove={(e) => draw(e, rightCanvasRef.current)}
           onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
         >
           <canvas ref={rightCanvasRef} />
         </Margin>
       </MainContent>
       <ButtonContainer>
-        <SliderContainer>
-          <StyledInput
-            type="range"
-            min="1"
-            max="20"
-            value={lineWidth}
-            onChange={(e) => setLineWidth(Number(e.target.value))}
+        <PaletteWrapper>
+          <PaletteButton
+            onClick={() => setIsPaletteOpen(!isPaletteOpen)}
+            title="パレット"
           />
-        </SliderContainer>
-        <ColorButton
-          color="#ffd96a"
-          onClick={() => handleToolChange('#ffd96a')}
-          title="イエロー"
-          style={{ opacity: !isEraser && currentColor === '#ffd96a' ? 1 : 0.6 }}
-        />
-        <ColorButton
-          color="#c7eb65"
-          onClick={() => handleToolChange('#c7eb65')}
-          title="ライムグリーン"
-        />
-        <ColorButton
-          color="#85eaff"
-          onClick={() => handleToolChange('#85eaff')}
-          title="スカイブルー"
-        />
-        <ColorButton
-          color="#c197ff"
-          onClick={() => handleToolChange('#c197ff')}
-          title="パープル"
-        />
-        <ColorButton
-          color="#ff9b60"
-          onClick={() => handleToolChange('#ff9b60')}
-          title="オレンジ"
-        />
-        <ColorButton
-          color="#ffaf80"
-          onClick={() => handleToolChange('#ffaf80')}
-          title="ライトオレンジ"
-        />
-        <ColorButton
-          color="#ff826a"
-          onClick={() => handleToolChange('#ff826a')}
-          title="コーラル"
-        />
-        <ColorButton
-          color="#ff85ca"
-          onClick={() => handleToolChange('#ff85ca')}
-          title="ピンク"
-        />
+          <PaletteContainer isOpen={isPaletteOpen}>
+            <SliderContainer>
+              <StyledInput
+                type="range"
+                min="1"
+                max="20"
+                value={lineWidth}
+                onChange={(e) => setLineWidth(Number(e.target.value))}
+              />
+            </SliderContainer>
+            <ColorButton
+              color="#ffd96a"
+              onClick={() => handleToolChange('#ffd96a')}
+              title="イエロー"
+              style={{ opacity: !isEraser && currentColor === '#ffd96a' ? 1 : 0.6 }}
+            />
+            <ColorButton
+              color="#c7eb65"
+              onClick={() => handleToolChange('#c7eb65')}
+              title="ライムグリーン"
+            />
+            <ColorButton
+              color="#85eaff"
+              onClick={() => handleToolChange('#85eaff')}
+              title="スカイブルー"
+            />
+            <ColorButton
+              color="#c197ff"
+              onClick={() => handleToolChange('#c197ff')}
+              title="パープル"
+            />
+            <ColorButton
+              color="#ff9b60"
+              onClick={() => handleToolChange('#ff9b60')}
+              title="オレンジ"
+            />
+            <ColorButton
+              color="#ffaf80"
+              onClick={() => handleToolChange('#ffaf80')}
+              title="ライトオレンジ"
+            />
+            <ColorButton
+              color="#ff826a"
+              onClick={() => handleToolChange('#ff826a')}
+              title="コーラル"
+            />
+            <ColorButton
+              color="#ff85ca"
+              onClick={() => handleToolChange('#ff85ca')}
+              title="ピンク"
+            />
+          </PaletteContainer>
+        </PaletteWrapper>
         <EraserButton
-          color="transparent"
           onClick={() => handleToolChange(null)}
           title="消しゴム"
           style={{ opacity: isEraser ? 1 : 0.6 }}
+        />
+        <ResetButton
+          onClick={handleReset}
+          title="リセット"
         />
         <LightButton
           isOn={isDrawingEnabled}
@@ -458,10 +528,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </g>
           </svg>
         </LightButton>
-        <ResetButton
-          onClick={handleReset}
-          title="リセット"
-        />
       </ButtonContainer>
     </LayoutContainer>
   );
