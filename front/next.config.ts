@@ -3,5 +3,5 @@ module.exports = {
   compiler: {
     emotion: true,
   },
-  output: 'export'
+  // output: 'export'
 }
