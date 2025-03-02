@@ -1,12 +1,17 @@
-import { css } from '@emotion/react'
+import styled from 'styled-components';
+import HeroSection from './Hero';
 
-
-export const Home = () => {
+const Top = () => {
   return (
-    <div css={styles.container}></div>
-  )
-}
+    <Container>
+      <HeroSection />
+    </Container>
+  );
+};
 
-const styles = {
-  container : css``
-}
+const Container = styled.div`
+  width: 100%;
+  min-height: 100vh;
+`;
+
+export default Top;

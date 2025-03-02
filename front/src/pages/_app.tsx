@@ -1,13 +1,14 @@
-import '../styles/globals.css'; // グローバルCSSのインポート
 import type { AppProps } from "next/app";
-import Header from '../components/parts/Header';
-
+import Layout from '../components/Layout';
+import { ThemeProvider } from 'styled-components';
+import '../styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <Header />
-      <Component {...pageProps} />
-    </>
+    <ThemeProvider theme={{ mouseY: 0 }}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ThemeProvider>
   );
 }

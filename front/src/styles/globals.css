@@ -1,8 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+html,
+body,
+#__next {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  cursor: url("/images/hude.svg") 0 20, pointer;
+}
 
-/* 追加のカスタムスタイル */
-body {
-    font-family: 'Arial', sans-serif;
+/* 描画中のカーソルスタイル */
+.drawing {
+  cursor: url("/images/hude.svg")  20, auto !important;
 }
