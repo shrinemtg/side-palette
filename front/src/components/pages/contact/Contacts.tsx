@@ -10,7 +10,7 @@ interface FormData {
   message: string;
 }
 
-const Contact: React.FC = () => {
+const Contacts: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -536,4 +536,4 @@ const faqs = [
   }
 ];
 
-export default Contact;
+export default Contacts;

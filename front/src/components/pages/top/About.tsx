@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import News from './News';
 
 const About = () => {
     return (
@@ -72,13 +71,7 @@ const About = () => {
                 </TeamGrid>
             </Section>
 
-            <News newsItems={newsItems} />
 
-            {/* CTA セクション */}
-            <CTASection>
-                <CTATitle>一緒に素晴らしいものを作りましょう</CTATitle>
-                <CTAButton href="/contact">お問い合わせ</CTAButton>
-            </CTASection>
         </AboutContainer>
     );
 };
@@ -258,38 +251,6 @@ const TeamMemberBio = styled.p`
     line-height: 1.6;
 `;
 
-const CTASection = styled.section`
-    text-align: center;
-    padding: 4rem 0;
-    background: linear-gradient(120deg,
-        rgba(255, 133, 202, 0.1) 0%,
-        rgba(193, 151, 255, 0.1) 50%,
-        rgba(133, 234, 255, 0.1) 100%
-    );
-    border-radius: 20px;
-`;
-
-const CTATitle = styled.h2`
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    color: #333;
-`;
-
-const CTAButton = styled.a`
-    display: inline-block;
-    padding: 1rem 2rem;
-    background: linear-gradient(120deg, #ff85ca, #85eaff);
-    color: white;
-    text-decoration: none;
-    border-radius: 30px;
-    font-weight: bold;
-    transition: transform 0.3s ease;
-    cursor: url("/images/hude.svg") 0 20, pointer;
-
-    &:hover {
-        transform: translateY(-2px);
-    }
-`;
 
 // ダミーデータ
 const teamMembers = [
@@ -313,22 +274,6 @@ const teamMembers = [
   }
 ];
 
-const newsItems = [
-    {
-        date: "2024.03.15",
-        title: "新規サービス「Webデザインサブスクリプション」開始",
-        description: "月額制でWebデザインサービスを提供する新プランを開始しました。"
-    },
-    {
-        date: "2024.02.28",
-        title: "ポートフォリオサイトをリニューアル",
-        description: "より見やすく、使いやすいデザインに更新しました。"
-    },
-    {
-        date: "2024.01.10",
-        title: "クリエイティブワークショップ開催",
-        description: "デザインの基礎から実践まで学べるワークショップを開催しました。"
-    }
-];
+
 
 export default About;
