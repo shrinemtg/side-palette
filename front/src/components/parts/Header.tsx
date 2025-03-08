@@ -5,30 +5,6 @@ const StyledImage = styled(Image)`
   filter: brightness(0) invert(1);
 `;
 
-const Header: React.FC = () => {
-    return (
-      <HeaderContainer>
-        <LogoContainer>
-            <Logo>Side Palette</Logo>
-            <StyledImage
-              src="/images/side-palette.png"
-              alt="Side Palette Logo"
-              width={40}
-              height={40}
-            />
-        </LogoContainer>
-        <Nav>
-          <NavLink href="#philosophy">philosophy</NavLink>
-          <NavLink href="#illustration">illustration</NavLink>
-          <NavLink href="#design">design</NavLink>
-          <NavLink href="#contact">contact</NavLink>
-        </Nav>
-      </HeaderContainer>
-    );
-  };
-
-  export default Header;
-
 const HeaderContainer = styled.header`
   width: 100%;
   background: linear-gradient(120deg,
@@ -38,17 +14,25 @@ const HeaderContainer = styled.header`
     #ffaf80 35%,
     #c197ff 50%,
     #85eaff 65%,
-rgba(186, 220, 91, 0.9) 80%,
+    rgba(186, 220, 91, 0.9) 80%,
     #ffd96a 100%
   );
   padding: 1rem 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   box-sizing: border-box;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+`;
+
+const HeaderContent = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const LogoContainer = styled.div`
@@ -97,3 +81,29 @@ const NavLink = styled.a`
     }
   }
 `;
+
+const Header: React.FC = () => {
+  return (
+    <HeaderContainer>
+      <HeaderContent>
+        <LogoContainer>
+          <Logo>Side Palette</Logo>
+          <StyledImage
+            src="/images/side-palette.png"
+            alt="Side Palette Logo"
+            width={40}
+            height={40}
+          />
+        </LogoContainer>
+        <Nav>
+          <NavLink href="#philosophy">philosophy</NavLink>
+          <NavLink href="#illustration">illustration</NavLink>
+          <NavLink href="#design">design</NavLink>
+          <NavLink href="#contact">contact</NavLink>
+        </Nav>
+      </HeaderContent>
+    </HeaderContainer>
+  );
+};
+
+export default Header;
