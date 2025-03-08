@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React, { ReactNode, useState } from 'react';
 import Header from './parts/Header';
+import Footer from './parts/Footer';
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -529,6 +530,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </svg>
         </LightButton>
       </ButtonContainer>
+      <Footer />
     </LayoutContainer>
   );
 };
