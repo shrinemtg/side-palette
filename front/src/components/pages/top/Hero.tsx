@@ -44,7 +44,6 @@ interface GridItem {
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [gridItems] = useState<GridItem[]>(
     artworks.map((url, index) => ({
       id: index,
@@ -101,7 +100,6 @@ const HeroSection = () => {
     const { innerWidth, innerHeight } = window;
     const x = (clientX / innerWidth) * 2 - 1;
     const y = (clientY / innerHeight) * 2 - 1;
-    setMousePosition({ x, y });
 
     const gridElements = document.querySelectorAll('.grid-item');
     gridElements.forEach((element, i) => {
