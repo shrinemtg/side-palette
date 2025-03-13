@@ -4,4 +4,10 @@ body,
   margin: 0;
   padding: 0;
   height: 100%;
+  cursor: url("/images/hude.svg") 0 20, pointer;
+}
+
+/* 描画中のカーソルスタイル */
+.drawing {
+  cursor: url("/images/hude.svg")  20, auto !important;
 }

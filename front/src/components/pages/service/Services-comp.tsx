@@ -1,5 +1,3 @@
-
-
 const Services = () => {
     return (
         <section id="services" className="p-8 bg-gray-100">
