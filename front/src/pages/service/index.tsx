@@ -1,4 +1,5 @@
-export default function WorkPage() {
-  // ToDo 要実装
-  return <div>WorkPage(要実装)</div>;
+import ServicePage from '../../components/pages/service/index';
+
+export default function ServicesPage() {
+  return <ServicePage />;
 }
