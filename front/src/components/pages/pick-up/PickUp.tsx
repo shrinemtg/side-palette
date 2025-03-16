@@ -5,7 +5,6 @@ import Image from 'next/image';
 interface WorkDetails {
   title: string;
   description: string;
-  technologies: string[];
   period: string;
   role: string;
   features: string[];
@@ -17,7 +16,6 @@ const portfolioData: WorkDetails[] = [
   {
     title: "スナック喫茶 モンキー&バード",
     description: "猿と鳥をモチーフにしたイラストレーション作品。店舗のイメージキャラクターとして動物たちの自然な動きと表情を捉えた心温まる作品を目指しました。",
-    technologies: ["Illustrator", "Photoshop"],
     period: "2024年8月 - 2024年9月",
     role: "イラストレーター、グラフィックデザイナー",
     features: ["手描きテイストの温かみのある表現", "動物の特徴を活かした構図", "季節感のある色使い"],
@@ -34,16 +32,15 @@ const portfolioData: WorkDetails[] = [
   {
     title: "干支絵馬 - 神明社",
     description: "神明社様のために制作した干支絵馬デザイン。宮司様とのヒアリングを踏まえ、その年ごとの情勢を考慮し願いを込めたデザインを心がけています。",
-    technologies: ["Illustrator", "伝統的な絵馬デザイン技法"],
     period: "毎年　10月 - 12月",
     role: "イラストレーター、デザイナー",
     features: ["時代背景からその年の祈りと願いを象徴したデザイン", "６畳分の大きさの大絵馬"],
     thumbnail: "/images/portfolio/eto-ema-shinmei/shinmei-eto-ema.jpg",
     images: [
-      "/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-01.jpg",
+      "/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-01.png",
       "/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-02.jpg",
       "/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-03.jpg",
-      "/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-01.jpg",
+      "/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-01.png",
       "/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-02.jpg",
       "/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-03.jpg",
     ]
@@ -51,7 +48,6 @@ const portfolioData: WorkDetails[] = [
   {
     title: "絵馬 - 太子堂八幡宮",
     description: "太子堂八幡宮様のために制作した絵馬デザイン。境内の特色と歴史を反映させ水彩画風に仕上げた祈願絵馬と折り紙と宝船をモチーフにした干支絵馬のデザインをさせて頂きました。",
-    technologies: ["Illustrator", "伝統工芸技法"],
     period: "2024年4月 - 2024年5月",
     role: "イラストレーター、デザイナー",
     features: ["境内の特色と歴史を反映させたデザイン", "親しみやすいモチーフからの独自表現", "伝統的な色使いの現代的解釈"],
@@ -65,8 +61,8 @@ const portfolioData: WorkDetails[] = [
 
 const Portfolio: React.FC = () => {
   return (
-    <PortfolioContainer>
-      <PageTitle>Project Pick Up</PageTitle>
+    <PortfolioContainer id="pick-up">
+      <PageTitle>Pick Up</PageTitle>
       {portfolioData.map((work, index) => (
         <WorkSection key={work.title} isReverse={index % 2 !== 0}>
           <ImageContainer>
@@ -95,10 +91,6 @@ const Portfolio: React.FC = () => {
             </WorkTitle>
             <Description>{work.description}</Description>
             <DetailsList>
-              <DetailItem>
-                <DetailLabel>使用技術：</DetailLabel>
-                <DetailContent>{work.technologies.join(', ')}</DetailContent>
-              </DetailItem>
               <DetailItem>
                 <DetailLabel>制作期間：</DetailLabel>
                 <DetailContent>{work.period}</DetailContent>
