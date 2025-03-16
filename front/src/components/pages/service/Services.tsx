@@ -23,7 +23,7 @@ const services: ServiceItem[] = [
   {
     title: 'ロゴデザイン',
     description: '企業や団体の理念や価値を表現する、印象的なロゴデザインを制作いたします。',
-    imageUrl: '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-01.png',
+    imageUrl: '/portfolios/rogo-design/keyakidokoro-01.jpg',
     features: [
       'ブランド価値の視覚化',
       '多様な用途に対応したフォーマット',
