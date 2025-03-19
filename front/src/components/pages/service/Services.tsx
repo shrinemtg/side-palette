@@ -221,43 +221,20 @@ const ServicePoint = styled.p`
   }
 `;
 
-const ServiceOverlay = styled.div`
-  position: absolute;
+const ModalOverlay = styled(motion.div)`
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-`;
-
-const ServiceDescription = styled.p`
-  color: white;
-  text-align: center;
-  font-size: 1rem;
-  line-height: 1.6;
-`;
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
   align-items: center;
-  justify-content: center;
   z-index: 1000;
-  padding: 2rem;
 `;
 
-const ModalContent = styled.div`
+const ModalContent = styled(motion.div)`
   background: white;
   border-radius: 12px;
   padding: 2rem;
