@@ -129,7 +129,7 @@ const ButtonContainer = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999;
   pointer-events: all;
 
   @media (max-width: 480px) {
@@ -347,22 +347,26 @@ const LightButton = styled.button<{ isOn: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: ${props => props.isOn ? '#ffd96a' : 'white'};
   cursor: url("/images/hude.svg") 0 20, pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: ${props => props.isOn
+    ? '0 0 15px rgba(255, 217, 106, 0.5), 0 2px 4px rgba(0, 0, 0, 0.2)'
+    : '0 2px 4px rgba(0, 0, 0, 0.2)'};
 
   svg {
     width: 24px;
     height: 24px;
     opacity: ${props => props.isOn ? 1 : 0.5};
     transition: all 0.3s ease;
-    fill: #666;
+    fill: ${props => props.isOn ? '#333' : '#666'};
   }
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: ${props => props.isOn
+      ? '0 0 20px rgba(255, 217, 106, 0.6), 0 4px 8px rgba(0, 0, 0, 0.25)'
+      : '0 4px 8px rgba(0, 0, 0, 0.25)'};
 
     svg {
       opacity: 1;

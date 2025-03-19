@@ -7,7 +7,7 @@ const Canvas: React.FC = () => {
   const [lastPos, setLastPos] = useState({ x: 0, y: 0 });
   const [currentColor, setCurrentColor] = useState('#ffd96a');
   const [isEraser, setIsEraser] = useState(false);
-  const [isDrawingEnabled, setIsDrawingEnabled] = useState(true);
+  const [isDrawingEnabled, setIsDrawingEnabled] = useState(false);
   const [lineWidth, setLineWidth] = useState(8);
   const [isDrawing, setIsDrawing] = useState(false);
   const [isPaletteOpen, setIsPaletteOpen] = useState(true);

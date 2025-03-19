@@ -3,11 +3,19 @@ import React, { ReactNode } from 'react';
 import Header from './parts/Header';
 import Footer from './parts/Footer';
 import Canvas from './pages/canvas';
+import { Klee_One } from 'next/font/google';
+
+const kleeOne = Klee_One({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  font-family: ${kleeOne.style.fontFamily};
 `;
 
 const MainContent = styled.div`

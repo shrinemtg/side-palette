@@ -136,9 +136,11 @@ const HeroSection = () => {
       </TitleWrapper>
 
       <ScrollDownIcon>
-        <span></span>
-        <span></span>
-        <span></span>
+        <span>よよよ</span>
+        <span>ううう</span>
+        <span>こここ</span>
+        <span>そそそ</span>
+        <span>！！！</span>
       </ScrollDownIcon>
     </HeroContainer>
   );
@@ -148,9 +150,9 @@ const HeroSection = () => {
 const HeroContainer = styled.section`
   height: 95vh;
   width: 100%;
-  // margin: 30px 0;
+  margin: 30px 0 80px 0;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background-color: #EAEAEA;
 `;
 
@@ -264,7 +266,7 @@ const ClipTitle = styled.h1`
 
 const ScrollDownIcon = styled.div`
   position: absolute;
-  bottom: 2rem;
+  bottom: -2rem;  // 2rem下に移動
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -272,6 +274,7 @@ const ScrollDownIcon = styled.div`
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+  z-index: 2;  // 他の要素の上に表示されるように
 
   span {
     display: block;
@@ -311,7 +314,7 @@ const ScrollDownIcon = styled.div`
   }
 
   @media (max-width: 768px) {
-    bottom: 1rem;
+    bottom: -1.5rem;  // モバイル表示時は少し上に
 
     span {
       width: 15px;

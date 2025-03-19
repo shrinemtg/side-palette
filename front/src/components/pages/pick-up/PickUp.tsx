@@ -4,10 +4,8 @@ import Image from 'next/image';
 
 interface WorkDetails {
   title: string;
+  summary: string;
   description: string;
-  period: string;
-  role: string;
-  features: string[];
   thumbnail: string;
   images?: string[];
 }
@@ -15,10 +13,8 @@ interface WorkDetails {
 const portfolioData: WorkDetails[] = [
   {
     title: "スナック喫茶 モンキー&バード",
-    description: "猿と鳥をモチーフにしたイラストレーション作品。店舗のイメージキャラクターとして動物たちの自然な動きと表情を捉えた心温まる作品を目指しました。",
-    period: "2024年8月 - 2024年9月",
-    role: "イラストレーター、グラフィックデザイナー",
-    features: ["手描きテイストの温かみのある表現", "動物の特徴を活かした構図", "季節感のある色使い"],
+    summary: "喫茶店・BARのキャラクターデザイン\nステンドグラスの鳥と壁紙の猿のオリジナルキャラクターを制作。レトロ調の色味で個性を出し、シンプルで親しみやすいデザインでキャラクターの性格が伝わるよう工夫しました。",
+    description: "<strong>「お店の核となるイメージキャラクターデザインが欲しい」</strong>喫茶店・BARを経営されているお客様からのご依頼で、Tシャツやグッズに使用するためのオリジナルキャラクターデザインを制作させていただきました。\n\nお客様のご希望により、色味はレトロ調にし、キャラクターに個性を持たせることを意識しました。リアルテイストではなく、イラストからキャラクターの簡単な性格や雰囲気が伝わるよう、シンプルで親しみやすいデザインに仕上げました。\n\nステンドグラスの鳥は、お店の雰囲気に合わせて色鮮やかながらも落ち着いたトーンで表現し、壁紙の猿のキャラクターは、遊び心がありつつもお店のコンセプトに合うようデザインしました。\n\nこれらのキャラクターが、お店の魅力をさらに引き立て、お客様に親しまれることを願っています。",
     thumbnail: "/portfolios/monkey-and-bird/monkey-and-bird-01.jpg",
     images: [
       "/portfolios/monkey-and-bird/monkey-and-bird-01.jpg",
@@ -30,11 +26,9 @@ const portfolioData: WorkDetails[] = [
     ]
   },
   {
-    title: "干支絵馬 - 神明社",
-    description: "神明社様のために制作した干支絵馬デザイン。宮司様とのヒアリングを踏まえ、その年ごとの情勢を考慮し願いを込めたデザインを心がけています。",
-    period: "毎年　10月 - 12月",
-    role: "イラストレーター、デザイナー",
-    features: ["時代背景からその年の祈りと願いを象徴したデザイン", "６畳分の大きさの大絵馬"],
+    title: "大館神明社",
+    summary: "大館神明社様の干支絵馬デザイン\n2024年と2025年の干支絵馬を制作。2024年は辰年の絵馬に参拝者を見守る思いを込め、2025年は災害から人々を守り、竹のように力強く成長する未来を願い、蛇をデザインしました。",
+    description: "<strong>「12年飾ることのできる大絵馬を描いてほしい」</strong>大館神明社様からのご依頼により、2024年からの干支絵馬のイラストを制作させていただきました。\n\n単なるイラストではなく、目的を持ったデザインにしてほしいというお客様の声を受け、辰年の絵馬には、新年の参拝者一人ひとりを正面から真っ直ぐに見つめ、2024年の1年間を見守り続けてくれるような思いを込めてデザインしました。\n\nまた、2025年の干支絵馬も制作させていただきました。2024年から続く予期せぬ自然災害の中、2025年には災害から人々を守り、竹のように力強く伸びていく人々の未来を守る願いを込め、要石を押さえつける蛇をデザインしました。\n\nこれらの絵馬が、参拝される方々の1年を見守り、災害から守る象徴となることを願っています。",
     thumbnail: "/images/portfolio/eto-ema-shinmei/shinmei-eto-ema.jpg",
     images: [
       "/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-01.png",
@@ -46,11 +40,9 @@ const portfolioData: WorkDetails[] = [
     ]
   },
   {
-    title: "絵馬 - 太子堂八幡宮",
-    description: "太子堂八幡宮様のために制作した絵馬デザイン。境内の特色と歴史を反映させ水彩画風に仕上げた祈願絵馬と折り紙と宝船をモチーフにした干支絵馬のデザインをさせて頂きました。",
-    period: "2024年4月 - 2024年5月",
-    role: "イラストレーター、デザイナー",
-    features: ["境内の特色と歴史を反映させたデザイン", "親しみやすいモチーフからの独自表現", "伝統的な色使いの現代的解釈"],
+    title: "太子堂八幡神社",
+    summary: "太子堂八幡神社様の絵馬デザイン\n2025年の干支絵馬は折り紙をモチーフにした遊び心のある蛇をデザインし、縁起絵馬は御神木とお社を柔らかい水彩画風で表現。通年使用できる伝統的で落ち着いたデザインに仕上げました。",
+    description: "<strong>「他とは一線を画す珍しいデザインにしたい」</strong>太子堂八幡神社様からのご依頼により、2025年からの干支絵馬と縁起絵馬のイラストを制作させていただきました。\n\n干支絵馬は、よくある白蛇のイラストではなく、遊び心のあるデザインにしたいというお客様のご要望を受け、折り紙をモチーフにしました。カラフルでありながらも落ち着いた色合いの蛇が、宝船のように皆様に縁起を運んでくるようなイメージでデザインしています。\n\nまた、縁起絵馬は、通年使用できるものとし、御神木を入れたデザインにしたいというご要望から、一目で太子堂八幡神社のものと分かるよう、お社と御神木を描きました。柔らかい水彩画風の色合いで、伝統的で落ち着いた雰囲気を表現しました。\n\nこれらの絵馬が、参拝される方々にとって特別なものとなることを願っています。",
     thumbnail: "/images/portfolio/eto-ema-taishido/taishido-eto-ema.jpg",
     images: [
       "/portfolios/eto-ema-taishido/taishido-eto-ema-mi-01.jpg",
@@ -60,6 +52,44 @@ const portfolioData: WorkDetails[] = [
 ];
 
 const Portfolio: React.FC = () => {
+  const [selectedWork, setSelectedWork] = useState<WorkDetails | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleDetailClick = (work: WorkDetails) => {
+    setSelectedWork(work);
+    setCurrentImageIndex(0);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedWork(null);
+    setCurrentImageIndex(0);
+  };
+
+  const handlePrevImage = () => {
+    if (selectedWork?.images) {
+      setCurrentImageIndex((prev) => (prev - 1 + selectedWork.images!.length) % selectedWork.images!.length);
+    }
+  };
+
+  const handleNextImage = () => {
+    if (selectedWork?.images) {
+      setCurrentImageIndex((prev) => (prev + 1) % selectedWork.images!.length);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedWork?.images) {
+      const timer = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % selectedWork.images!.length);
+      }, 5000);
+
+      return () => {
+        clearInterval(timer);
+      };
+    }
+    return () => {};
+  }, [selectedWork]);
+
   return (
     <PortfolioContainer id="pick-up">
       <PageTitle>Pick Up</PageTitle>
@@ -89,30 +119,52 @@ const Portfolio: React.FC = () => {
                 work.title
               )}
             </WorkTitle>
-            <Description>{work.description}</Description>
-            <DetailsList>
-              <DetailItem>
-                <DetailLabel>制作期間：</DetailLabel>
-                <DetailContent>{work.period}</DetailContent>
-              </DetailItem>
-              <DetailItem>
-                <DetailLabel>役割：</DetailLabel>
-                <DetailContent>{work.role}</DetailContent>
-              </DetailItem>
-              <DetailItem>
-                <DetailLabel>特徴：</DetailLabel>
-                <DetailContent>
-                  <FeaturesList>
-                    {work.features.map((feature, i) => (
-                      <li key={i}>{feature}</li>
-                    ))}
-                  </FeaturesList>
-                </DetailContent>
-              </DetailItem>
-            </DetailsList>
+            <Summary>{work.summary}</Summary>
+            <DetailButton onClick={() => handleDetailClick(work)}>
+              詳細を見る
+            </DetailButton>
           </WorkDetails>
         </WorkSection>
       ))}
+
+      {selectedWork && (
+        <ModalOverlay onClick={handleCloseModal}>
+          <ModalContent onClick={e => e.stopPropagation()}>
+            <CloseButton onClick={handleCloseModal}>×</CloseButton>
+            <ModalImageContainer>
+              <Image
+                src={selectedWork.images?.[currentImageIndex] || selectedWork.thumbnail}
+                alt={`${selectedWork.title} - 画像${currentImageIndex + 1}`}
+                layout="fill"
+                objectFit={selectedWork.title === "スナック喫茶 モンキー&バード" ? "contain" : "cover"}
+                style={{ backgroundColor: selectedWork.title === "スナック喫茶 モンキー&バード" ? "#fff" : "transparent" }}
+              />
+              <ImageNavigation>
+                <NavButton onClick={handlePrevImage}>←</NavButton>
+                <NavButton onClick={handleNextImage}>→</NavButton>
+              </ImageNavigation>
+              {selectedWork.images && selectedWork.images.length > 1 && (
+                <ImageIndicators>
+                  {selectedWork.images.map((_, index) => (
+                    <Indicator
+                      key={index}
+                      isActive={index === currentImageIndex}
+                      onClick={() => setCurrentImageIndex(index)}
+                    />
+                  ))}
+                </ImageIndicators>
+              )}
+            </ModalImageContainer>
+            <ModalTitle>{selectedWork.title}</ModalTitle>
+            <ModalQuote>
+              {selectedWork.description.split('<strong>')[1]?.split('</strong>')[0]}
+            </ModalQuote>
+            <ModalDescription>
+              {selectedWork.description.split('</strong>')[1]}
+            </ModalDescription>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </PortfolioContainer>
   );
 };
@@ -218,13 +270,13 @@ const Indicator = styled.button<{ isActive: boolean }>`
 const PortfolioContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 2rem 2rem;
 `;
 
 const PageTitle = styled.h1`
   font-size: 2.5rem;
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 6rem;
   position: relative;
 
   &::after {
@@ -233,7 +285,7 @@ const PageTitle = styled.h1`
     bottom: -1rem;
     left: 50%;
     transform: translateX(-50%);
-    width: 350px;
+    width: 180px;
     height: 3px;
     background: linear-gradient(90deg,
       rgba(255, 133, 202, 0.5) 0%,
@@ -295,47 +347,160 @@ const SubTitle = styled.span`
   color: #666;
 `;
 
-const Description = styled.p`
+const Summary = styled.p`
   font-size: 1.1rem;
-  line-height: 1.6;
+  line-height: 2;
   color: #666;
+  margin-bottom: 1.5rem;
+  white-space: pre-line;
+`;
+
+const DetailButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg,
+    rgba(255, 133, 202, 0.8) 0%,
+    rgba(193, 151, 255, 0.8) 50%,
+    rgba(133, 234, 255, 0.8) 100%
+  );
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 2rem;
+`;
+
+const ModalContent = styled.div`
+  background: white;
+  padding: 1.5rem 3rem 1.5rem 3rem;
+  border-radius: 12px;
+  max-width: 1000px;
+  width: 100%;
+  max-height: 100vh;
+  overflow-y: auto;
+  position: relative;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0.5rem;
+  line-height: 1;
+
+  &:hover {
+    color: #333;
+  }
+`;
+
+const ModalTitle = styled.h2`
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
+  position: relative;
+`;
+
+const ModalImageContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
   margin-bottom: 2rem;
+  background-color: #fff;
 `;
 
-const DetailsList = styled.div`
+const ImageNavigation = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  justify-content: space-between;
+  padding: 0 1rem;
+  pointer-events: none;
 `;
 
-const DetailItem = styled.div`
+const NavButton = styled.button`
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #333;
+  pointer-events: auto;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: white;
+    transform: scale(1.1);
+  }
+`;
+
+const ImageIndicators = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
   gap: 0.5rem;
 `;
 
-const DetailLabel = styled.span`
-  font-weight: bold;
+const ModalQuote = styled.div`
+  max-width: 720px;
+  font-size: 1.5rem;
   color: #333;
-  font-size: 0.9rem;
+  margin: 0 auto 2rem;
+  font-weight: 620;
+  line-height: 1.6;
+  text-align: center;
 `;
 
-const DetailContent = styled.span`
+const ModalDescription = styled.div`
+  font-size: 1.1rem;
+  line-height: 2;
   color: #666;
-  line-height: 1.5;
-`;
-
-const FeaturesList = styled.ul`
-  margin: 0;
-  padding-left: 1.5rem;
-
-  li {
-    margin-bottom: 0.5rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
+  white-space: pre-line;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
 `;
 
 export default Portfolio;

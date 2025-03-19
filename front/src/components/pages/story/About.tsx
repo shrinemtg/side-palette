@@ -29,7 +29,7 @@ const About = () => {
 // スタイルコンポーネント
 const AboutContainer = styled.div`
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 30px auto;
     padding: 2rem;
 `;
 
@@ -51,7 +51,8 @@ const PageTitle = styled.h1`
     text-align: center;
     font-size: 3.5rem;
     position: relative;
-
+    margin-top: 30px;
+    margin-bottom: 30px;
     &::after {
         content: '';
         position: absolute;
@@ -86,7 +87,7 @@ const LeadText = styled.p`
     font-size: 1rem;
     color: #666;
     max-width: 600px;
-    margin: 2px auto;
+    margin: 20px auto;
 `;
 
 export default About;
