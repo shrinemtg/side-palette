@@ -30,19 +30,19 @@ const teamMembers = [
         name: "谷口 瑞季",
         role: "クリエイティブディレクター / イラストレーター",
         bio: "明るく元気なアイデアマン！デザインの核となるクリエイティブなアイデアを担当します。唯一無二のイラストを用いて、お客様の思いに寄り添ったデザインを創造します。『こんなデザインがいい！』という思いを、ぜひ教えてください。",
-        image: "/images/team-1.jpg"
+        image: "/portfolios/welcome-board/welcome-board-01.jpg"
     },
     {
         name: "佐藤 文胤",
         role: "webデザイナー / 営業担当",
         bio: "デザインは誠実に打ち合わせは笑顔で！お客様の想いを形にするWebデザイナーです。お客様の思いや目的をヒアリングして、効果的で魅力的なデザインに仕上げます。「どうしたら効果的かわからない」というお悩みも、ぜひご相談ください！",
-        image: "/images/team-2.jpg"
+        image: "/portfolios/welcome-board/welcome-board-01.jpg"
     },
     {
         name: "佐藤 哲也",
         role: "webエンジニア",
         bio: "システムの基盤を支えるバックエンド開発を専門としています。デザインやお客様との直接のやり取りは行いませんが、技術面でプロジェクトを確実にサポートします。",
-        image: "/images/team-3.jpg"
+        image: "/portfolios/welcome-board/wata.jpg"
     }
 ];
 

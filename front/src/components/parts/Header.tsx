@@ -19,7 +19,7 @@ const HeaderContainer = styled.header`
     rgba(186, 220, 91, 0.9) 80%,
     #ffd96a 100%
   );
-  padding: 0.8rem 1rem;
+  padding: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,11 +27,13 @@ const HeaderContainer = styled.header`
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 1000;
 
   @media (min-width: 768px) {
-    padding: 0.8rem 1.5rem;
+    padding: 3px 1rem;
   }
 `;
 
@@ -41,7 +43,6 @@ const HeaderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0.5rem;
 
   @media (min-width: 768px) {
     padding: 0 1rem;
@@ -65,8 +66,9 @@ const LogoLink = styled(Link)`
 
 const Logo = styled.h1`
   font-size: 1.8rem;
+  font-size: 1.2rem; //後で変更
   font-weight: bold;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   color: white;
 `;
 

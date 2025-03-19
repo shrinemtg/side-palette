@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -22,12 +22,13 @@ const services: ServiceItem[] = [
   },
   {
     title: 'ロゴデザイン',
-    description: '企業や団体の理念や価値を表現する、印象的なロゴデザインを制作いたします。',
+    description: 'ブランドの顔となるロゴをデザイン',
     imageUrl: '/portfolios/rogo-design/keyakidokoro-01.jpg',
     features: [
-      'ブランド価値の視覚化',
-      '多様な用途に対応したフォーマット',
-      'オリジナリティの高いデザイン'
+      'ロゴは、企業やブランドの顔となる重要な要素です。side paletteでは、クライアントの理念やターゲット層を徹底的に分析し、その企業やブランドに最適なロゴデザインを提案します。',
+      'シンプルで印象的なデザインから、個性的で独創的なデザインまで、幅広いニーズに対応。ロゴを通じて、ブランドの魅力を最大限に引き出します。',
+      'あなたのビジネスを象徴するロゴを、一緒に作り上げましょう。ロゴは、企業やブランドの顔となる重要な要素です。side paletteでは、クライアントの理念やターゲット層を徹底的に分析し、その企業やブランドに最適なロゴデザインを提案します。','シンプルで印象的なデザインから、個性的で独創的なデザインまで、幅広いニーズに対応。ロゴを通じて、ブランドの魅力を最大限に引き出します。',
+    'あなたのビジネスを象徴するロゴを、一緒に作り上げましょう。'
     ]
   },
   {
@@ -53,7 +54,7 @@ const services: ServiceItem[] = [
   {
     title: '名刺作成',
     description: 'ビジネスの第一印象を左右する、プロフェッショナルな名刺デザインを制作いたします。',
-    imageUrl: '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-01.png',
+    imageUrl: '/portfolios/business-card/side-palette-rogo.jpg',
     features: [
       '企業ブランドに合わせたデザイン',
       '高品質な印刷',
@@ -134,10 +135,90 @@ const ServicesGrid = styled.div`
   padding: 2rem 0;
 `;
 
+const ServiceCard = styled(motion.div)`
+  position: relative;
+  width: 100%;
+  height: 400px;
+  perspective: 2000px;
+  cursor: pointer;
+
+  &:hover .card-inner {
+    transform: rotateY(180deg);
+  }
+`;
+
+const CardInner = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+`;
+
+const CardSide = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+  overflow: hidden;
+`;
+
+const CardFront = styled(CardSide)``;
+
+const CardBack = styled(CardSide)`
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
 const ServiceImage = styled.img`
   width: 100%;
-  height: 300px;
+  height: 70%;
   object-fit: cover;
+`;
+
+const ServiceTitle = styled.h3`
+  margin: 15px 0;
+  font-size: 1.5rem;
+  color: #333;
+`;
+
+const BackTitle = styled.h3`
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
+
+const ServicePoints = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  width: 100%;
+`;
+
+const ServicePoint = styled.p`
+  font-size: 1rem;
+  color: #666;
+  margin: 5px 0;
+  padding-left: 20px;
+  position: relative;
+
+  &:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #4ECDC4;
+  }
 `;
 
 const ServiceOverlay = styled.div`
@@ -153,38 +234,6 @@ const ServiceOverlay = styled.div`
   padding: 1.5rem;
   opacity: 0;
   transition: opacity 0.3s ease;
-`;
-
-const ServiceCard = styled.div`
-  position: relative;
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-
-    ${ServiceOverlay} {
-      opacity: 1;
-    }
-  }
-`;
-
-const ServiceTitle = styled.h2`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin: 0;
-  color: #333;
-  text-align: center;
 `;
 
 const ServiceDescription = styled.p`
@@ -286,7 +335,6 @@ const Services = () => {
         <AboutUsLabel>Services</AboutUsLabel>
         <PageTitle>サービス紹介</PageTitle>
         <LeadText>
-          伝統と革新を融合させた、高品質なデザインサービスを提供いたします。<br />
           お客様の思いを形に、新しい価値を創造します。
         </LeadText>
       </HeroSection>
@@ -295,18 +343,26 @@ const Services = () => {
         {services.map((service, index) => (
           <ServiceCard
             key={service.title}
-            as={motion.div}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
             onClick={() => setSelectedService(service)}
           >
-            <ServiceImage src={service.imageUrl} alt={service.title} />
-            <ServiceOverlay>
-              <ServiceDescription>{service.description}</ServiceDescription>
-            </ServiceOverlay>
-            <ServiceTitle>{service.title}</ServiceTitle>
+            <CardInner className="card-inner">
+              <CardFront>
+                <ServiceImage src={service.imageUrl} alt={service.title} />
+                <ServiceTitle>{service.title}</ServiceTitle>
+              </CardFront>
+              <CardBack>
+                <BackTitle>{service.title}</BackTitle>
+                <ServicePoints>
+                  {service.features.slice(0, 3).map((feature, i) => (
+                    <ServicePoint key={i}>{feature}</ServicePoint>
+                  ))}
+                </ServicePoints>
+              </CardBack>
+            </CardInner>
           </ServiceCard>
         ))}
       </ServicesGrid>
