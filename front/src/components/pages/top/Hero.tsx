@@ -7,33 +7,27 @@ gsap.registerPlugin(ScrollTrigger);
 
 // 固定のアートワーク画像配列
 const artworks = [
-  // 1セット目
-  'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1573096108468-702f6014ef28?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1549490349-8643362247b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1574169208507-84376144848b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1548123378-bde4eca81d2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1567095761054-7a02e69e5c43?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1607893378714-007fd47c8719?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1576773689115-5cd2b0223523?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1611083360739-bdad6e0eb1fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  // 2セット目（新しい画像を追加）
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1614850715649-1d0106293bd1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1573096108468-702f6014ef28?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1549490349-8643362247b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1574169208507-84376144848b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1548123378-bde4eca81d2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1567095761054-7a02e69e5c43?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1607893378714-007fd47c8719?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80'
+  '/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-01.png',
+  '/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-02.jpg',
+  '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-01.png',
+  '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-02.jpg',
+  '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-03.jpg',
+  '/portfolios/eto-ema-taishido/taishido-eto-ema-mi-01.jpg',
+  '/portfolios/eto-ema-taishido/taishido-kigan-ema-01.jpg',
+  '/portfolios/graphic/label-concon.png',
+  '/portfolios/monkey-and-bird/monkey-and-bird-01.jpg',
+  '/portfolios/monkey-and-bird/monkey-and-bird-02.jpg',
+  '/portfolios/monkey-and-bird/monkey-and-bird-character-01.jpg',
+  '/portfolios/monkey-and-bird/monkey-and-bird-character-02.jpg',
+  '/portfolios/monkey-and-bird/monkey-and-bird-character-03.jpg',
+  '/portfolios/monkey-and-bird/monkey-and-bird-rogo.jpg',
+  '/portfolios/order-illust/order-illust-01.jpg',
+  '/portfolios/order-illust/order-illust-02.jpg',
+  '/portfolios/rogo-design/keyakidokoro-01.jpg',
+  '/portfolios/welcome-board/welcome-board-01.jpg',
+  '/portfolios/youtube/yorusizi-01.jpg',
+  '/portfolios/youtube/yorusizi-02.png',
+  '/portfolios/youtube/yorusizi-03.jpg',
 ];
 
 interface GridItem {
@@ -140,61 +134,60 @@ const HeroSection = () => {
           Side Palette
         </ClipTitle>
       </TitleWrapper>
+
+      <ScrollDownIcon>
+        <span></span>
+        <span></span>
+        <span></span>
+      </ScrollDownIcon>
     </HeroContainer>
   );
 };
 
 // コンテナのスタイル
 const HeroContainer = styled.section`
-  height: 70vh; // デフォルトの高さ
-  width: 80%; // 幅を100%に設定
-  margin: 0 auto; // 左右に均等に配置
-  border-radius: 20px; // 角を丸くする
-  position: relative; // 相対配置
-  overflow: hidden; // はみ出た要素を非表示にする
-  background-color:#EAEAEA;
-  // background-color:#000;
-  margin-top: 80px; // 上部に80pxのマージンを設定
-
+  height: 95vh;
+  width: 100%;
+  // margin: 30px 0;
+  position: relative;
+  overflow: hidden;
+  background-color: #EAEAEA;
 `;
 
 // カルーセルのスタイル
 const CarouselWrapper = styled.div`
-  position: absolute; // 絶対配置
-  top: 30%; // 上部から50%の位置に配置
-  transform: translateY(-50%); // 垂直方向に50%移動
-  width: 100%; // 幅を100%に設定
-  height: 100vh; // 高さを80vhに設定
-  overflow: hidden; // はみ出た要素を非表示にする
-  mask-image: linear-gradient(// マスクを設定
-    to right,// 右から左に向かって
-    transparent,// 透明
-    black 5%,// 黒色を5%の位置から
-    black 95%,// 黒色を95%の位置から
-    transparent// 透明
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 95vh;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
   );
 `;
 
 // カルーセルの内部スタイル
-const CarouselInner = styled.div`
-  display: flex;
-  gap: 2rem;
-  padding: 2rem;
-  animation: scroll 40s linear infinite;
-  width: fit-content;
-
-  // グリッドセットのスタイル
-  & > div {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 2rem;
-    min-width: calc(100vw - 6rem);
-    flex-shrink: 0;
-    place-items: center;
+const CarouselInner = styled.div`// カルーセルの内部スタイル
+  display: flex;                          // フレックスボックスを使用してカルーセルを作成
+  gap: 1rem;                            // カルーセルのアイテム間に1.5remのスペースを設定
+  padding: 1rem;                        // カルーセルのアイテムの周囲に1.5remのパディングを設定
+  animation: scroll 40s linear infinite;  // スクロールアニメーションを40秒で繰り返し実行
+  width: fit-content;                     // カルーセルの幅を内容に合わせる
+  & > div {// カルーセルの内部のdiv要素に対するスタイル
+    display: grid;// グリッドレイアウトを使用してカルーセルを作成
+    grid-template-columns: repeat(6, 1fr);// 6列のグリッドを作成
+    grid-template-rows: repeat(3, 1fr);// 4行のグリッドを作成
+    gap: 1rem;// グリッドのアイテム間に1.5remのスペースを設定
+    flex-shrink: 0;// カルーセルの幅を内容に合わせる
+    place-items: center;// カルーセルのアイテムを中央揃えにする
+    min-width: calc(100vw - 3rem);// カルーセルの幅を内容に合わせる
   }
 
-  // スクロールアニメーションのキーフレーム
   @keyframes scroll {
     0% {
       transform: translateX(calc(-100% / 3));
@@ -207,19 +200,37 @@ const CarouselInner = styled.div`
 
 // グリッドアイテムのスタイル
 const GridItem = styled.div`
-  position: relative;
-  overflow: hidden;
-  border-radius: 20px;
-  width: 250px;
-  height: 250px;
-  transition: transform 0.3s ease; // トランジションを追加
+  position: relative;  // 相対配置
+  overflow: hidden;  // オーバーフローを非表示にする
+  border-radius: 20px;  // 角を20pxに設定
+  width: 300px;  // 幅を300pxに設定
+  height: 300px;  // 高さを300pxに設定
+  transition: transform 0.3s ease;  // 変換を0.3秒で滑らかに遷移
 
-  img {// 画像のスタイル
-    width: 100%;// 幅を100%に設定
-    height: 100%;// 高さを100%に設定
-    object-fit: cover;// オブジェクトをカバーする
-    filter: brightness(0.8) contrast(1.2);// 明るさを0.8倍にし、コントラストを1.2倍にする
-    margin-bottom: 1rem;// 下部に1remのマージンを設定
+  img {
+    width: 100%;  // 幅を100%に設定
+    height: 100%;  // 高さを100%に設定
+    object-fit: cover;  // オブジェクトをカバーにする
+    filter: brightness(1) contrast(1.2);  // 明るさを0.8倍に、コントラストを1.2倍に設定
+    margin: 0;  // マージンを0に設定
+  }
+
+  @media (max-width: 1440px) {
+    width: 200px;
+    height: 200px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 150px;
+    height: 150px;
+  }
+  @media (max-width: 768px) {
+    width: 120px;
+    height: 120px;
+  }
+  @media (max-width: 480px) {
+    width: 100px;
+    height: 100px;
   }
 `;
 
@@ -248,6 +259,64 @@ const ClipTitle = styled.h1`
   // モバイル用のスタイル
   @media (max-width: 768px) {
     font-size: clamp(3rem, 8vw, 5rem);
+  }
+`;
+
+const ScrollDownIcon = styled.div`
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+
+  span {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-bottom: 2px solid #333;
+    border-right: 2px solid #333;
+    transform: rotate(45deg);
+    animation: scrollDown 2s infinite;
+    opacity: 0;
+
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+
+  @keyframes scrollDown {
+    0% {
+      opacity: 0;
+      transform: rotate(45deg) translate(-20px, -20px);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: rotate(45deg) translate(20px, 20px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    bottom: 1rem;
+
+    span {
+      width: 15px;
+      height: 15px;
+    }
   }
 `;
 
