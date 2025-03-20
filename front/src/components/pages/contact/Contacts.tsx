@@ -48,7 +48,7 @@ const Contacts: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <PageTitle>Contact Us</PageTitle>
+            <PageTitle>Contact</PageTitle>
             <LeadText>
               お客様のご要望をお聞かせください。<br />
               24時間以内に担当者よりご連絡させていただきます。
@@ -222,7 +222,7 @@ const Contacts: React.FC = () => {
                 <ActionButton href="/">
                   ホームに戻る
                 </ActionButton>
-                <ActionButton href="/services">
+                <ActionButton href="/service">
                   サービス一覧を見る
                 </ActionButton>
               </ModalButtons>
@@ -239,10 +239,14 @@ const ContactContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const HeroSection = styled.section`
   text-align: center;
+  max-width: 800px;
   padding: 4rem 0;
   background: linear-gradient(120deg,
     rgba(255, 133, 202, 0.1) 0%,
@@ -250,7 +254,8 @@ const HeroSection = styled.section`
     rgba(133, 234, 255, 0.1) 100%
   );
   border-radius: 20px;
-  margin-bottom: 4rem;
+  width: 100%;
+  margin: 4rem auto;
 `;
 
 const PageTitle = styled.h1`
@@ -263,6 +268,7 @@ const PageTitle = styled.h1`
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
 `;
 
 const LeadText = styled.p`
@@ -274,6 +280,7 @@ const LeadText = styled.p`
 
 const FormSection = styled.section`
   max-width: 800px;
+  width: 100%;
   margin: 0 auto;
   padding: 2rem;
   background: white;

@@ -32,9 +32,8 @@ const Footer: React.FC = () => {
         <FooterSection>
           <FooterTitle>Menu</FooterTitle>
           <FooterNav>
-            <FooterLink href="/about">About</FooterLink>
-            <FooterLink href="/services">Services</FooterLink>
-            <FooterLink href="/works">Works</FooterLink>
+            <FooterLink href="/story">Story</FooterLink>
+            <FooterLink href="/service">Service</FooterLink>
             <FooterLink href="/contact">Contact</FooterLink>
           </FooterNav>
         </FooterSection>
@@ -42,8 +41,8 @@ const Footer: React.FC = () => {
         <FooterSection>
           <FooterTitle>Social</FooterTitle>
           <SocialLinks>
-            <SocialLink href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              Instagram
+            <SocialLink href="https://www.tiktok.com/@mizuki.1998" target="_blank" rel="noopener noreferrer">
+              TikTok
             </SocialLink>
           </SocialLinks>
         </FooterSection>
@@ -125,7 +124,7 @@ const FooterContainer = styled.footer`
     #ffd96a 100%
   );
   margin-top: 100px;
-  padding: 2rem 2rem 1rem;
+  padding: 4rem 2rem 2rem;
   color: white;
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
@@ -138,8 +137,8 @@ const FooterContent = styled.div`
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  padding-bottom: 2rem;
+  gap: 4rem;
+  padding-bottom: 3rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   width: 100%;
 `;
@@ -147,13 +146,13 @@ const FooterContent = styled.div`
 const FooterSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 `;
 
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8rem;
   margin-bottom: 1rem;
 `;
 
@@ -162,36 +161,44 @@ const StyledImage = styled(Image)`
 `;
 
 const LogoText = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: white;
+  letter-spacing: -0.02em;
 `;
 
 const CompanyInfo = styled.p`
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.8;
   opacity: 0.9;
+  letter-spacing: 0.02em;
 `;
 
 const FooterTitle = styled.h3`
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  letter-spacing: -0.02em;
 `;
 
 const FooterNav = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.8rem;
 `;
 
 const FooterLink = styled(Link)`
   color: white;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.1rem;
   position: relative;
   width: fit-content;
   cursor: url("/images/hude.svg") 0 20, pointer;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   &::after {
     content: '';
@@ -212,16 +219,21 @@ const FooterLink = styled(Link)`
 const SocialLinks = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.8rem;
 `;
 
 const SocialLink = styled.a`
   color: white;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.1rem;
   position: relative;
   width: fit-content;
   cursor: url("/images/hude.svg") 0 20, pointer;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   &::after {
     content: '';
@@ -240,8 +252,10 @@ const SocialLink = styled.a`
 `;
 
 const FooterBottom = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
   width: 100%;
-  padding-top: 1rem;
+  padding-top: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -256,18 +270,19 @@ const FooterBottom = styled.div`
 
 const FooterLinks = styled.div`
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
 `;
 
 const SmallLink = styled.button`
   color: white;
   text-decoration: none;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   opacity: 0.8;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
   background: none;
   border: none;
   cursor: url("/images/hude.svg") 0 20, pointer;
+  padding: 0.5rem 0;
 
   &:hover {
     opacity: 1;
@@ -275,7 +290,7 @@ const SmallLink = styled.button`
 `;
 
 const Copyright = styled.p`
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   opacity: 0.8;
 `;
 
@@ -285,50 +300,58 @@ const ModalOverlay = styled(motion.div)`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(5px);
 `;
 
 const ModalContent = styled(motion.div)`
   background: white;
-  padding: 2rem;
+  padding: 3rem;
   border-radius: 20px;
   max-width: 600px;
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
   color: #333;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 `;
 
 const ModalTitle = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: #333;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
+  letter-spacing: -0.02em;
 `;
 
 const ModalText = styled.div`
   line-height: 1.8;
   margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: #666;
 `;
 
 const CloseButton = styled.button`
   display: block;
   margin: 0 auto;
-  padding: 0.75rem 2rem;
+  padding: 0.8rem 2.5rem;
   background: linear-gradient(120deg, #ff85ca, #85eaff);
   color: white;
   border: none;
   border-radius: 30px;
   font-weight: bold;
+  font-size: 1.1rem;
   cursor: url("/images/hude.svg") 0 20, pointer;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
   &:hover {
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   }
 `;
 

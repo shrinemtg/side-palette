@@ -135,9 +135,8 @@ const Portfolio: React.FC = () => {
               <Image
                 src={selectedWork.images?.[currentImageIndex] || selectedWork.thumbnail}
                 alt={`${selectedWork.title} - 画像${currentImageIndex + 1}`}
-                layout="fill"
-                objectFit={selectedWork.title === "スナック喫茶 モンキー&バード" ? "contain" : "cover"}
-                style={{ backgroundColor: selectedWork.title === "スナック喫茶 モンキー&バード" ? "#fff" : "transparent" }}
+                fill
+                style={{ objectFit: selectedWork.title === "スナック喫茶 モンキー&バード" ? "contain" : "cover" }}
               />
               <ImageNavigation>
                 <NavButton onClick={handlePrevImage}>←</NavButton>
@@ -195,9 +194,8 @@ const Slideshow: React.FC<SlideshowProps> = ({ images }) => {
           <Image
             src={image}
             alt={`slide-${index + 1}`}
-            layout="fill"
-            objectFit={image.includes('rogo') ? 'contain' : 'cover'}
-            style={{ backgroundColor: image.includes('rogo') ? '#fff' : 'transparent' }}
+            fill
+            style={{ objectFit: image.includes('rogo') ? 'contain' : 'cover' }}
           />
         </SlideImage>
       ))}

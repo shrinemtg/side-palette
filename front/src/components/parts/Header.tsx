@@ -38,14 +38,14 @@ const HeaderContainer = styled.header`
 `;
 
 const HeaderContent = styled.div`
-  max-width: 1200px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 2rem;
 
   @media (min-width: 768px) {
-    padding: 0 1rem;
+    padding: 0 4rem;
   }
 `;
 
@@ -54,6 +54,7 @@ const LogoContainer = styled.div`
   align-items: center;
   gap: 1rem;
   z-index: 1001;
+  margin-right: auto;
 `;
 
 const LogoLink = styled(Link)`
@@ -97,7 +98,8 @@ const Nav = styled.nav<{ isOpen: boolean }>`
 
   @media (min-width: 768px) {
     display: flex;
-    gap: 1.5rem;
+    gap: 2.5rem;
+    margin-left: auto;
   }
 `;
 
@@ -231,7 +233,6 @@ const Header: React.FC = () => {
         <Nav isOpen={isOpen}>
           <NavLink href="/story" onClick={handleLinkClick}>Story</NavLink>
           <NavLink href="/service" onClick={handleLinkClick}>Service</NavLink>
-          <NavLink href="/work" onClick={handleLinkClick}>Work</NavLink>
           <NavLink href="/contact" onClick={handleLinkClick}>Contact</NavLink>
         </Nav>
       </HeaderContent>

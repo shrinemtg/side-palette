@@ -11,6 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Side Palette｜デザイン・イラスト会社</title>
         <meta name="description" content="テンプレートのデザインではなく、お客様「一人一人に寄り添ったデザイン」をお届けします。" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/side-palette.ico" type="image/x-icon" />
       </Head>
       <GlobalStyle />

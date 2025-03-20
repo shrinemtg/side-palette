@@ -38,12 +38,26 @@ interface GridItem {
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const [gridItems] = useState<GridItem[]>(
-    artworks.map((url, index) => ({
+  const [gridItems, setGridItems] = useState<GridItem[]>([]);
+
+  useEffect(() => {
+    // 画像配列をシャッフルする関数
+    const shuffleArray = (array: string[]) => {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    };
+
+    // シャッフルした画像配列を設定
+    const shuffledArtworks = shuffleArray(artworks);
+    setGridItems(shuffledArtworks.map((url, index) => ({
       id: index,
       imageUrl: url
-    }))
-  );
+    })));
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -136,11 +150,9 @@ const HeroSection = () => {
       </TitleWrapper>
 
       <ScrollDownIcon>
-        <span>よよよ</span>
-        <span>ううう</span>
-        <span>こここ</span>
-        <span>そそそ</span>
-        <span>！！！</span>
+        <span></span>
+        <span></span>
+        <span></span>
       </ScrollDownIcon>
     </HeroContainer>
   );
