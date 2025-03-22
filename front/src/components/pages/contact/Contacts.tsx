@@ -10,6 +10,10 @@ interface FormData {
   message: string;
 }
 
+interface ModalContentProps {
+  $isOpen: boolean;
+}
+
 const Contacts: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -42,13 +46,13 @@ const Contacts: React.FC = () => {
     <>
       <ContactContainer>
         {/* ヘッダーセクション */}
+        <PageTitle>Contact</PageTitle>
         <HeroSection>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <PageTitle>Contact</PageTitle>
             <LeadText>
               お客様のご要望をお聞かせください。<br />
               24時間以内に担当者よりご連絡させていただきます。
@@ -133,6 +137,23 @@ const Contacts: React.FC = () => {
           </ContactForm>
         </FormSection>
 
+        {/* 予約セクション */}
+        <BookingSection>
+          <SectionTitle>オンライン予約のご案内</SectionTitle>
+          <BookingDescription>
+            ビデオ通話にてご相談も承っております。<br />
+            下記の予約可能な時間帯からお選びいただけます。
+          </BookingDescription>
+          <CalendarContainer>
+            <iframe
+              src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2pUQ-hlBbCDixykSDSRgDQQjT_mixTC8TcEF2bpirGuG5p7MsDj44v_R8af-f3U9w8ezQg_N9t?gv=true"
+              style={{ border: 0 }}
+              width="100%"
+              height="600"
+              frameBorder="0"
+            />
+          </CalendarContainer>
+        </BookingSection>
         {/* FAQセクション */}
         <FAQSection>
           <SectionTitle>よくあるご質問</SectionTitle>
@@ -145,6 +166,7 @@ const Contacts: React.FC = () => {
             ))}
           </FAQList>
         </FAQSection>
+
       </ContactContainer>
 
       {/* 確認モーダル */}
@@ -156,6 +178,7 @@ const Contacts: React.FC = () => {
             exit={{ opacity: 0 }}
           >
             <ModalContent
+              $isOpen={showConfirmModal}
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
@@ -209,6 +232,7 @@ const Contacts: React.FC = () => {
             exit={{ opacity: 0 }}
           >
             <ModalContent
+              $isOpen={showThanksModal}
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
@@ -237,7 +261,7 @@ const Contacts: React.FC = () => {
 // スタイルコンポーネント
 const ContactContainer = styled.div`
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 2rem auto;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -245,37 +269,56 @@ const ContactContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
+  position: relative;
+  padding: 2rem 2rem;
   text-align: center;
-  max-width: 800px;
-  padding: 4rem 0;
   background: linear-gradient(120deg,
     rgba(255, 133, 202, 0.1) 0%,
     rgba(193, 151, 255, 0.1) 50%,
     rgba(133, 234, 255, 0.1) 100%
   );
   border-radius: 20px;
+  margin: 0 auto 4rem auto;
+  max-width: 800px;
   width: 100%;
-  margin: 4rem auto;
 `;
 
 const PageTitle = styled.h1`
+  color: #333;
+  text-align: center;
   font-size: 3.5rem;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(120deg,
-    #ff85ca 0%,
-    #c197ff 50%,
-    #85eaff 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  position: relative;
+  margin: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    height: 3px;
+    background: linear-gradient(90deg,
+      rgba(255, 133, 202, 0.5) 0%,
+      rgba(193, 151, 255, 0.5) 50%,
+      rgba(133, 234, 255, 0.5) 70%,
+      rgba(177, 227, 59, 0.5) 90%,
+      rgba(243, 188, 22, 0.5) 100%
+    );
+  }
 `;
 
 const LeadText = styled.p`
-  font-size: 1.5rem;
+  text-align: center;
+  font-size: 1.2rem;
   color: #666;
   max-width: 800px;
   margin: 0 auto;
+  line-height: 2.2;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 `;
 
 const FormSection = styled.section`
@@ -440,7 +483,7 @@ const ModalOverlay = styled(motion.div)`
   z-index: 1000;
 `;
 
-const ModalContent = styled(motion.div)`
+const ModalContent = styled(motion.div)<ModalContentProps>`
   background: white;
   padding: 2rem;
   border-radius: 20px;
@@ -448,6 +491,9 @@ const ModalContent = styled(motion.div)`
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
+  opacity: ${props => props.$isOpen ? 1 : 0};
+  transform: ${props => props.$isOpen ? 'scale(1)' : 'scale(0.8)'};
+  transition: all 0.3s ease;
 `;
 
 const ModalTitle = styled.h2`
@@ -542,5 +588,39 @@ const faqs = [
     answer: "銀行振込、クレジットカード、PayPalでのお支払いに対応しております。"
   }
 ];
+
+// スタイルコンポーネントの追加
+const BookingSection = styled.section`
+  max-width: 800px;
+  width: 100%;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+const BookingDescription = styled.p`
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.8;
+`;
+
+const CalendarContainer = styled.div`
+  width: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  @media (max-width: 768px) {
+    height: 500px;
+  }
+
+  @media (max-width: 480px) {
+    height: 400px;
+  }
+`;
 
 export default Contacts;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Image from 'next/image';
 
-interface WorkDetails {
+interface WorkDetailsType {
   title: string;
   summary: string;
   description: string;
@@ -10,7 +10,7 @@ interface WorkDetails {
   images?: string[];
 }
 
-const portfolioData: WorkDetails[] = [
+const portfolioData: WorkDetailsType[] = [
   {
     title: "スナック喫茶 モンキー&バード",
     summary: "喫茶店・BARのキャラクターデザイン\nステンドグラスの鳥と壁紙の猿のオリジナルキャラクターを制作。レトロ調の色味で個性を出し、シンプルで親しみやすいデザインでキャラクターの性格が伝わるよう工夫しました。",
@@ -52,10 +52,10 @@ const portfolioData: WorkDetails[] = [
 ];
 
 const Portfolio: React.FC = () => {
-  const [selectedWork, setSelectedWork] = useState<WorkDetails | null>(null);
+  const [selectedWork, setSelectedWork] = useState<WorkDetailsType | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const handleDetailClick = (work: WorkDetails) => {
+  const handleDetailClick = (work: WorkDetailsType) => {
     setSelectedWork(work);
     setCurrentImageIndex(0);
   };
@@ -268,7 +268,7 @@ const Indicator = styled.button<{ isActive: boolean }>`
 const PortfolioContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 2rem;
+  padding: 6rem 2rem;
 `;
 
 const PageTitle = styled.h1`
@@ -309,16 +309,16 @@ const WorkSection = styled.section<{ isReverse: boolean }>`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 3rem;
     direction: ltr;
-    margin-bottom: 4rem;
+    margin-bottom: 6rem;
   }
 `;
 
 const ImageContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 400px;
+  height:26rem;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -326,9 +326,19 @@ const ImageContainer = styled.div`
 
 const WorkDetails = styled.div`
   padding: 2rem;
+  height: 26rem;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    height: auto;
+    min-height: 26rem;
+  }
 `;
 
 const WorkTitle = styled.h2`
@@ -336,6 +346,11 @@ const WorkTitle = styled.h2`
   margin-bottom: 1.5rem;
   color: #333;
   line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const SubTitle = styled.span`
@@ -351,6 +366,14 @@ const Summary = styled.p`
   color: #666;
   margin-bottom: 1.5rem;
   white-space: pre-line;
+  flex-grow: 1;
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
 `;
 
 const DetailButton = styled.button`
@@ -371,6 +394,14 @@ const DetailButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  margin-top: auto;
+  align-self: flex-start;
+
+  @media (max-width: 768px) {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
 
   &:hover {
     transform: translateY(-2px);

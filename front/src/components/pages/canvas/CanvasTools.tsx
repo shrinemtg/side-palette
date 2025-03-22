@@ -253,7 +253,7 @@ const StyledInput = styled.input`
   width: 100px;
   height: 2px;
   -webkit-appearance: none;
-  background: linear-gradient(to right, #ccc, #333);
+  background: linear-gradient(to right,rgb(86, 198, 221), rgb(86, 198, 221));
   outline: none;
   border-radius: 2px;
 
@@ -262,12 +262,12 @@ const StyledInput = styled.input`
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    background: #333;
+    background: #85eaff;
     cursor: pointer;
     transition: all .2s ease-in-out;
 
     &:hover {
-      background: #666;
+      background: #85eaff;
       transform: scale(1.2);
     }
   }
@@ -277,12 +277,12 @@ const StyledInput = styled.input`
     height: 15px;
     border: none;
     border-radius: 50%;
-    background: #333;
+    background: #85eaff;
     cursor: pointer;
     transition: all .2s ease-in-out;
 
     &:hover {
-      background: #666;
+      background: #85eaff;
       transform: scale(1.2);
     }
   }

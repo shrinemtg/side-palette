@@ -16,6 +16,15 @@ const LayoutContainer = styled.div`
   flex-direction: column;
   min-height: 100vh;
   font-family: ${kleeOne.style.fontFamily};
+  font-size: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
 `;
 
 const MainContent = styled.div`

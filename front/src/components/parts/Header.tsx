@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -80,13 +81,16 @@ const Nav = styled.nav<{ isOpen: boolean }>`
     right: ${props => props.isOpen ? '0' : '-100%'};
     width: 100%;
     height: 100vh;
-    background: linear-gradient(135deg,
-      rgba(255, 133, 202, 0.98) 0%,
-      rgba(193, 151, 255, 0.98) 25%,
-      rgba(133, 234, 255, 0.98) 50%,
-      rgba(255, 130, 106, 0.98) 75%,
-      rgba(255, 217, 106, 0.98) 100%
-    );
+  background: linear-gradient(120deg,
+    #ff85ca 0%,
+    #ff826a 15%,
+    #ff9b60 25%,
+    #ffaf80 35%,
+    #c197ff 50%,
+    #85eaff 65%,
+    rgba(186, 220, 91, 0.9) 80%,
+    #ffd96a 100%
+  );
     display: flex;
     flex-direction: column;
     justify-content: center;

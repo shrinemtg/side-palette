@@ -1,3 +1,5 @@
+import React from 'react';
+import Image from 'next/image';
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
@@ -18,27 +20,34 @@ const artworks = [
   '/portfolios/monkey-and-bird/monkey-and-bird-01.jpg',
   '/portfolios/monkey-and-bird/monkey-and-bird-02.jpg',
   '/portfolios/monkey-and-bird/monkey-and-bird-character-01.jpg',
-  '/portfolios/monkey-and-bird/monkey-and-bird-character-02.jpg',
   '/portfolios/monkey-and-bird/monkey-and-bird-character-03.jpg',
   '/portfolios/monkey-and-bird/monkey-and-bird-rogo.jpg',
   '/portfolios/order-illust/order-illust-01.jpg',
   '/portfolios/order-illust/order-illust-02.jpg',
+  '/portfolios/order-illust/toipu.png',
   '/portfolios/rogo-design/keyakidokoro-01.jpg',
+  '/portfolios/rogo-design/fao-01.jpg',
+  '/portfolios/rogo-design/koala-hihuka‐clinic-01.jpg',
+  '/portfolios/rogo-design/well-be-earth-01.jpg',
   '/portfolios/welcome-board/welcome-board-01.jpg',
   '/portfolios/youtube/yorusizi-01.jpg',
-  '/portfolios/youtube/yorusizi-02.png',
   '/portfolios/youtube/yorusizi-03.jpg',
 ];
 
-interface GridItem {
+interface GridItemData {
   id: number;
   imageUrl: string;
+}
+
+interface StyledGridItemProps {
+  $isActive: boolean;
+  $isReverse: boolean;
 }
 
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const [gridItems, setGridItems] = useState<GridItem[]>([]);
+  const [gridItems, setGridItems] = useState<GridItemData[]>([]);
 
   useEffect(() => {
     // 画像配列をシャッフルする関数
@@ -96,13 +105,13 @@ const HeroSection = () => {
       gsap.to(element, {
         x: 0,
         y: 0,
-        duration: 1.5, // 戻る時間を延長
-        ease: "power2.inOut", // イージングを変更してよりスムーズに
+        duration: 1.5,
+        ease: "power2.inOut",
       });
     });
   };
 
-  // マウス移動時のアニメーションも調整
+  // マウス移動時のアニメーション
   const handleMouseMove = (e: React.MouseEvent) => {
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
@@ -114,7 +123,7 @@ const HeroSection = () => {
       gsap.to(element, {
         x: x * 20 * (i % 6 - 2.5),
         y: y * 20 * (Math.floor(i / 6) - 1.5),
-        duration: 0.8, // 移動時間も少し延長
+        duration: 0.8,
         ease: "power2.out"
       });
     });
@@ -131,12 +140,21 @@ const HeroSection = () => {
           {[...Array(4)].map((_, index) => (
             <div key={`grid-set-${index}`} className="grid-set">
               {gridItems.map((item) => (
-                <GridItem
+                <StyledGridItem
                   key={`${index}-${item.id}`}
                   className="grid-item"
+                  $isActive={false}
+                  $isReverse={false}
                 >
-                  <img src={item.imageUrl} alt="" loading="lazy" />
-                </GridItem>
+                  <Image
+                    src={item.imageUrl}
+                    alt=""
+                    width={200}
+                    height={200}
+                    style={{ objectFit: 'cover' }}
+                    priority={index === 0}
+                  />
+                </StyledGridItem>
               ))}
             </div>
           ))}
@@ -162,10 +180,15 @@ const HeroSection = () => {
 const HeroContainer = styled.section`
   height: 95vh;
   width: 100%;
-  margin: 30px 0 80px 0;
+  margin: 2rem 0 12rem 0;
   position: relative;
   overflow: visible;
   background-color: #EAEAEA;
+
+  @media (max-width: 768px) {
+    height: 100vh;
+    margin: 0 0 4rem 0;
+  }
 `;
 
 // カルーセルのスタイル
@@ -183,23 +206,49 @@ const CarouselWrapper = styled.div`
     black 95%,
     transparent
   );
+
+  @media (max-width: 768px) {
+    height: 100vh;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 2%,
+      black 98%,
+      transparent
+    );
+  }
 `;
 
 // カルーセルの内部スタイル
-const CarouselInner = styled.div`// カルーセルの内部スタイル
-  display: flex;                          // フレックスボックスを使用してカルーセルを作成
-  gap: 1rem;                            // カルーセルのアイテム間に1.5remのスペースを設定
-  padding: 1rem;                        // カルーセルのアイテムの周囲に1.5remのパディングを設定
-  animation: scroll 40s linear infinite;  // スクロールアニメーションを40秒で繰り返し実行
-  width: fit-content;                     // カルーセルの幅を内容に合わせる
-  & > div {// カルーセルの内部のdiv要素に対するスタイル
-    display: grid;// グリッドレイアウトを使用してカルーセルを作成
-    grid-template-columns: repeat(6, 1fr);// 6列のグリッドを作成
-    grid-template-rows: repeat(3, 1fr);// 4行のグリッドを作成
-    gap: 1rem;// グリッドのアイテム間に1.5remのスペースを設定
-    flex-shrink: 0;// カルーセルの幅を内容に合わせる
-    place-items: center;// カルーセルのアイテムを中央揃えにする
-    min-width: calc(100vw - 3rem);// カルーセルの幅を内容に合わせる
+const CarouselInner = styled.div`
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  animation: scroll 40s linear infinite;
+  width: fit-content;
+
+  & > div {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+    flex-shrink: 0;
+    place-items: center;
+    min-width: calc(100vw - 3rem);
+  }
+
+  @media (max-width: 768px) {
+    gap: 0.25rem;
+    padding: 0.25rem;
+
+    & > div {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 0.25rem;
+      min-width: calc(100vw - 0.5rem);
+      height: 100vh;
+      align-items: center;
+    }
   }
 
   @keyframes scroll {
@@ -207,100 +256,92 @@ const CarouselInner = styled.div`// カルーセルの内部スタイル
       transform: translateX(calc(-100% / 3));
     }
     100% {
-      transform: translateX(calc(-100% * 2 / 3));
+      transform: translateX(calc(-200% / 3));
     }
   }
 `;
 
 // グリッドアイテムのスタイル
-const GridItem = styled.div`
-  position: relative;  // 相対配置
-  overflow: hidden;  // オーバーフローを非表示にする
-  border-radius: 20px;  // 角を20pxに設定
-  width: 300px;  // 幅を300pxに設定
-  height: 300px;  // 高さを300pxに設定
-  transition: transform 0.3s ease;  // 変換を0.3秒で滑らかに遷移
+const StyledGridItem = styled.div<StyledGridItemProps>`
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 
   img {
-    width: 100%;  // 幅を100%に設定
-    height: 100%;  // 高さを100%に設定
-    object-fit: cover;  // オブジェクトをカバーにする
-    filter: brightness(1) contrast(1.2);  // 明るさを0.8倍に、コントラストを1.2倍に設定
-    margin: 0;  // マージンを0に設定
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
   }
 
-  @media (max-width: 1440px) {
-    width: 200px;
-    height: 200px;
+  &:hover {
+    transform: scale(1.05);
+
+    img {
+      transform: scale(1.1);
+    }
   }
 
-  @media (max-width: 1024px) {
-    width: 150px;
-    height: 150px;
-  }
   @media (max-width: 768px) {
-    width: 120px;
-    height: 120px;
-  }
-  @media (max-width: 480px) {
-    width: 100px;
-    height: 100px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 `;
 
-// タイトルのラップスタイル
+// タイトルラッパーのスタイル
 const TitleWrapper = styled.div`
-  position: absolute;// 絶対配置
-  top: 50%;// 上部から50%の位置に配置
-  left: 50%;// 左から50%の位置に配置
-  transform: translate(-50%, -50%);// 水平方向に50%移動し、垂直方向に50%移動
-  z-index: 2;// 要素の重なり順を2に設定
-  mix-blend-mode: difference;// ブレンドモードを差分に設定
-  pointer-events: none;// ポインタイベントを無効にする
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  width: 100%;
 `;
 
 // クリップタイトルのスタイル
 const ClipTitle = styled.h1`
-  font-size: clamp(4rem, 10vw, 8rem);// フォントサイズをクランプする
-  font-weight: 900;// フォントの太さを900に設定
-  color: white;// テキストの色を白色に設定
-  text-align: center;// テキストを中央揃えにする
-  font-family: 'Montserrat', sans-serif;// フォントをMontserratに設定
-  letter-spacing: -2px;// 文字間隔を-2pxに設定
-  mix-blend-mode: difference;// ブレンドモードを差分に設定
-  text-transform: uppercase;// テキストを大文字にする
+  font-size: 8vw;
+  font-weight: 700;
+  color: transparent;
+  background: linear-gradient(45deg,rgb(255, 255, 255),rgb(82, 197, 190));
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
 
-  // モバイル用のスタイル
   @media (max-width: 768px) {
-    font-size: clamp(3rem, 8vw, 5rem);
+    font-size: 12vw;
   }
 `;
 
+// スクロールダウンアイコンのスタイル
 const ScrollDownIcon = styled.div`
   position: absolute;
-  bottom: -2rem;  // 2rem下に移動
+  bottom: -2rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  cursor: pointer;
-  z-index: 2;  // 他の要素の上に表示されるように
+  z-index: 10;
 
   span {
-    display: block;
     width: 20px;
     height: 20px;
+    border-left: 2px solid #333;
     border-bottom: 2px solid #333;
-    border-right: 2px solid #333;
-    transform: rotate(45deg);
-    animation: scrollDown 2s infinite;
+    transform: rotate(-45deg);
+    animation: scrollDown 1.5s infinite;
     opacity: 0;
-
-    &:nth-child(1) {
-      animation-delay: 0s;
-    }
 
     &:nth-child(2) {
       animation-delay: 0.2s;
@@ -314,19 +355,19 @@ const ScrollDownIcon = styled.div`
   @keyframes scrollDown {
     0% {
       opacity: 0;
-      transform: rotate(45deg) translate(-20px, -20px);
+      transform: rotate(-45deg) translateY(-10px);
     }
     50% {
       opacity: 1;
     }
     100% {
       opacity: 0;
-      transform: rotate(45deg) translate(20px, 20px);
+      transform: rotate(-45deg) translateY(10px);
     }
   }
 
   @media (max-width: 768px) {
-    bottom: -1.5rem;  // モバイル表示時は少し上に
+    bottom: -1rem;
 
     span {
       width: 15px;

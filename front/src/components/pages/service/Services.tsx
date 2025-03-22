@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Klee_One } from 'next/font/google';
 
+interface ServiceCardProps {
+  $isActive: boolean;
+}
+
 const kleeOne = Klee_One({
   weight: '400',
   subsets: ['latin'],
@@ -159,6 +163,7 @@ const Services = () => {
 
       return () => clearInterval(timer);
     }
+    return undefined;
   }, [selectedService]);
 
   const nextImage = () => {
@@ -175,8 +180,8 @@ const Services = () => {
 
   return (
     <Container>
-      <HeroSection>
         <PageTitle>Services</PageTitle>
+      <HeroSection>
         <LeadText>
         side paletteは、デジタルからアナログまで、多様なデザインを手掛けるデザイン会社です。クライアントの想いやビジョンを形にするために、常に新しい挑戦を続けています。
         あなたのプロジェクトに合ったデザインを提案します。まずはお気軽にお問い合わせください。一緒に、あなたのビジネスやイベントを成功へと導きましょう。
@@ -186,11 +191,8 @@ const Services = () => {
       <ServicesGrid>
         {services.map((service, index) => (
           <ServiceCard
-            key={service.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            viewport={{ once: true }}
+            key={index}
+            $isActive={index === currentImageIndex}
             onClick={() => setSelectedService(service)}
           >
             <ServiceImageWrapper>
@@ -269,7 +271,7 @@ const HeroSection = styled.div`
     rgba(133, 234, 255, 0.1) 100%
   );
   border-radius: 20px;
-  margin: 4rem auto;
+  margin: 2rem auto;
   max-width: 800px;
 
 
@@ -280,7 +282,7 @@ const PageTitle = styled.h1`
   text-align: center;
   font-size: 3.5rem;
   position: relative;
-  margin-bottom: 3rem;
+  margin: 5rem 0 1rem 0;
   font-family: ${kleeOne.style.fontFamily};
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -320,17 +322,36 @@ const ServicesGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2.5rem;
   padding: 2rem 0;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    max-width: 350px;
+    margin: 0 auto;
+  }
 `;
 
-const ServiceCard = styled(motion.div)`
+const ServiceCard = styled.div<ServiceCardProps>`
   position: relative;
   width: 100%;
   height: 450px;
-  cursor: pointer;
-  border-radius: 20px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   background: white;
+  border-radius: 20px;
   overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: url("/images/hude.svg") 0 20, pointer;
+  transition: all 0.3s ease;
+  transform: ${props => props.$isActive ? 'scale(1.05)' : 'scale(1)'};
+  z-index: ${props => props.$isActive ? 2 : 1};
+
+  &:hover {
+    transform: ${props => props.$isActive ? 'scale(1.05)' : 'scale(1.02)'};
+  }
+
+  @media (max-width: 768px) {
+    height: 400px;
+    max-width: 350px;
+    margin: 0 auto;
+  }
 `;
 
 const ServiceImageWrapper = styled.div`

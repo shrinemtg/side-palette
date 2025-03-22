@@ -51,8 +51,7 @@ const PageTitle = styled.h1`
     text-align: center;
     font-size: 3.5rem;
     position: relative;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin: 2rem ;
     &::after {
         content: '';
         position: absolute;
@@ -61,11 +60,13 @@ const PageTitle = styled.h1`
         transform: translateX(-50%);
         width: 300px;
         height: 3px;
-        background: linear-gradient(90deg,
-            rgba(255, 133, 202, 0.5) 0%,
-            rgba(193, 151, 255, 0.5) 50%,
-            rgba(133, 234, 255, 0.5) 100%
-        );
+    background: linear-gradient(90deg,
+      rgba(255, 133, 202, 0.5) 0%,
+      rgba(193, 151, 255, 0.5) 50%,
+      rgba(133, 234, 255, 0.5) 70%,
+      rgba(177, 227, 59, 0.5) 90%,
+      rgba(243, 188, 22, 0.5) 100%
+    );
     }
 `;
 
