@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -19,7 +20,7 @@ const HeaderContainer = styled.header`
     rgba(186, 220, 91, 0.9) 80%,
     #ffd96a 100%
   );
-  padding: 0.8rem 1rem;
+  padding: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,24 +28,25 @@ const HeaderContainer = styled.header`
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 1000;
 
   @media (min-width: 768px) {
-    padding: 0.8rem 1.5rem;
+    padding: 3px 1rem;
   }
 `;
 
 const HeaderContent = styled.div`
-  max-width: 1200px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0 2rem;
 
   @media (min-width: 768px) {
-    padding: 0 1rem;
+    padding: 0 4rem;
   }
 `;
 
@@ -53,6 +55,7 @@ const LogoContainer = styled.div`
   align-items: center;
   gap: 1rem;
   z-index: 1001;
+  margin-right: auto;
 `;
 
 const LogoLink = styled(Link)`
@@ -65,8 +68,9 @@ const LogoLink = styled(Link)`
 
 const Logo = styled.h1`
   font-size: 1.8rem;
+  font-size: 1.2rem; //後で変更
   font-weight: bold;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   color: white;
 `;
 
@@ -77,13 +81,16 @@ const Nav = styled.nav<{ isOpen: boolean }>`
     right: ${props => props.isOpen ? '0' : '-100%'};
     width: 100%;
     height: 100vh;
-    background: linear-gradient(135deg,
-      rgba(255, 133, 202, 0.98) 0%,
-      rgba(193, 151, 255, 0.98) 25%,
-      rgba(133, 234, 255, 0.98) 50%,
-      rgba(255, 130, 106, 0.98) 75%,
-      rgba(255, 217, 106, 0.98) 100%
-    );
+  background: linear-gradient(120deg,
+    #ff85ca 0%,
+    #ff826a 15%,
+    #ff9b60 25%,
+    #ffaf80 35%,
+    #c197ff 50%,
+    #85eaff 65%,
+    rgba(186, 220, 91, 0.9) 80%,
+    #ffd96a 100%
+  );
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -95,7 +102,8 @@ const Nav = styled.nav<{ isOpen: boolean }>`
 
   @media (min-width: 768px) {
     display: flex;
-    gap: 1.5rem;
+    gap: 2.5rem;
+    margin-left: auto;
   }
 `;
 
@@ -229,7 +237,6 @@ const Header: React.FC = () => {
         <Nav isOpen={isOpen}>
           <NavLink href="/story" onClick={handleLinkClick}>Story</NavLink>
           <NavLink href="/service" onClick={handleLinkClick}>Service</NavLink>
-          <NavLink href="/work" onClick={handleLinkClick}>Work</NavLink>
           <NavLink href="/contact" onClick={handleLinkClick}>Contact</NavLink>
         </Nav>
       </HeaderContent>

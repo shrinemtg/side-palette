@@ -1,3 +1,5 @@
+import React from 'react';
+import Image from 'next/image';
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
@@ -7,49 +9,64 @@ gsap.registerPlugin(ScrollTrigger);
 
 // 固定のアートワーク画像配列
 const artworks = [
-  // 1セット目
-  'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1573096108468-702f6014ef28?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1549490349-8643362247b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1574169208507-84376144848b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1548123378-bde4eca81d2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1567095761054-7a02e69e5c43?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1607893378714-007fd47c8719?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1576773689115-5cd2b0223523?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1611083360739-bdad6e0eb1fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  // 2セット目（新しい画像を追加）
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1614850715649-1d0106293bd1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1573096108468-702f6014ef28?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1549490349-8643362247b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1574169208507-84376144848b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1548123378-bde4eca81d2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1567095761054-7a02e69e5c43?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80',
-  'https://images.unsplash.com/photo-1607893378714-007fd47c8719?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&h=500&q=80'
+  '/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-01.png',
+  '/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-02.jpg',
+  '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-01.png',
+  '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-02.jpg',
+  '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-03.jpg',
+  '/portfolios/eto-ema-taishido/taishido-eto-ema-mi-01.jpg',
+  '/portfolios/eto-ema-taishido/taishido-kigan-ema-01.jpg',
+  '/portfolios/graphic/label-concon.png',
+  '/portfolios/monkey-and-bird/monkey-and-bird-01.jpg',
+  '/portfolios/monkey-and-bird/monkey-and-bird-02.jpg',
+  '/portfolios/monkey-and-bird/monkey-and-bird-character-01.jpg',
+  '/portfolios/monkey-and-bird/monkey-and-bird-character-03.jpg',
+  '/portfolios/monkey-and-bird/monkey-and-bird-rogo.jpg',
+  '/portfolios/order-illust/order-illust-01.jpg',
+  '/portfolios/order-illust/order-illust-02.jpg',
+  '/portfolios/order-illust/toipu.png',
+  '/portfolios/rogo-design/keyakidokoro-01.jpg',
+  '/portfolios/rogo-design/fao-01.jpg',
+  '/portfolios/rogo-design/koala-hihuka‐clinic-01.jpg',
+  '/portfolios/rogo-design/well-be-earth-01.jpg',
+  '/portfolios/welcome-board/welcome-board-01.jpg',
+  '/portfolios/youtube/yorusizi-01.jpg',
+  '/portfolios/youtube/yorusizi-03.jpg',
 ];
 
-interface GridItem {
+interface GridItemData {
   id: number;
   imageUrl: string;
+}
+
+interface StyledGridItemProps {
+  $isActive: boolean;
+  $isReverse: boolean;
 }
 
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const [gridItems] = useState<GridItem[]>(
-    artworks.map((url, index) => ({
+  const [gridItems, setGridItems] = useState<GridItemData[]>([]);
+
+  useEffect(() => {
+    // 画像配列をシャッフルする関数
+    const shuffleArray = (array: string[]) => {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    };
+
+    // シャッフルした画像配列を設定
+    const shuffledArtworks = shuffleArray(artworks);
+    setGridItems(shuffledArtworks.map((url, index) => ({
       id: index,
       imageUrl: url
-    }))
-  );
+    })));
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -88,13 +105,13 @@ const HeroSection = () => {
       gsap.to(element, {
         x: 0,
         y: 0,
-        duration: 1.5, // 戻る時間を延長
-        ease: "power2.inOut", // イージングを変更してよりスムーズに
+        duration: 1.5,
+        ease: "power2.inOut",
       });
     });
   };
 
-  // マウス移動時のアニメーションも調整
+  // マウス移動時のアニメーション
   const handleMouseMove = (e: React.MouseEvent) => {
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
@@ -106,7 +123,7 @@ const HeroSection = () => {
       gsap.to(element, {
         x: x * 20 * (i % 6 - 2.5),
         y: y * 20 * (Math.floor(i / 6) - 1.5),
-        duration: 0.8, // 移動時間も少し延長
+        duration: 0.8,
         ease: "power2.out"
       });
     });
@@ -123,12 +140,21 @@ const HeroSection = () => {
           {[...Array(4)].map((_, index) => (
             <div key={`grid-set-${index}`} className="grid-set">
               {gridItems.map((item) => (
-                <GridItem
+                <StyledGridItem
                   key={`${index}-${item.id}`}
                   className="grid-item"
+                  $isActive={false}
+                  $isReverse={false}
                 >
-                  <img src={item.imageUrl} alt="" loading="lazy" />
-                </GridItem>
+                  <Image
+                    src={item.imageUrl}
+                    alt=""
+                    width={200}
+                    height={200}
+                    style={{ objectFit: 'cover' }}
+                    priority={index === 0}
+                  />
+                </StyledGridItem>
               ))}
             </div>
           ))}
@@ -140,114 +166,213 @@ const HeroSection = () => {
           Side Palette
         </ClipTitle>
       </TitleWrapper>
+
+      <ScrollDownIcon>
+        <span></span>
+        <span></span>
+        <span></span>
+      </ScrollDownIcon>
     </HeroContainer>
   );
 };
 
 // コンテナのスタイル
 const HeroContainer = styled.section`
-  height: 70vh; // デフォルトの高さ
-  width: 80%; // 幅を100%に設定
-  margin: 0 auto; // 左右に均等に配置
-  border-radius: 20px; // 角を丸くする
-  position: relative; // 相対配置
-  overflow: hidden; // はみ出た要素を非表示にする
-  background-color:#EAEAEA;
-  // background-color:#000;
-  margin-top: 80px; // 上部に80pxのマージンを設定
+  height: 95vh;
+  width: 100%;
+  margin: 2rem 0 12rem 0;
+  position: relative;
+  overflow: visible;
+  background-color: #EAEAEA;
 
+  @media (max-width: 768px) {
+    height: 100vh;
+    margin: 0 0 4rem 0;
+  }
 `;
 
 // カルーセルのスタイル
 const CarouselWrapper = styled.div`
-  position: absolute; // 絶対配置
-  top: 30%; // 上部から50%の位置に配置
-  transform: translateY(-50%); // 垂直方向に50%移動
-  width: 100%; // 幅を100%に設定
-  height: 100vh; // 高さを80vhに設定
-  overflow: hidden; // はみ出た要素を非表示にする
-  mask-image: linear-gradient(// マスクを設定
-    to right,// 右から左に向かって
-    transparent,// 透明
-    black 5%,// 黒色を5%の位置から
-    black 95%,// 黒色を95%の位置から
-    transparent// 透明
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 95vh;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
   );
+
+  @media (max-width: 768px) {
+    height: 100vh;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 2%,
+      black 98%,
+      transparent
+    );
+  }
 `;
 
 // カルーセルの内部スタイル
 const CarouselInner = styled.div`
   display: flex;
-  gap: 2rem;
-  padding: 2rem;
+  gap: 1rem;
+  padding: 1rem;
   animation: scroll 40s linear infinite;
   width: fit-content;
 
-  // グリッドセットのスタイル
   & > div {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 2rem;
-    min-width: calc(100vw - 6rem);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
     flex-shrink: 0;
     place-items: center;
+    min-width: calc(100vw - 3rem);
   }
 
-  // スクロールアニメーションのキーフレーム
+  @media (max-width: 768px) {
+    gap: 0.25rem;
+    padding: 0.25rem;
+
+    & > div {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 0.25rem;
+      min-width: calc(100vw - 0.5rem);
+      height: 100vh;
+      align-items: center;
+    }
+  }
+
   @keyframes scroll {
     0% {
       transform: translateX(calc(-100% / 3));
     }
     100% {
-      transform: translateX(calc(-100% * 2 / 3));
+      transform: translateX(calc(-200% / 3));
     }
   }
 `;
 
 // グリッドアイテムのスタイル
-const GridItem = styled.div`
-  position: relative;
+const StyledGridItem = styled.div<StyledGridItemProps>`
+  width: 100%;
+  aspect-ratio: 1;
   overflow: hidden;
-  border-radius: 20px;
-  width: 250px;
-  height: 250px;
-  transition: transform 0.3s ease; // トランジションを追加
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 
-  img {// 画像のスタイル
-    width: 100%;// 幅を100%に設定
-    height: 100%;// 高さを100%に設定
-    object-fit: cover;// オブジェクトをカバーする
-    filter: brightness(0.8) contrast(1.2);// 明るさを0.8倍にし、コントラストを1.2倍にする
-    margin-bottom: 1rem;// 下部に1remのマージンを設定
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+
+    img {
+      transform: scale(1.1);
+    }
+  }
+
+  @media (max-width: 768px) {
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 `;
 
-// タイトルのラップスタイル
+// タイトルラッパーのスタイル
 const TitleWrapper = styled.div`
-  position: absolute;// 絶対配置
-  top: 50%;// 上部から50%の位置に配置
-  left: 50%;// 左から50%の位置に配置
-  transform: translate(-50%, -50%);// 水平方向に50%移動し、垂直方向に50%移動
-  z-index: 2;// 要素の重なり順を2に設定
-  mix-blend-mode: difference;// ブレンドモードを差分に設定
-  pointer-events: none;// ポインタイベントを無効にする
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  width: 100%;
 `;
 
 // クリップタイトルのスタイル
 const ClipTitle = styled.h1`
-  font-size: clamp(4rem, 10vw, 8rem);// フォントサイズをクランプする
-  font-weight: 900;// フォントの太さを900に設定
-  color: white;// テキストの色を白色に設定
-  text-align: center;// テキストを中央揃えにする
-  font-family: 'Montserrat', sans-serif;// フォントをMontserratに設定
-  letter-spacing: -2px;// 文字間隔を-2pxに設定
-  mix-blend-mode: difference;// ブレンドモードを差分に設定
-  text-transform: uppercase;// テキストを大文字にする
+  font-size: 8vw;
+  font-weight: 700;
+  color: transparent;
+  background: linear-gradient(45deg,rgb(255, 255, 255),rgb(82, 197, 190));
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
 
-  // モバイル用のスタイル
   @media (max-width: 768px) {
-    font-size: clamp(3rem, 8vw, 5rem);
+    font-size: 12vw;
+  }
+`;
+
+// スクロールダウンアイコンのスタイル
+const ScrollDownIcon = styled.div`
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+
+  span {
+    width: 20px;
+    height: 20px;
+    border-left: 2px solid #333;
+    border-bottom: 2px solid #333;
+    transform: rotate(-45deg);
+    animation: scrollDown 1.5s infinite;
+    opacity: 0;
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+
+  @keyframes scrollDown {
+    0% {
+      opacity: 0;
+      transform: rotate(-45deg) translateY(-10px);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: rotate(-45deg) translateY(10px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    bottom: -1rem;
+
+    span {
+      width: 15px;
+      height: 15px;
+    }
   }
 `;
 
