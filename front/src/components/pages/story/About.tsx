@@ -14,10 +14,10 @@ const About = () => {
                 >
                     <LeadTitle>「思いを形に、未来を描く。」</LeadTitle>
                     <LeadText>
-                        私たちは、お客様の胸に秘めた思いを丁寧に汲み取り、それを唯一無二のデザインとして形にするパートナーです。<br /><br />
-                        「こんなことをしてみたい」「でもどうしたらもっとよくなるのか分からない」そんな些細な悩みや夢を、ぜひお聞かせください。<br /><br />
-                        私たちは、お客様の想いを救い上げ、一緒に考え、夢を現実にするお手伝いをさせていただきます。<br /><br />
-                        あなたの思いが形になる瞬間を、共に創り上げましょう。
+                    私たちはお客様の描く未来への羅針盤となり、その想いを唯一無二のデザインで現実へと導くクリエイティブパートナーです。<br/><br/>
+                    「こんなことを実現したい」「でも、具体的にどう進めればいいか分からない」そんなアイデアの種や、まだ輪郭のぼやけた夢も、まずは私たちにご相談ください。<br/><br/>
+                    私たちは、お客様の想いを深く理解し、専門的な知識と経験を活かして、実現可能な具体的なプランニングからデザイン制作まで、一貫してサポートいたします。お客様の潜在的なニーズを引き出し、想像を超える最高のデザインをご提案することをお約束します。<br/>
+                    あなたの熱い想いを、確かなカタチに変え、共に未来を切り拓きましょう。最初の一歩を、私たちがお手伝いします。<br/>
                     </LeadText>
                 </motion.div>
             </AboutUsSection>
@@ -43,22 +43,21 @@ const AboutUsSection = styled.section`
         rgba(133, 234, 255, 0.1) 100%
     );
     border-radius: 20px;
-    margin-bottom: 4rem;
 `;
 
 const PageTitle = styled.h1`
     color: #333;
     text-align: center;
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     position: relative;
-    margin: 2rem ;
+    margin: 2rem auto ;
     &::after {
         content: '';
         position: absolute;
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 300px;
+        width: 12rem;
         height: 3px;
     background: linear-gradient(90deg,
       rgba(255, 133, 202, 0.5) 0%,
@@ -72,8 +71,8 @@ const PageTitle = styled.h1`
 
 const LeadTitle = styled.h2`
     text-align: center;
-    font-size: 2rem;
-    margin-bottom: 3rem;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
     background: linear-gradient(120deg,
         #ff85ca 0%,
         #c197ff 50%,
@@ -85,10 +84,10 @@ const LeadTitle = styled.h2`
 
 const LeadText = styled.p`
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #666;
     max-width: 600px;
-    margin: 20px auto;
+    margin: 2rem;
 `;
 
 export default About;

@@ -286,7 +286,7 @@ const HeroSection = styled.section`
 const PageTitle = styled.h1`
   color: #333;
   text-align: center;
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   position: relative;
   margin: 2rem;
   font-weight: 700;

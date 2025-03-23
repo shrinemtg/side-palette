@@ -149,8 +149,8 @@ const HeroSection = () => {
                   <Image
                     src={item.imageUrl}
                     alt=""
-                    width={200}
-                    height={200}
+                    fill
+                    sizes="(max-width: 768px) 33vw, 16vw"
                     style={{ objectFit: 'cover' }}
                     priority={index === 0}
                   />
@@ -238,14 +238,14 @@ const CarouselInner = styled.div`
   }
 
   @media (max-width: 768px) {
-    gap: 0.25rem;
-    padding: 0.25rem;
+    gap: 0.75rem;
+    padding: 0.75rem;
 
     & > div {
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(3, 1fr);
-      gap: 0.25rem;
-      min-width: calc(100vw - 0.5rem);
+      gap: 0.75rem;
+      min-width: calc(100vw - 1.5rem);
       height: 100vh;
       align-items: center;
     }
@@ -287,8 +287,10 @@ const StyledGridItem = styled.div<StyledGridItemProps>`
   }
 
   @media (max-width: 768px) {
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    aspect-ratio: 1;
+    height: calc((100vh - 3rem) / 4);
   }
 `;
 
@@ -305,10 +307,10 @@ const TitleWrapper = styled.div`
 
 // クリップタイトルのスタイル
 const ClipTitle = styled.h1`
-  font-size: 8vw;
+  font-size: 10vw;
   font-weight: 700;
   color: transparent;
-  background: linear-gradient(45deg,rgb(255, 255, 255),rgb(82, 197, 190));
+  background: linear-gradient(45deg,rgba(255, 255, 255),rgba(255, 255, 255));
   -webkit-background-clip: text;
   background-clip: text;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -318,7 +320,7 @@ const ClipTitle = styled.h1`
   letter-spacing: 0.1em;
 
   @media (max-width: 768px) {
-    font-size: 12vw;
+    font-size: 15vw;
   }
 `;
 

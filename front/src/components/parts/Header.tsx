@@ -6,6 +6,10 @@ import { useState, useEffect } from 'react';
 
 const StyledImage = styled(Image)`
   filter: brightness(0) invert(1);
+  margin :0.6rem 0;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 `;
 
 const HeaderContainer = styled.header`
@@ -67,8 +71,7 @@ const LogoLink = styled(Link)`
 `;
 
 const Logo = styled.h1`
-  font-size: 1.8rem;
-  font-size: 1.2rem; //後で変更
+  font-size: 1.2rem;
   font-weight: bold;
   margin-right: 0.5rem;
   color: white;
@@ -224,8 +227,8 @@ const Header: React.FC = () => {
             <StyledImage
               src="/images/side-palette.png"
               alt="Side Palette Logo"
-              width={48}
-              height={48}
+              width={36}
+              height={36}
             />
           </LogoLink>
         </LogoContainer>

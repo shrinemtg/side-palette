@@ -280,7 +280,7 @@ const HeroSection = styled.div`
 const PageTitle = styled.h1`
   color: #333;
   text-align: center;
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   position: relative;
   margin: 5rem 0 1rem 0;
   font-family: ${kleeOne.style.fontFamily};
@@ -293,7 +293,7 @@ const PageTitle = styled.h1`
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 250px;
+    width: 11rem;
     height: 3px;
     background: linear-gradient(90deg,
       rgba(255, 133, 202, 0.5) 0%,
@@ -440,25 +440,25 @@ const ModalCloseButton = styled.button`
 const ModalImageContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 400px;
-  margin-bottom: 2rem;
+  height: 350px;
+  margin-bottom: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  overflow: hidden;
 `;
 
 const ModalImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background-color: #f5f5f5;
 `;
 
 const ModalTitle = styled.h2`
-  font-size: 2.2rem;
-  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
   color: #333;
   font-weight: 700;
   font-family: ${kleeOne.style.fontFamily};
@@ -467,8 +467,8 @@ const ModalTitle = styled.h2`
 `;
 
 const ModalDescription = styled.p`
-  font-size: 1.2rem;
-  line-height: 2;
+  font-size: 1rem;
+  line-height: 1.8;
   color: #666;
   margin-bottom: 3rem;
   font-family: ${kleeOne.style.fontFamily};
@@ -477,13 +477,13 @@ const ModalDescription = styled.p`
 `;
 
 const ModalSection = styled.div`
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 `;
 
 const SectionTitle = styled.h3`
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   color: #333;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   font-weight: 600;
   font-family: ${kleeOne.style.fontFamily};
   letter-spacing: -0.02em;
@@ -496,12 +496,12 @@ const ProcessList = styled.ul`
 `;
 
 const ProcessItem = styled.li`
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #666;
   margin-bottom: 1rem;
-  padding-left: 1.8rem;
+  padding-left: 1.2rem;
   position: relative;
-  line-height: 1.8;
+  line-height: 1.5;
   font-family: ${kleeOne.style.fontFamily};
   letter-spacing: 0.02em;
 
@@ -519,25 +519,34 @@ const SlideButton = styled.button<{ $prev?: boolean; $next?: boolean }>`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.8);
+  background: none;
   border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 0.2rem;
+  height: 0.2rem;
   cursor: pointer;
-  font-size: 1.5rem;
+  pointer-events: auto;
+  transition: all 0.3s ease;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #333;
-  transition: all 0.3s ease;
-  z-index: 2;
 
   ${props => props.$prev ? 'left: 1rem;' : ''}
   ${props => props.$next ? 'right: 1rem;' : ''}
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.95);
+  &::before {
+    content: '';
+    position: absolute;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    transform: ${props => props.$prev ? 'rotate(-135deg)' : 'rotate(45deg)'};
+    transition: all 0.3s ease;
+  }
+
+  &:hover::before {
+    transform: ${props => props.$prev ? 'rotate(-135deg) scale(1.2)' : 'rotate(45deg) scale(1.2)'};
   }
 `;
 
