@@ -47,14 +47,14 @@ const teamMembers = [
         name: "谷口 瑞季",
         role: "デザイナー/ イラストレーター",
         catchPhrase: "「明るく元気なアイデアマン！」",
-        bio: "デザインの核となるクリエイティブなアイデアを担当します。唯一無二のイラストを用いて、お客様の思いに寄り添ったデザインを創造します。『こんなデザインがいい！』という思いを、ぜひ教えてください。",
+        bio: "デザインの核となる、クリエイティブなアイデアを生み出すアイデアマンです。お客様の「こんなデザインがいい！」というワクワクする想いを、世界に一つだけのイラストで表現します。手描きの温かさを大切にしながら、デジタルならではの表現力も活かし、お客様の個性を最大限に引き出すデザインを創造します。あなたの頭の中にあるイメージを、ぜひ私たちに教えてください。最高のカタチで実現してみせます！",
         image: "/portfolios/member/taniguti-01.jpg"
     },
     {
         name: "佐藤 文胤",
         role: "webデザイナー / 営業担当",
-        catchPhrase: "「デザインは誠実に打ち合わせは笑顔で！」",
-        bio: "お客様の想いを形にするWebデザイナーです。お客様の思いや目的をヒアリングして、効果的で魅力的なデザインに仕上げます。些細なことでも、ぜひご相談ください！",
+        catchPhrase: "「笑顔で寄り添うパートナー！」",
+        bio: "お客様の想いを、デザインというカタチにするWebデザイナーです。丁寧なヒアリングを大切にし、お客様の描く理想や目的を深く理解することから始めます。その上で、効果的な戦略と魅力的なデザインを組み合わせ、お客様のビジネスや活動をより一層輝かせるWebサイトを制作いたします。些細なイメージやお悩みでも構いません。ぜひ一度、笑顔でお話をお聞かせください！",
         image: "/portfolios/member/cheese-sato.jpg"
     },
     // {
@@ -74,7 +74,7 @@ const Section = styled.section`
 const TeamSectionTitle = styled.h2`
     color: #333;
     font-size: 2.5rem;
-    margin: 4rem auto;
+    margin: 2rem auto;
     text-align: center;
     position: relative;
 
@@ -118,7 +118,7 @@ const TeamMemberCard = styled(motion.div)`
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
     text-align: center;
-    padding: 20px;
+    padding: 1.2rem;
 
 `;
 
@@ -128,7 +128,7 @@ const ImageContainer = styled.div`
     height: 200px;
     overflow: hidden;
     border-radius: 20px;
-    margin: 20px auto;
+    margin: 1.2rem auto;
 `;
 
 const TeamMemberImage = styled(Image)`
@@ -149,9 +149,8 @@ const ImageOverlay = styled.div`
 `;
 
 const TeamMemberName = styled.h3`
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     color: #333;
-    margin-bottom: 0.5rem;
     font-weight: 600;
     text-align: center;
 `;
@@ -161,10 +160,23 @@ const TeamMemberRole = styled.p`
     margin-bottom: 1rem;
     font-size: 1rem;
     text-align: center;
+    position: relative;
+    padding-bottom: 0.5rem;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 14rem;
+        height: 1px;
+        background: rgba(110, 52, 52, 0.2);
+    }
 `;
 
 const TeamMemberBio = styled.div`
-    margin: 2rem;
+    margin: 1.2rem;
     text-align: left;
 `;
 
@@ -172,13 +184,14 @@ const CatchPhrase = styled.p`
     color: #666;
     font-size: 1rem;
     font-weight: 400;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     text-align: center;
 `;
 
 const BioText = styled.p`
     color: #666;
-    font-size: 1rem;
+    font-size: 0.8rem;
     line-height: 1.8;
+    margin :1.2rem ;
 `;
 

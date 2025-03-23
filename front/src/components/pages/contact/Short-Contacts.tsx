@@ -20,6 +20,7 @@ const FixedCTAButton = styled.a`
     transition: all 0.3s ease;
     cursor: url("/images/hude.svg") 0 20, pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    writing-mode: horizontal-tb;
 
     &:hover {
         animation: shake 0.5s ease-in-out;
@@ -32,11 +33,23 @@ const FixedCTAButton = styled.a`
         75% { transform: translateX(5px); }
     }
 
+
     @media (max-width: 768px) {
         right: 1rem;
         bottom: 5rem;
         padding: 0.75rem 1.5rem;
         font-size: 0.9rem;
+    }
+
+    @media (max-width: 480px) {
+        right: 1rem;
+        bottom: 1rem;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.8rem;
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        padding: 1.5rem 0.75rem;
+        letter-spacing: 0.2em;
     }
 `;
 
