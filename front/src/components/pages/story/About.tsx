@@ -14,10 +14,16 @@ const About = () => {
                 >
                     <LeadTitle>「思いを形に、未来を描く。」</LeadTitle>
                     <LeadText>
-                    私たちはお客様の描く未来への羅針盤となり、その想いを唯一無二のデザインで現実へと導くクリエイティブパートナーです。<br/><br/>
-                    「こんなことを実現したい」「でも、具体的にどう進めればいいか分からない」そんなアイデアの種や、まだ輪郭のぼやけた夢も、まずは私たちにご相談ください。<br/><br/>
-                    私たちは、お客様の想いを深く理解し、専門的な知識と経験を活かして、実現可能な具体的なプランニングからデザイン制作まで、一貫してサポートいたします。お客様の潜在的なニーズを引き出し、想像を超える最高のデザインをご提案することをお約束します。<br/>
-                    あなたの熱い想いを、確かなカタチに変え、共に未来を切り拓きましょう。最初の一歩を、私たちがお手伝いします。<br/>
+                    私たちSide Paletteは、お客様の思いを丁寧に汲み取り<br/>
+
+                    それを唯一無二のデザインやイラストとして<br/>
+                    形にするパートナーです。<br/><br/><br/>
+
+                    「他とは違うオリジナルなものが欲しい…」<br/>
+                    「デザインをもっとよくしたい...」<br/><br/><br/>
+                    そんなお客様のお悩みをぜひ、私たちにお聞かせください<br/>
+                    共に考え、<br/>
+                    あなたの思いを形にするお手伝いをさせていただきます。
                     </LeadText>
                 </motion.div>
             </AboutUsSection>
@@ -30,13 +36,13 @@ const About = () => {
 const AboutContainer = styled.div`
     max-width: 1200px;
     margin: 30px auto;
-    padding: 2rem;
+    padding: 1rem;
 `;
 
 const AboutUsSection = styled.section`
     max-width: 800px;
     margin: 0 auto;
-    padding: 2rem 0;
+    padding: 2rem 1rem;
    background: linear-gradient(120deg,
       rgba(255, 133, 202, 0.2) 0%,
       rgba(193, 151, 255, 0.2) 50%,

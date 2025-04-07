@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import Services from './Services';
+import ShortContacts from '../contact/Short-Contacts';
 
 const ServicePage = () => {
     return (
         <ServiceContainer>
             <Services />
+            <ShortContacts />
         </ServiceContainer>
     );
 };

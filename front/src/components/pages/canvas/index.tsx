@@ -115,8 +115,8 @@ const Canvas: React.FC = () => {
   return (
     <CanvasContainer>
       <CanvasWrapper
-        isDrawing={isDrawing}
-        isDrawingEnabled={isDrawingEnabled}
+        $isDrawing={isDrawing}
+        $isDrawingEnabled={isDrawingEnabled}
         onMouseDown={handleMouseDown}
         onMouseMove={draw}
         onMouseUp={handleMouseUp}
@@ -125,7 +125,7 @@ const Canvas: React.FC = () => {
         <canvas ref={canvasRef} />
       </CanvasWrapper>
       <CanvasTools
-        isDrawingEnabled={isDrawingEnabled}
+        $isDrawingEnabled={isDrawingEnabled}
         setIsDrawingEnabled={setIsDrawingEnabled}
         isPaletteOpen={isPaletteOpen}
         setIsPaletteOpen={setIsPaletteOpen}
@@ -151,12 +151,12 @@ const CanvasContainer = styled.div`
   mix-blend-mode: darken;
 `;
 
-const CanvasWrapper = styled.div<{ isDrawing: boolean; isDrawingEnabled: boolean }>`
+const CanvasWrapper = styled.div<{ $isDrawing: boolean; $isDrawingEnabled: boolean }>`
   width: 100%;
   height: 100%;
   position: relative;
-  pointer-events: ${props => props.isDrawingEnabled ? 'all' : 'none'};
-  cursor: ${props => props.isDrawing ? 'url("/images/hude.svg") 0 20, auto' : 'url("/images/hude.svg") 0 20, pointer'};
+  pointer-events: ${props => props.$isDrawingEnabled ? 'all' : 'none'};
+  cursor: ${props => props.$isDrawing ? 'url("/images/hude.svg") 0 20, auto' : 'url("/images/hude.svg") 0 20, pointer'};
 
   canvas {
     position: absolute;

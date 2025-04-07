@@ -14,6 +14,10 @@ interface ModalContentProps {
   $isOpen: boolean;
 }
 
+interface LineIconProps {
+  className?: string;
+}
+
 const Contacts: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -54,8 +58,12 @@ const Contacts: React.FC = () => {
             transition={{ duration: 0.8 }}
           >
             <LeadText>
-              お客様のご要望をお聞かせください。<br />
-              24時間以内に担当者よりご連絡させていただきます。
+            ご質問、お見積もり、ご相談等、<br />
+            お気軽にお問い合わせください。<br />
+            営業時間外を除き<br />
+            24時間以内に担当者よりご連絡させていただきます。<br />
+            お電話でのご相談は公式LINEより承っておりますので<br />
+            下記リンクよりお友達追加の方よろしくお願いいたします
             </LeadText>
           </motion.div>
         </HeroSection>
@@ -138,20 +146,23 @@ const Contacts: React.FC = () => {
         </FormSection>
 
         {/* 予約セクション */}
+        <SectionTitle>公式LINE</SectionTitle>
         <BookingSection>
-          <SectionTitle>LINE公式アカウント</SectionTitle>
           <BookingDescription>
-            お気軽にLINEでご相談ください。<br />
-            最新の作品やお得な情報も配信しています。
+          Side Palette公式LINEでは<br />
+          ご質問ご相談お見積もりがお電話でも可能です<br /><br />
+
+          またLINEでしか得られない<br />
+          お得な情報もございますので<br />
+          ぜひ、公式LINEアカウントを<br />
+          ご登録ください<br /><br />
+          お客様のお悩みを是非お聞かせください
           </BookingDescription>
           <LineButtonContainer>
-            <a href="https://lin.ee/BFEMIE0">
-              <LineButtonImage
-                src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png"
-                alt="友だち追加"
-                height="36"
-              />
-            </a>
+            <CustomLineButton href="https://lin.ee/BFEMIE0">
+              <LineIcon />
+              友だち追加
+            </CustomLineButton>
           </LineButtonContainer>
         </BookingSection>
         {/* FAQセクション */}
@@ -327,7 +338,7 @@ const LeadText = styled.p`
 const FormSection = styled.section`
   max-width: 800px;
   width: 100%;
-  margin: 0 auto;
+  margin: 0 auto 4rem;
   padding: 2rem;
   background: white;
   border-radius: 20px;
@@ -433,8 +444,33 @@ const FAQSection = styled.section`
 const SectionTitle = styled.h2`
   font-size: 2rem;
   text-align: center;
-  margin-bottom: 2rem;
+  margin: 0 0 1.5rem 0;
   color: #333;
+  position: relative;
+  padding: 0 0 0.5rem 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 3px;
+    background: linear-gradient(90deg,
+      rgba(255, 133, 202, 0.5) 0%,
+      rgba(193, 151, 255, 0.5) 50%,
+      rgba(133, 234, 255, 0.5) 70%,
+      rgba(177, 227, 59, 0.5) 90%,
+      rgba(243, 188, 22, 0.5) 100%
+    );
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    margin: 0 0 2rem 0;
+    padding: 0 0 0.3rem 0;
+  }
 `;
 
 const FAQList = styled.div`
@@ -448,12 +484,16 @@ const FAQItem = styled.div`
   padding: 1.5rem;
   border-radius: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
 `;
 
 const FAQQuestion = styled.h3`
   font-size: 1.1rem;
   color: #333;
   margin-bottom: 0.5rem;
+    @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 
   &::before {
     content: "Q. ";
@@ -596,12 +636,13 @@ const faqs = [
 const BookingSection = styled.section`
   max-width: 800px;
   width: 100%;
-  margin: 4rem auto;
+  margin: 0 auto 4rem;
   padding: 2rem;
   background: white;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
+
 `;
 
 const BookingDescription = styled.p`
@@ -610,6 +651,10 @@ const BookingDescription = styled.p`
   color: #666;
   margin-bottom: 2rem;
   line-height: 1.8;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const LineButtonContainer = styled.div`
@@ -619,12 +664,52 @@ const LineButtonContainer = styled.div`
   margin-top: 1rem;
 `;
 
-const LineButtonImage = styled.img`
-  border: none;
+const CustomLineButton = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(120deg, #ff85ca, #85eaff);
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
   transition: transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   &:hover {
     transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+  }
+`;
+
+const LineIcon = styled(({ className }: LineIconProps) => (
+  <svg
+    className={className}
+    width="40"
+    height="40"
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M16 2C8.28 2 2 7.48 2 14.23c0 6.12 5.43 11.23 12.77 12.19.5.11 1.17.33 1.34.76.15.39.1.99.05 1.38l-.22 1.31c-.07.39-.31 1.54 1.35.84 1.65-.7 8.94-5.27 12.2-9.01C31.11 19.41 32 16.95 32 14.23 32 7.48 25.72 2 16 2zM9.84 17.45h-2.5c-.37 0-.67-.3-.67-.67V11.7c0-.37.3-.67.67-.67s.67.3.67.67v4.41h1.83c.37 0 .67.3.67.67s-.3.67-.67.67zm3.67-.67c0 .37-.3.67-.67.67s-.67-.3-.67-.67V11.7c0-.37.3-.67.67-.67s.67.3.67.67v5.08zm7.33 0c0 .28-.17.53-.43.63-.07.03-.15.04-.23.04-.2 0-.39-.09-.52-.24l-2.55-3.47v3.04c0 .37-.3.67-.67.67s-.67-.3-.67-.67V11.7c0-.28.17-.53.43-.63.07-.03.15-.04.23-.04.2 0 .39.09.52.24l2.55 3.47V11.7c0-.37.3-.67.67-.67s.67.3.67.67v5.08zm4.33-3.33h-1.83v.91h1.83c.37 0 .67.3.67.67s-.3.67-.67.67h-1.83v.91h1.83c.37 0 .67.3.67.67s-.3.67-.67.67h-2.5c-.37 0-.67-.3-.67-.67V11.7c0-.37.3-.67.67-.67h2.5c.37 0 .67.3.67.67s-.3.67-.67.67z"
+      fill="white"
+    />
+  </svg>
+))`
+  width: 32px;
+  height: 32px;
+
+  @media (max-width: 768px) {
+    width: 24px;
+    height: 24px;
   }
 `;
 
