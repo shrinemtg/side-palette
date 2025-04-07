@@ -6,10 +6,15 @@ import { useState, useEffect } from 'react';
 
 const StyledImage = styled(Image)`
   filter: brightness(0) invert(1);
-  margin :0.6rem 0;
+  margin: 0.6rem 0;
   align-items: center;
   display: flex;
   justify-content: center;
+
+  @media (max-width: 767px) {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+  }
 `;
 
 const HeaderContainer = styled.header`
@@ -68,6 +73,9 @@ const LogoLink = styled(Link)`
   gap: 1rem;
   text-decoration: none;
   cursor: url("/images/hude.svg") 0 20, pointer;
+    @media (max-width: 767px) {
+     gap: 0.2rem;
+  }
 `;
 
 const Logo = styled.h1`
@@ -75,6 +83,10 @@ const Logo = styled.h1`
   font-weight: bold;
   margin-right: 0.5rem;
   color: white;
+
+  @media (max-width: 767px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const Nav = styled.nav<{ isOpen: boolean }>`
@@ -155,8 +167,8 @@ const MenuButton = styled.button<{ isOpen: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 30px;
-    height: 20px;
+    width: 1.3rem;
+    height: 1rem;
 
     span {
       display: block;

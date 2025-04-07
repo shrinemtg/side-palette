@@ -139,20 +139,20 @@ const Contacts: React.FC = () => {
 
         {/* 予約セクション */}
         <BookingSection>
-          <SectionTitle>オンライン予約のご案内</SectionTitle>
+          <SectionTitle>LINE公式アカウント</SectionTitle>
           <BookingDescription>
-            ビデオ通話にてご相談も承っております。<br />
-            下記の予約可能な時間帯からお選びいただけます。
+            お気軽にLINEでご相談ください。<br />
+            最新の作品やお得な情報も配信しています。
           </BookingDescription>
-          <CalendarContainer>
-            <iframe
-              src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2pUQ-hlBbCDixykSDSRgDQQjT_mixTC8TcEF2bpirGuG5p7MsDj44v_R8af-f3U9w8ezQg_N9t?gv=true"
-              style={{ border: 0 }}
-              width="100%"
-              height="600"
-              frameBorder="0"
-            />
-          </CalendarContainer>
+          <LineButtonContainer>
+            <a href="https://lin.ee/BFEMIE0">
+              <LineButtonImage
+                src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png"
+                alt="友だち追加"
+                height="36"
+              />
+            </a>
+          </LineButtonContainer>
         </BookingSection>
         {/* FAQセクション */}
         <FAQSection>
@@ -273,10 +273,13 @@ const HeroSection = styled.section`
   padding: 2rem 2rem;
   text-align: center;
   background: linear-gradient(120deg,
-    rgba(255, 133, 202, 0.1) 0%,
-    rgba(193, 151, 255, 0.1) 50%,
-    rgba(133, 234, 255, 0.1) 100%
+      rgba(255, 133, 202, 0.2) 0%,
+      rgba(193, 151, 255, 0.2) 50%,
+      rgba(133, 234, 255, 0.2) 70%,
+      rgba(177, 227, 59, 0.2) 90%,
+      rgba(243, 188, 22, 0.2) 100%
   );
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   margin: 0 auto 4rem auto;
   max-width: 800px;
@@ -298,7 +301,7 @@ const PageTitle = styled.h1`
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 250px;
+    width: 180px;
     height: 3px;
     background: linear-gradient(90deg,
       rgba(255, 133, 202, 0.5) 0%,
@@ -312,7 +315,7 @@ const PageTitle = styled.h1`
 
 const LeadText = styled.p`
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #666;
   max-width: 800px;
   margin: 0 auto;
@@ -585,11 +588,11 @@ const faqs = [
   },
   {
     question: "支払方法について教えてください",
-    answer: "銀行振込、クレジットカード、PayPalでのお支払いに対応しております。"
+    answer: "銀行振込、クレジットカード、でのお支払いに対応しております。"
   }
 ];
 
-// スタイルコンポーネントの追加
+// スタイルコンポーネントの更新
 const BookingSection = styled.section`
   max-width: 800px;
   width: 100%;
@@ -598,6 +601,7 @@ const BookingSection = styled.section`
   background: white;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
 `;
 
 const BookingDescription = styled.p`
@@ -608,18 +612,19 @@ const BookingDescription = styled.p`
   line-height: 1.8;
 `;
 
-const CalendarContainer = styled.div`
-  width: 100%;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+const LineButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+`;
 
-  @media (max-width: 768px) {
-    height: 500px;
-  }
+const LineButtonImage = styled.img`
+  border: none;
+  transition: transform 0.3s ease;
 
-  @media (max-width: 480px) {
-    height: 400px;
+  &:hover {
+    transform: scale(1.05);
   }
 `;
 

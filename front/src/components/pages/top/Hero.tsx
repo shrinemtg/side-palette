@@ -357,14 +357,14 @@ const ScrollDownIcon = styled.div`
   @keyframes scrollDown {
     0% {
       opacity: 0;
-      transform: rotate(-45deg) translateY(-10px);
+      transform: translate(0, -10px) rotate(-45deg);
     }
     50% {
       opacity: 1;
     }
     100% {
       opacity: 0;
-      transform: rotate(-45deg) translateY(10px);
+      transform: translate(0, 10px) rotate(-45deg);
     }
   }
 
