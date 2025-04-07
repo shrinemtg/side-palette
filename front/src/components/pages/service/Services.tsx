@@ -192,11 +192,7 @@ const Services = () => {
     }
   };
 
-  const prevImage = () => {
-    if (selectedService) {
-      setCurrentImageIndex((prev) => (prev - 1 + selectedService.images.length) % selectedService.images.length);
-    }
-  };
+
 
   return (
     <Container>
