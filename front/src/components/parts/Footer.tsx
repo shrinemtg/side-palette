@@ -19,19 +19,18 @@ const Footer: React.FC = () => {
             <StyledImage
               src="/images/side-palette.png"
               alt="Side Palette Logo"
-              width={36}
-              height={36}
+              width={24}
+              height={24}
             />
           </LogoContainer>
           <CompanyInfo>
             〒017-0867<br />
-            千葉県松戸市北小金きよしガ丘5-5-1<br />
-            TEL: 080-1699-0692
+            千葉県松戸市<br />
+            北小金きよしガ丘5-5-1<br />
           </CompanyInfo>
         </FooterSection>
 
         <FooterSection>
-          <FooterTitle>Menu</FooterTitle>
           <FooterNav>
             <FooterLink href="/story">Story</FooterLink>
             <FooterLink href="/service">Service</FooterLink>
@@ -40,7 +39,6 @@ const Footer: React.FC = () => {
         </FooterSection>
 
         <FooterSection>
-          <FooterTitle>Social</FooterTitle>
           <SocialLinks>
             <SocialLink href="https://www.tiktok.com/@mizuki.1998" target="_blank" rel="noopener noreferrer">
               TikTok
@@ -282,9 +280,8 @@ const FooterContent = styled.div`
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.2);
   width: 100%;
   grid-template-columns: 3fr 1fr 1fr;
-  gap: 2rem ;
   @media (max-width: 768px) {
-    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-columns: 3fr 1fr 2fr;
     gap: 0.5rem;
   }
 `;
@@ -313,7 +310,7 @@ const FooterSection = styled.div`
   const FooterNav = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    margin-top: 2.7rem ;
 
     @media (max-width: 768px) {
       align-items: left;
@@ -324,36 +321,23 @@ const StyledImage = styled(Image)`
 `;
 
 const LogoText = styled.h2`
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   font-weight: bold;
   color: white;
   letter-spacing: -0.02em;
 `;
 
 const CompanyInfo = styled.p`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   line-height: 1.6;
   opacity: 0.9;
   letter-spacing: 0.02em;
 `;
 
-const FooterTitle = styled.h3`
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 0.1rem;
-  letter-spacing: -0.02em;
-
-  @media (max-width: 768px) {
-  margin-top : 0.3rem;
-    align-items: left;
-  }
-`;
-
-
 const FooterLink = styled(Link)`
   color: white;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.8rem;
   position: relative;
   width: fit-content;
   cursor: url("/images/hude.svg") 0 20, pointer;
@@ -381,7 +365,7 @@ const FooterLink = styled(Link)`
 
 const SocialLinks = styled.div`  display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  margin-top: 2.7rem ;
 
   @media (max-width: 768px) {
     align-items: left;
@@ -422,7 +406,7 @@ const FooterBottom = styled.div`
   margin: 1rem auto;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.4rem;

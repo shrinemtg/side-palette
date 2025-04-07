@@ -37,11 +37,14 @@ const AboutUsSection = styled.section`
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem 0;
-    background: linear-gradient(120deg,
-        rgba(255, 133, 202, 0.1) 0%,
-        rgba(193, 151, 255, 0.1) 50%,
-        rgba(133, 234, 255, 0.1) 100%
-    );
+   background: linear-gradient(120deg,
+      rgba(255, 133, 202, 0.2) 0%,
+      rgba(193, 151, 255, 0.2) 50%,
+      rgba(133, 234, 255, 0.2) 70%,
+      rgba(177, 227, 59, 0.2) 90%,
+      rgba(243, 188, 22, 0.2) 100%
+  );
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
 `;
 
@@ -71,7 +74,7 @@ const PageTitle = styled.h1`
 
 const LeadTitle = styled.h2`
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-bottom: 2rem;
     background: linear-gradient(120deg,
         #ff85ca 0%,
@@ -84,10 +87,10 @@ const LeadTitle = styled.h2`
 
 const LeadText = styled.p`
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #666;
     max-width: 600px;
-    margin: 2rem;
+    margin: 2rem auto;
 `;
 
 export default About;
