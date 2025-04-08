@@ -1,8 +1,41 @@
 import styled from 'styled-components';
+import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const ShortContact = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const buttonRef = useRef<HTMLAnchorElement>(null);
+  const router = useRouter();
+  const isHomePage = router.pathname === '/';
+
+  useEffect(() => {
+    // ホームページ以外では常に表示
+    if (!isHomePage) {
+      setIsVisible(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      if (buttonRef.current) {
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        // 1スクロール分（画面の高さ）スクロールしたら表示
+        setIsVisible(scrollPosition > windowHeight * 0.5);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // 初期表示時にもチェック
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isHomePage]);
+
   return (
-    <FixedCTAButton href="/contact">お問い合わせ</FixedCTAButton>
+    <FixedCTAButton href="/contact" ref={buttonRef} className={isVisible ? 'visible' : ''}>
+      お問い合わせ
+    </FixedCTAButton>
   );
 };
 
@@ -21,6 +54,14 @@ const FixedCTAButton = styled.a`
     cursor: url("/images/hude.svg") 0 20, pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     writing-mode: horizontal-tb;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     &:hover {
         animation: shake 0.5s ease-in-out;
@@ -32,7 +73,6 @@ const FixedCTAButton = styled.a`
         25% { transform: translateX(-5px); }
         75% { transform: translateX(5px); }
     }
-
 
     @media (max-width: 768px) {
         right: 1rem;

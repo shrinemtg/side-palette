@@ -129,7 +129,7 @@ const HeroSection = () => {
     });
   };
 
-  return (
+    return (
     <HeroContainer
       ref={containerRef}
       onMouseMove={handleMouseMove}
@@ -270,12 +270,20 @@ const StyledGridItem = styled.div<StyledGridItemProps>`
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
   }
 
   &:hover {
@@ -313,11 +321,16 @@ const ClipTitle = styled.h1`
   background: linear-gradient(45deg,rgba(255, 255, 255),rgba(255, 255, 255));
   -webkit-background-clip: text;
   background-clip: text;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);
   margin: 0;
   padding: 0;
   line-height: 1.2;
   letter-spacing: 0.1em;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
+      user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 
   @media (max-width: 768px) {
     font-size: 15vw;

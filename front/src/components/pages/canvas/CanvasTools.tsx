@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 interface CanvasToolsProps {
-  isDrawingEnabled: boolean;
+  $isDrawingEnabled: boolean;
   setIsDrawingEnabled: (enabled: boolean) => void;
   isPaletteOpen: boolean;
   setIsPaletteOpen: (open: boolean) => void;
@@ -15,7 +16,7 @@ interface CanvasToolsProps {
 }
 
 const CanvasTools: React.FC<CanvasToolsProps> = ({
-  isDrawingEnabled,
+  $isDrawingEnabled,
   setIsDrawingEnabled,
   isPaletteOpen,
   setIsPaletteOpen,
@@ -26,14 +27,43 @@ const CanvasTools: React.FC<CanvasToolsProps> = ({
   handleToolChange,
   handleReset
 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const buttonContainerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const isHomePage = router.pathname === '/';
+
+  useEffect(() => {
+    // ホームページ以外では常に表示
+    if (!isHomePage) {
+      setIsVisible(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      if (buttonContainerRef.current) {
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        // 1スクロール分（画面の高さ）スクロールしたら表示
+        setIsVisible(scrollPosition > windowHeight * 0.5);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // 初期表示時にもチェック
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isHomePage]);
+
   return (
-    <ButtonContainer>
+    <ButtonContainer ref={buttonContainerRef} className={isVisible ? 'visible' : ''}>
       <PaletteWrapper>
         <PaletteButton
           onClick={() => setIsPaletteOpen(!isPaletteOpen)}
           title="パレット"
         />
-        <PaletteContainer isOpen={isPaletteOpen}>
+        <PaletteContainer $isOpen={isPaletteOpen}>
           <SliderContainer>
             <StyledInput
               type="range"
@@ -96,9 +126,9 @@ const CanvasTools: React.FC<CanvasToolsProps> = ({
         title="リセット"
       />
       <LightButton
-        isOn={isDrawingEnabled}
-        onClick={() => setIsDrawingEnabled(!isDrawingEnabled)}
-        title={isDrawingEnabled ? '描画停止' : '描画開始'}
+        $isOn={$isDrawingEnabled}
+        onClick={() => setIsDrawingEnabled(!$isDrawingEnabled)}
+        title={$isDrawingEnabled ? '描画停止' : '描画開始'}
       >
         <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
           <g>
@@ -131,6 +161,14 @@ const ButtonContainer = styled.div`
   align-items: center;
   z-index: 9999;
   pointer-events: all;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
   @media (max-width: 480px) {
     display: none;
@@ -288,15 +326,15 @@ const StyledInput = styled.input`
   }
 `;
 
-const PaletteContainer = styled.div<{ isOpen: boolean }>`
+const PaletteContainer = styled.div<{ $isOpen: boolean }>`
   display: flex;
   align-items: center;
   padding: 0 10px;
   gap: 8px;
   transition: all 0.3s ease;
   overflow: hidden;
-  width: ${props => props.isOpen ? 'auto' : '0'};
-  opacity: ${props => props.isOpen ? '1' : '0'};
+  width: ${props => props.$isOpen ? 'auto' : '0'};
+  opacity: ${props => props.$isOpen ? '1' : '0'};
 `;
 
 const PaletteButton = styled.button`
@@ -339,7 +377,7 @@ const PaletteButton = styled.button`
   }
 `;
 
-const LightButton = styled.button<{ isOn: boolean }>`
+const LightButton = styled.button<{ $isOn: boolean }>`
   width: 40px;
   height: 40px;
   border-radius: 8px;
@@ -347,24 +385,24 @@ const LightButton = styled.button<{ isOn: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${props => props.isOn ? '#ffd96a' : 'white'};
+  background: ${props => props.$isOn ? '#ffd96a' : 'white'};
   cursor: url("/images/hude.svg") 0 20, pointer;
   transition: all 0.3s ease;
-  box-shadow: ${props => props.isOn
+  box-shadow: ${props => props.$isOn
     ? '0 0 15px rgba(255, 217, 106, 0.5), 0 2px 4px rgba(0, 0, 0, 0.2)'
     : '0 2px 4px rgba(0, 0, 0, 0.2)'};
 
   svg {
     width: 24px;
     height: 24px;
-    opacity: ${props => props.isOn ? 1 : 0.5};
+    opacity: ${props => props.$isOn ? 1 : 0.5};
     transition: all 0.3s ease;
-    fill: ${props => props.isOn ? '#333' : '#666'};
+    fill: ${props => props.$isOn ? '#333' : '#666'};
   }
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${props => props.isOn
+    box-shadow: ${props => props.$isOn
       ? '0 0 20px rgba(255, 217, 106, 0.6), 0 4px 8px rgba(0, 0, 0, 0.25)'
       : '0 4px 8px rgba(0, 0, 0, 0.25)'};
 

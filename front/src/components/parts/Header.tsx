@@ -89,11 +89,11 @@ const Logo = styled.h1`
   }
 `;
 
-const Nav = styled.nav<{ isOpen: boolean }>`
+const Nav = styled.nav<{ $isOpen: boolean }>`
   @media (max-width: 767px) {
     position: fixed;
     top: 0;
-    right: ${props => props.isOpen ? '0' : '-100%'};
+    right: ${props => props.$isOpen ? '0' : '-100%'};
     width: 100%;
     height: 100vh;
   background: linear-gradient(120deg,
@@ -155,7 +155,7 @@ const NavLink = styled.a`
   }
 `;
 
-const MenuButton = styled.button<{ isOpen: boolean }>`
+const MenuButton = styled.button<{ $isOpen: boolean }>`
   display: none;
   background: none;
   border: none;
@@ -178,16 +178,16 @@ const MenuButton = styled.button<{ isOpen: boolean }>`
       transition: transform 0.3s ease-in-out;
 
       &:first-child {
-        transform: ${props => props.isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none'};
+        transform: ${props => props.$isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none'};
       }
 
       &:nth-child(2) {
-        opacity: ${props => props.isOpen ? '0' : '1'};
-        transform: ${props => props.isOpen ? 'translateX(-100%)' : 'none'};
+        opacity: ${props => props.$isOpen ? '0' : '1'};
+        transform: ${props => props.$isOpen ? 'translateX(-100%)' : 'none'};
       }
 
       &:last-child {
-        transform: ${props => props.isOpen ? 'rotate(-45deg) translate(6px, -6px)' : 'none'};
+        transform: ${props => props.$isOpen ? 'rotate(-45deg) translate(6px, -6px)' : 'none'};
       }
     }
   }
@@ -244,12 +244,12 @@ const Header: React.FC = () => {
             />
           </LogoLink>
         </LogoContainer>
-        <MenuButton isOpen={isOpen} onClick={handleMenuClick}>
+        <MenuButton $isOpen={isOpen} onClick={handleMenuClick}>
           <span />
           <span />
           <span />
         </MenuButton>
-        <Nav isOpen={isOpen}>
+        <Nav $isOpen={isOpen}>
           <NavLink href="/story" onClick={handleLinkClick}>Story</NavLink>
           <NavLink href="/service" onClick={handleLinkClick}>Service</NavLink>
           <NavLink href="/contact" onClick={handleLinkClick}>Contact</NavLink>

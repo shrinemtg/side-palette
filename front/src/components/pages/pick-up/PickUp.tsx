@@ -65,16 +65,14 @@ const Portfolio: React.FC = () => {
     setCurrentImageIndex(0);
   };
 
-  const handlePrevImage = () => {
-    if (selectedWork?.images) {
-      setCurrentImageIndex((prev) => (prev - 1 + selectedWork.images!.length) % selectedWork.images!.length);
-    }
-  };
-
-  const handleNextImage = () => {
+  const handleImageClick = () => {
     if (selectedWork?.images) {
       setCurrentImageIndex((prev) => (prev + 1) % selectedWork.images!.length);
     }
+  };
+
+  const handleIndicatorClick = (index: number) => {
+    setCurrentImageIndex(index);
   };
 
   useEffect(() => {
@@ -94,7 +92,7 @@ const Portfolio: React.FC = () => {
     <PortfolioContainer id="pick-up">
       <PageTitle>Pick Up</PageTitle>
       {portfolioData.map((work, index) => (
-        <WorkSection key={work.title} isReverse={index % 2 !== 0}>
+        <WorkSection key={work.title} $isReverse={index % 2 !== 0}>
           <ImageContainer>
             {work.images ? (
               <Slideshow images={work.images} />
@@ -131,27 +129,26 @@ const Portfolio: React.FC = () => {
         <ModalOverlay onClick={handleCloseModal}>
           <ModalContent onClick={e => e.stopPropagation()}>
             <CloseButton onClick={handleCloseModal}>×</CloseButton>
-            <ModalImageContainer>
-              <Image
+            <ModalImageContainer onClick={handleImageClick}>
+              <ModalImage
                 src={selectedWork.images?.[currentImageIndex] || selectedWork.thumbnail}
                 alt={`${selectedWork.title} - 画像${currentImageIndex + 1}`}
                 fill
                 style={{ objectFit: selectedWork.title === "スナック喫茶 モンキー&バード" ? "contain" : "cover" }}
               />
-              <ImageNavigation>
-                <NavButton onClick={handlePrevImage}>←</NavButton>
-                <NavButton onClick={handleNextImage}>→</NavButton>
-              </ImageNavigation>
               {selectedWork.images && selectedWork.images.length > 1 && (
-                <ImageIndicators>
+                <SlideshowIndicators>
                   {selectedWork.images.map((_, index) => (
                     <Indicator
                       key={index}
-                      isActive={index === currentImageIndex}
-                      onClick={() => setCurrentImageIndex(index)}
+                      $isActive={index === currentImageIndex}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleIndicatorClick(index);
+                      }}
                     />
                   ))}
-                </ImageIndicators>
+                </SlideshowIndicators>
               )}
             </ModalImageContainer>
             <ModalTitle>
@@ -197,7 +194,7 @@ const Slideshow: React.FC<SlideshowProps> = ({ images }) => {
       {images.map((image, index) => (
         <SlideImage
           key={image}
-          isActive={index === currentIndex}
+          $isActive={index === currentIndex}
           style={{ zIndex: index === currentIndex ? 1 : 0 }}
         >
           <Image
@@ -212,7 +209,7 @@ const Slideshow: React.FC<SlideshowProps> = ({ images }) => {
         {images.map((_, index) => (
           <Indicator
             key={index}
-            isActive={index === currentIndex}
+            $isActive={index === currentIndex}
             onClick={() => setCurrentIndex(index)}
           />
         ))}
@@ -238,15 +235,15 @@ const SlideshowContainer = styled.div`
   overflow: hidden;
 `;
 
-const SlideImage = styled.div<{ isActive: boolean }>`
+const SlideImage = styled.div<{ $isActive: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: ${props => props.isActive ? 1 : 0};
+  opacity: ${props => props.$isActive ? 1 : 0};
   transition: opacity 0.5s ease-in-out;
-  animation: ${props => props.isActive ? fadeIn : 'none'} 0.5s ease-in-out;
+  animation: ${props => props.$isActive ? fadeIn : 'none'} 0.5s ease-in-out;
 
   img {
     object-fit: cover;
@@ -265,18 +262,18 @@ const SlideshowIndicators = styled.div`
   z-index: 2;
 `;
 
-const Indicator = styled.button<{ isActive: boolean }>`
+const Indicator = styled.button<{ $isActive: boolean }>`
   width: 10px;
   height: 10px;
   border-radius: 50%;
   border: none;
-  background-color: ${props => props.isActive ? '#fff' : 'rgba(255, 255, 255, 0.5)'};
+  background-color: ${props => props.$isActive ? '#fff' : 'rgba(255, 255, 255, 0.5)'};
   cursor: pointer;
   transition: background-color 0.3s ease;
   padding: 0;
 
   &:hover {
-    background-color: ${props => props.isActive ? '#fff' : 'rgba(255, 255, 255, 0.7)'};
+    background-color: ${props => props.$isActive ? '#fff' : 'rgba(255, 255, 255, 0.7)'};
   }
 `;
 
@@ -310,14 +307,14 @@ const PageTitle = styled.h1`
   }
 `;
 
-const WorkSection = styled.section<{ isReverse: boolean }>`
+const WorkSection = styled.section<{ $isReverse: boolean }>`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   margin-bottom: 8rem;
   align-items: center;
 
-  ${props => props.isReverse && `
+  ${props => props.$isReverse && `
     direction: rtl;
     > * {
       direction: ltr;
@@ -465,6 +462,7 @@ const CloseButton = styled.button`
   color: #666;
   padding: 0.5rem;
   line-height: 1;
+  z-index: 10;
 
   &:hover {
     color: #333;
@@ -493,60 +491,19 @@ const ModalImageContainer = styled.div`
   overflow: hidden;
   margin-bottom: 1.5rem;
   background-color: #fff;
+  cursor: pointer;
 
   @media (max-width: 768px) {
     height: 300px;
   }
 `;
 
-const ImageNavigation = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  transform: translateY(-50%);
-  display: flex;
-  justify-content: space-between;
-  padding: 0 1rem;
-  pointer-events: none;
-`;
+const ModalImage = styled(Image)`
+  transition: transform 0.3s ease;
 
-const NavButton = styled.button`
-  background: none;
-  border: none;
-  width: 0.1rem;
-  height: 0.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  pointer-events: auto;
-  transition: all 0.3s ease;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    width: 0.6rem;
-    height: 0.6rem;
-    border-top: 2px solid white;
-    border-right: 2px solid white;
-    transform: ${props => props.children === '←' ? 'rotate(-135deg)' : 'rotate(45deg)'};
-    transition: all 0.3s ease;
+  &:hover {
+    transform: scale(1.02);
   }
-
-  &:hover::before {
-    transform: ${props => props.children === '←' ? 'rotate(-135deg) scale(1.2)' : 'rotate(45deg) scale(1.2)'};
-  }
-`;
-
-const ImageIndicators = styled.div`
-  position: absolute;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 0.5rem;
 `;
 
 const ModalQuote = styled.div`
