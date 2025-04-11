@@ -40,10 +40,34 @@ const Contacts: React.FC = () => {
     setShowConfirmModal(true);
   };
 
-  const handleConfirmSubmit = () => {
-    // ここで実際の送信処理を実装
-    setShowConfirmModal(false);
-    setShowThanksModal(true);
+  const handleConfirmSubmit = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/contact/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ message: 'エラーの詳細を取得できませんでした' }));
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        setShowConfirmModal(false);
+        setShowThanksModal(true);
+      } else {
+        throw new Error(data.message || 'エラーが発生しました。もう一度お試しください。');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert(error instanceof Error ? error.message : 'エラーが発生しました。もう一度お試しください。');
+    }
   };
 
   return (
@@ -62,13 +86,35 @@ const Contacts: React.FC = () => {
             お気軽にお問い合わせください。<br />
             営業時間外を除き<br />
             24時間以内に担当者よりご連絡させていただきます。<br />
-            お電話でのご相談は公式LINEより承っておりますので<br />
+            チャットまたは、お電話でのご相談は公式LINEより承っております<br />
             下記リンクよりお友達追加の方よろしくお願いいたします
             </LeadText>
           </motion.div>
         </HeroSection>
 
+        {/* 公式LINEセクション */}
+        <SectionTitle>公式LINE</SectionTitle>
+        <BookingSection>
+          <BookingDescription>
+          Side Palette公式LINEでは<br />
+          ご質問ご相談お見積もりがお電話でも可能です<br /><br />
+
+          またLINEでしか得られない<br />
+          お得な情報もございますので<br />
+          ぜひ、公式LINEアカウントを<br />
+          ご登録ください<br /><br />
+          お客様のお悩みを是非お聞かせください
+          </BookingDescription>
+          <LineButtonContainer>
+            <CustomLineButton href="https://lin.ee/BFEMIE0">
+              <LineIcon />
+              友だち追加
+            </CustomLineButton>
+          </LineButtonContainer>
+        </BookingSection>
+
         {/* フォームセクション */}
+        <FormTitle>メールでのお問い合わせ</FormTitle>
         <FormSection>
           <ContactForm onSubmit={handleSubmit}>
             <FormGroup>
@@ -145,29 +191,9 @@ const Contacts: React.FC = () => {
           </ContactForm>
         </FormSection>
 
-        {/* 予約セクション */}
-        <SectionTitle>公式LINE</SectionTitle>
-        <BookingSection>
-          <BookingDescription>
-          Side Palette公式LINEでは<br />
-          ご質問ご相談お見積もりがお電話でも可能です<br /><br />
-
-          またLINEでしか得られない<br />
-          お得な情報もございますので<br />
-          ぜひ、公式LINEアカウントを<br />
-          ご登録ください<br /><br />
-          お客様のお悩みを是非お聞かせください
-          </BookingDescription>
-          <LineButtonContainer>
-            <CustomLineButton href="https://lin.ee/BFEMIE0">
-              <LineIcon />
-              友だち追加
-            </CustomLineButton>
-          </LineButtonContainer>
-        </BookingSection>
         {/* FAQセクション */}
         <FAQSection>
-          <SectionTitle>よくあるご質問</SectionTitle>
+          <QATitle>よくあるご質問</QATitle>
           <FAQList>
             {faqs.map((faq, index) => (
               <FAQItem key={index}>
@@ -699,7 +725,7 @@ const LineIcon = styled(({ className }: LineIconProps) => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M16 2C8.28 2 2 7.48 2 14.23c0 6.12 5.43 11.23 12.77 12.19.5.11 1.17.33 1.34.76.15.39.1.99.05 1.38l-.22 1.31c-.07.39-.31 1.54 1.35.84 1.65-.7 8.94-5.27 12.2-9.01C31.11 19.41 32 16.95 32 14.23 32 7.48 25.72 2 16 2zM9.84 17.45h-2.5c-.37 0-.67-.3-.67-.67V11.7c0-.37.3-.67.67-.67s.67.3.67.67v4.41h1.83c.37 0 .67.3.67.67s-.3.67-.67.67zm3.67-.67c0 .37-.3.67-.67.67s-.67-.3-.67-.67V11.7c0-.37.3-.67.67-.67s.67.3.67.67v5.08zm7.33 0c0 .28-.17.53-.43.63-.07.03-.15.04-.23.04-.2 0-.39-.09-.52-.24l-2.55-3.47v3.04c0 .37-.3.67-.67.67s-.67-.3-.67-.67V11.7c0-.28.17-.53.43-.63.07-.03.15-.04.23-.04.2 0 .39.09.52.24l2.55 3.47V11.7c0-.37.3-.67.67-.67s.67.3.67.67v5.08zm4.33-3.33h-1.83v.91h1.83c.37 0 .67.3.67.67s-.3.67-.67.67h-1.83v.91h1.83c.37 0 .67.3.67.67s-.3.67-.67.67h-2.5c-.37 0-.67-.3-.67-.67V11.7c0-.37.3-.67.67-.67h2.5c.37 0 .67.3.67.67s-.3.67-.67.67z"
+      d="M16 2C8.28 2 2 7.48 2 14.23c0 6.12 5.43 11.23 12.77 12.19.5.11 1.17.33 1.34.76.15.39.1.99.05 1.38l-.22 1.31c-.07.39-.31 1.54 1.35.84 1.65-.7 8.94-5.27 12.2-9.01C31.11 19.41 32 16.95 32 14.23 32 7.48 25.72 2 16 2zM9.84 17.45h-2.5c-.37 0-.67-.3-.67V11.7c0-.37.3-.67.67-.67s.67.3.67.67v4.41h1.83c.37 0 .67.3.67.67s-.3.67-.67.67zm3.67-.67c0 .37-.3.67-.67.67s-.67-.3-.67-.67V11.7c0-.37.3-.67.67-.67s.67.3.67.67v5.08zm7.33 0c0 .28-.17.53-.43.63-.07.03-.15.04-.23.04-.2 0-.39-.09-.52-.24l-2.55-3.47v3.04c0 .37-.3.67-.67.67s-.67-.3-.67-.67V11.7c0-.28.17-.53.43-.63.07-.03.15-.04.23-.04.2 0 .39.09.52.24l2.55 3.47V11.7c0-.37.3-.67.67-.67s.67.3.67.67v5.08zm4.33-3.33h-1.83v.91h1.83c.37 0 .67.3.67.67s-.3.67-.67.67h-1.83v.91h1.83c.37 0 .67.3.67.67s-.3.67-.67.67h-2.5c-.37 0-.67-.3-.67-.67V11.7c0-.37.3-.67.67-.67h2.5c.37 0 .67.3.67.67s-.3.67-.67.67z"
       fill="white"
     />
   </svg>
@@ -712,5 +738,69 @@ const LineIcon = styled(({ className }: LineIconProps) => (
     height: 24px;
   }
 `;
+
+const FormTitle = styled.h2`
+font-size: 2rem;
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  position: relative;
+  padding: 0 0 0.5rem 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 350px;
+    height: 3px;
+    background: linear-gradient(90deg,
+      rgba(255, 133, 202, 0.5) 0%,
+      rgba(193, 151, 255, 0.5) 50%,
+      rgba(133, 234, 255, 0.5) 70%,
+      rgba(177, 227, 59, 0.5) 90%,
+      rgba(243, 188, 22, 0.5) 100%
+    );
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    margin: 0 0 2rem 0;
+    padding: 0 0 0.3rem 0;
+  }
+`;
+const QATitle = styled.h2`
+font-size: 2rem;
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  position: relative;
+  padding: 0 0 0.5rem 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 230px;
+    height: 3px;
+    background: linear-gradient(90deg,
+      rgba(255, 133, 202, 0.5) 0%,
+      rgba(193, 151, 255, 0.5) 50%,
+      rgba(133, 234, 255, 0.5) 70%,
+      rgba(177, 227, 59, 0.5) 90%,
+      rgba(243, 188, 22, 0.5) 100%
+    );
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    margin: 0 0 2rem 0;
+    padding: 0 0 0.3rem 0;
+  }
+`;
+
 
 export default Contacts;

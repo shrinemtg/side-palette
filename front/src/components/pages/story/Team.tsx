@@ -57,12 +57,6 @@ const teamMembers = [
         bio: "お客様の想いを、デザインというカタチにするWebデザイナーです。丁寧なヒアリングを大切にし、お客様の描く理想や目的を深く理解することから始めます。その上で、効果的な戦略と魅力的なデザインを組み合わせ、お客様のビジネスや活動をより一層輝かせるWebサイトを制作いたします。些細なイメージやお悩みでも構いません。ぜひ一度、笑顔でお話をお聞かせください！",
         image: "/portfolios/member/cheese-sato.jpg"
     },
-    // {
-    //     name: "佐藤 哲也",
-    //     role: "webエンジニア",
-    //     bio: "システムの基盤を支えるバックエンド開発を専門としています。デザインやお客様との直接のやり取りは行いませんが、技術面でプロジェクトを確実にサポートします。",
-    //     image: "/portfolios/welcome-board/wata.jpg"
-    // }
 ];
 
 export default Team;
@@ -118,7 +112,7 @@ const TeamMemberCard = styled(motion.div)`
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
     text-align: center;
-    padding: 1.2rem;
+    padding: 1rem 0;
 
 `;
 
@@ -176,7 +170,7 @@ const TeamMemberRole = styled.p`
 `;
 
 const TeamMemberBio = styled.div`
-    margin: 1.2rem;
+    margin: 1.2rem 0;
     text-align: left;
 `;
 

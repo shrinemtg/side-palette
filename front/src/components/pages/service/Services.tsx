@@ -192,8 +192,6 @@ const Services = () => {
     }
   };
 
-
-
   return (
     <Container>
         <PageTitle>Services</PageTitle>
