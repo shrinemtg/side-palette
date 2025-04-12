@@ -9,10 +9,10 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Side Palette｜デザイン・イラスト会社</title>
+        <title>Side Palette</title>
         <meta name="description" content="テンプレートのデザインではなく、お客様「一人一人に寄り添ったデザイン」をお届けします。" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/side-palette.ico" type="image/x-icon" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <GlobalStyle />
       <ThemeProvider theme={{ mouseY: 0 }}>

@@ -3,18 +3,16 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
     @font-face {
         font-family: 'Klee One';
-        src: url('/fonts/KleeOne-Regular.woff2') format('woff2');
-        font-weight: 400;
+        src: url('/fonts/Klee_One/KleeOne-Regular.ttf') format('truetype');
+        font-weight: normal;
         font-style: normal;
-        font-display: swap;
     }
 
     @font-face {
         font-family: 'Klee One';
-        src: url('/fonts/KleeOne-SemiBold.woff2') format('woff2');
+        src: url('/fonts/Klee_One/KleeOne-SemiBold.ttf') format('truetype');
         font-weight: 600;
         font-style: normal;
-        font-display: swap;
     }
 
     * {

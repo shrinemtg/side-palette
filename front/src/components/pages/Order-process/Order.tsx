@@ -1,11 +1,4 @@
 import styled from 'styled-components';
-import { Klee_One } from 'next/font/google';
-
-const kleeOne = Klee_One({
-  weight: '400',
-  subsets: ['latin'],
-  display: 'swap',
-});
 
 const OrderProcess = () => {
   return (
@@ -17,7 +10,7 @@ const OrderProcess = () => {
             <StepNumber>{step.number}</StepNumber>
             <StepTitle>{step.title}</StepTitle>
             <StepDescription>
-              {step.description}
+              <DescriptionText>{step.description}</DescriptionText>
               {step.note && <Note>{step.note}</Note>}
             </StepDescription>
           </Section>
@@ -66,7 +59,7 @@ const Container = styled.div`
   max-width: 800px;
   margin: 5rem auto;
   padding: 2rem;
-  font-family: ${kleeOne.style.fontFamily};
+  font-family: 'Klee One', sans-serif;
 `;
 
 const Title = styled.h1`
@@ -75,7 +68,7 @@ const Title = styled.h1`
   font-size: 2.5rem;
   position: relative;
   margin-bottom: 3rem;
-  font-family: ${kleeOne.style.fontFamily};
+  font-family: 'Klee One', sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
 
@@ -139,7 +132,7 @@ const StepTitle = styled.h2`
   font-size: 1.4rem;
   color: #333;
   margin-bottom: 1rem;
-  font-family: ${kleeOne.style.fontFamily};
+  font-family: 'Klee One', sans-serif;
   font-weight: 600;
   letter-spacing: -0.02em;
 
@@ -148,13 +141,13 @@ const StepTitle = styled.h2`
   }
 `;
 
-const StepDescription = styled.p`
+const StepDescription = styled.div`
   font-size: 1rem;
   line-height: 2;
   color: #666;
   margin-left: 2rem;
   white-space: pre-line;
-  font-family: ${kleeOne.style.fontFamily};
+  font-family: 'Klee One', sans-serif;
   letter-spacing: 0.02em;
 
   @media (max-width: 768px) {
@@ -163,13 +156,17 @@ const StepDescription = styled.p`
   }
 `;
 
-const Note = styled.p`
+const DescriptionText = styled.p`
+  margin: 0;
+`;
+
+const Note = styled.div`
   font-size: 0.9rem;
   color: #FF6B6B;
   margin-top: 1rem;
   font-style: italic;
   white-space: pre-line;
-  font-family: ${kleeOne.style.fontFamily};
+  font-family: 'Klee One', sans-serif;
   letter-spacing: 0.02em;
 
   @media (max-width: 768px) {
