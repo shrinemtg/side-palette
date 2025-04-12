@@ -23,7 +23,7 @@ const Team = () => {
                                 height={200}
                                 style={{
                                     objectPosition: member.name === "佐藤 文胤" ? "center 0%" : "center 40%",
-                                    objectFit: member.name === "谷口 瑞季" ? "cover" : "cover",
+                                    objectFit: "cover",
                                     transform: member.name === "谷口 瑞季" ? "scale(1.3)" : "scale(1)"
                                 }}
                             />
@@ -57,12 +57,6 @@ const teamMembers = [
         bio: "お客様の想いを、デザインというカタチにするWebデザイナーです。丁寧なヒアリングを大切にし、お客様の描く理想や目的を深く理解することから始めます。その上で、効果的な戦略と魅力的なデザインを組み合わせ、お客様のビジネスや活動をより一層輝かせるWebサイトを制作いたします。些細なイメージやお悩みでも構いません。ぜひ一度、笑顔でお話をお聞かせください！",
         image: "/portfolios/member/cheese-sato.jpg"
     },
-    // {
-    //     name: "佐藤 哲也",
-    //     role: "webエンジニア",
-    //     bio: "システムの基盤を支えるバックエンド開発を専門としています。デザインやお客様との直接のやり取りは行いませんが、技術面でプロジェクトを確実にサポートします。",
-    //     image: "/portfolios/welcome-board/wata.jpg"
-    // }
 ];
 
 export default Team;
@@ -86,13 +80,13 @@ const TeamSectionTitle = styled.h2`
         transform: translateX(-50%);
         width: 250px;
         height: 3px;
-    background: linear-gradient(90deg,
-      rgba(255, 133, 202, 0.5) 0%,
-      rgba(193, 151, 255, 0.5) 50%,
-      rgba(133, 234, 255, 0.5) 70%,
-      rgba(177, 227, 59, 0.5) 90%,
-      rgba(243, 188, 22, 0.5) 100%
-    );
+        background: linear-gradient(90deg,
+          rgba(255, 133, 202, 0.5) 0%,
+          rgba(193, 151, 255, 0.5) 50%,
+          rgba(133, 234, 255, 0.5) 70%,
+          rgba(177, 227, 59, 0.5) 90%,
+          rgba(243, 188, 22, 0.5) 100%
+        );
     }
 `;
 
@@ -118,8 +112,7 @@ const TeamMemberCard = styled(motion.div)`
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
     text-align: center;
-    padding: 1.2rem;
-
+    padding: 1rem 0;
 `;
 
 const ImageContainer = styled.div`
@@ -176,7 +169,7 @@ const TeamMemberRole = styled.p`
 `;
 
 const TeamMemberBio = styled.div`
-    margin: 1.2rem;
+    margin: 1.2rem 0;
     text-align: left;
 `;
 
@@ -192,6 +185,6 @@ const BioText = styled.p`
     color: #666;
     font-size: 0.8rem;
     line-height: 1.8;
-    margin :1.2rem ;
+    margin: 1.2rem;
 `;
 

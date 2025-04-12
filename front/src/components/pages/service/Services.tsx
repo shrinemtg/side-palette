@@ -192,17 +192,15 @@ const Services = () => {
     }
   };
 
-
-
   return (
     <Container>
-        <PageTitle>Services</PageTitle>
+      <PageTitle>Services</PageTitle>
       <HeroSection>
         <LeadText>
-        side paletteは、デジタルからアナログまで、多様なデザインを手掛けるデザイン会社です。<br /><br />
-        お客様の想いやビジョンを形にするために、常に新しい挑戦を続けています。<br /><br />
-        以下が主なサービス内容です。<br />
-        この他にも柔軟にご対応できますので、まずはお気軽にお問い合わせください。
+          side paletteは、デジタルからアナログまで、多様なデザインを手掛けるデザイン会社です。<br /><br />
+          お客様の想いやビジョンを形にするために、常に新しい挑戦を続けています。<br /><br />
+          以下が主なサービス内容です。<br />
+          この他にも柔軟にご対応できますので、まずはお気軽にお問い合わせください。
         </LeadText>
       </HeroSection>
 
@@ -298,18 +296,16 @@ const HeroSection = styled.div`
   padding: 2rem 2rem;
   text-align: center;
   background: linear-gradient(120deg,
-      rgba(255, 133, 202, 0.2) 0%,
-      rgba(193, 151, 255, 0.2) 50%,
-      rgba(133, 234, 255, 0.2) 70%,
-      rgba(177, 227, 59, 0.2) 90%,
-      rgba(243, 188, 22, 0.2) 100%
+    rgba(255, 133, 202, 0.2) 0%,
+    rgba(193, 151, 255, 0.2) 50%,
+    rgba(133, 234, 255, 0.2) 70%,
+    rgba(177, 227, 59, 0.2) 90%,
+    rgba(243, 188, 22, 0.2) 100%
   );
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   margin: 2rem auto;
   max-width: 800px;
-
-
 `;
 
 const PageTitle = styled.h1`
@@ -431,9 +427,9 @@ const ServiceDescription = styled.p`
   opacity: 1;
   font-family: ${kleeOne.style.fontFamily};
   letter-spacing: 0.02em;
-  background-color:rgba(246, 242, 242, 0.09);
+  background-color: rgba(246, 242, 242, 0.09);
   border-radius: 8px;
-  padding: 0.1rem ;
+  padding: 0.1rem;
 `;
 
 const ModalOverlay = styled(motion.div)`
