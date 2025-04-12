@@ -17,7 +17,8 @@ const allowedOrigins = [
   'http://localhost:3001',
   'https://side-palette.com',
   'https://www.side-palette.com',
-  'https://*.vercel.app'
+  'https://side-palette.vercel.app',
+  'https://side-palette-git-develop-ub-mtg.vercel.app'
 ];
 
 app.use(cors({
@@ -25,6 +26,7 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log('CORS blocked for origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
