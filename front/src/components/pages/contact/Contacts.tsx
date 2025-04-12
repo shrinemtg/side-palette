@@ -44,7 +44,8 @@ const Contacts: React.FC = () => {
 
   const handleConfirmSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/contact/submit', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.side-palette.com';
+      const response = await fetch(`${apiUrl}/api/contact/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
