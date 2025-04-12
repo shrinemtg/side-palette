@@ -44,7 +44,18 @@ const Contacts: React.FC = () => {
 
   const handleConfirmSubmit = async () => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.side-palette.com';
+      // 開発環境ではローカルAPIを使用し、本番環境では環境変数から取得
+      const apiUrl = process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3002'
+        : process.env.NEXT_PUBLIC_API_URL;
+
+      if (!apiUrl) {
+        throw new Error('API URLが設定されていません。環境変数を確認してください。');
+      }
+
+      console.log('Sending request to:', `${apiUrl}/api/contact/submit`);
+      console.log('Form data:', formData);
+
       const response = await fetch(`${apiUrl}/api/contact/submit`, {
         method: 'POST',
         headers: {
@@ -54,22 +65,26 @@ const Contacts: React.FC = () => {
         credentials: 'include',
       });
 
+      console.log('Response status:', response.status);
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ message: 'エラーの詳細を取得できませんでした' }));
+        console.error('Error response:', errorData);
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log('Success response:', data);
 
       if (data.success) {
         setShowConfirmModal(false);
         setShowThanksModal(true);
       } else {
-        throw new Error(data.message || 'エラーが発生しました。もう一度お試しください。');
+        throw new Error(data.message || '送信に失敗しました。もう一度お試しください。');
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert(error instanceof Error ? error.message : 'エラーが発生しました。もう一度お試しください。');
+      console.error('Error submitting form:', error);
+      alert(error instanceof Error ? error.message : '送信に失敗しました。もう一度お試しください。');
     }
   };
 
@@ -124,71 +139,82 @@ const Contacts: React.FC = () => {
         <FormSection>
           <ContactForm onSubmit={handleSubmit}>
             <FormGroup>
-              <Label>お名前 <Required>*</Required></Label>
+              <Label htmlFor="name">お名前 <Required>*</Required></Label>
               <Input
+                id="name"
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="山田 太郎"
                 required
+                autoComplete="name"
               />
             </FormGroup>
 
             <FormGroup>
-              <Label>メールアドレス <Required>*</Required></Label>
+              <Label htmlFor="email">メールアドレス <Required>*</Required></Label>
               <Input
+                id="email"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="example@email.com"
                 required
+                autoComplete="email"
               />
             </FormGroup>
 
             <FormGroup>
-              <Label>電話番号</Label>
+              <Label htmlFor="phone">電話番号</Label>
               <Input
+                id="phone"
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="090-1234-5678"
+                autoComplete="tel"
               />
             </FormGroup>
 
             <FormGroup>
-              <Label>会社名</Label>
+              <Label htmlFor="company">会社名</Label>
               <Input
+                id="company"
                 type="text"
                 name="company"
                 value={formData.company}
                 onChange={handleInputChange}
                 placeholder="株式会社サンプル"
+                autoComplete="organization"
               />
             </FormGroup>
 
             <FormGroup>
-              <Label>メッセージ <Required>*</Required></Label>
+              <Label htmlFor="message">メッセージ <Required>*</Required></Label>
               <Textarea
+                id="message"
                 name="message"
                 value={formData.message}
                 onChange={handleInputChange}
                 placeholder="お問い合わせ内容をご記入ください"
                 rows={6}
                 required
+                autoComplete="off"
               />
             </FormGroup>
 
             <PrivacyCheck>
               <input
+                id="privacy"
                 type="checkbox"
                 checked={privacyChecked}
                 onChange={(e) => setPrivacyChecked(e.target.checked)}
                 required
               />
-              <span>プライバシーポリシーに同意する</span>
+              <Label htmlFor="privacy">プライバシーポリシーに同意する</Label>
             </PrivacyCheck>
 
             <SubmitButton type="submit" disabled={!privacyChecked}>
