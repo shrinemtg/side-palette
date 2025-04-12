@@ -12,8 +12,22 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // CORSの設定
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'https://side-palette.com',
+  'https://www.side-palette.com',
+  'https://*.vercel.app'
+];
+
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
