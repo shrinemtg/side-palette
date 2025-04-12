@@ -11,6 +11,11 @@ const Canvas: React.FC = () => {
   const [lineWidth, setLineWidth] = useState(8);
   const [isDrawing, setIsDrawing] = useState(false);
   const [isPaletteOpen, setIsPaletteOpen] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isDrawingEnabled) return;
@@ -88,6 +93,8 @@ const Canvas: React.FC = () => {
   };
 
   useEffect(() => {
+    if (!isMounted) return;
+
     const updateCanvasSize = () => {
       const canvas = canvasRef.current;
       if (canvas) {
@@ -110,7 +117,11 @@ const Canvas: React.FC = () => {
     updateCanvasSize();
     window.addEventListener('resize', updateCanvasSize);
     return () => window.removeEventListener('resize', updateCanvasSize);
-  }, []);
+  }, [isMounted]);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <CanvasContainer>

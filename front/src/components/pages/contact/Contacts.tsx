@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -14,11 +14,9 @@ interface ModalContentProps {
   $isOpen: boolean;
 }
 
-interface LineIconProps {
-  className?: string;
-}
 
 const Contacts: React.FC = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -29,6 +27,10 @@ const Contacts: React.FC = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showThanksModal, setShowThanksModal] = useState(false);
   const [privacyChecked, setPrivacyChecked] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -70,6 +72,10 @@ const Contacts: React.FC = () => {
     }
   };
 
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <>
       <ContactContainer>
@@ -82,12 +88,12 @@ const Contacts: React.FC = () => {
             transition={{ duration: 0.8 }}
           >
             <LeadText>
-            ご質問、お見積もり、ご相談等、<br />
-            お気軽にお問い合わせください。<br />
-            営業時間外を除き<br />
-            24時間以内に担当者よりご連絡させていただきます。<br />
-            チャットまたは、お電話でのご相談は公式LINEより承っております<br />
-            下記リンクよりお友達追加の方よろしくお願いいたします
+              ご質問、お見積もり、ご相談等、<br />
+              お気軽にお問い合わせください。<br />
+              営業時間外を除き<br />
+              24時間以内に担当者よりご連絡させていただきます。<br />
+              チャットまたは、お電話でのご相談は公式LINEより承っております<br />
+              下記リンクよりお友達追加の方よろしくお願いいたします
             </LeadText>
           </motion.div>
         </HeroSection>
@@ -96,18 +102,17 @@ const Contacts: React.FC = () => {
         <SectionTitle>公式LINE</SectionTitle>
         <BookingSection>
           <BookingDescription>
-          Side Palette公式LINEでは<br />
-          ご質問ご相談お見積もりがお電話でも可能です<br /><br />
-
-          またLINEでしか得られない<br />
-          お得な情報もございますので<br />
-          ぜひ、公式LINEアカウントを<br />
-          ご登録ください<br /><br />
-          お客様のお悩みを是非お聞かせください
+            Side Palette公式LINEでは<br />
+            ご質問ご相談お見積もりがお電話でも可能です<br /><br />
+            またLINEでしか得られない<br />
+            お得な情報もございますので<br />
+            ぜひ、公式LINEアカウントを<br />
+            ご登録ください<br /><br />
+            お客様のお悩みを是非お聞かせください
           </BookingDescription>
           <LineButtonContainer>
             <CustomLineButton href="https://lin.ee/BFEMIE0">
-              <LineIcon />
+              <img width="24" height="24" src="https://img.icons8.com/forma-thin-filled-sharp/24/FFFFFF/line-me.png" alt="line-me" />
               友だち追加
             </CustomLineButton>
           </LineButtonContainer>
@@ -203,12 +208,11 @@ const Contacts: React.FC = () => {
             ))}
           </FAQList>
         </FAQSection>
-
       </ContactContainer>
 
       {/* 確認モーダル */}
-      <AnimatePresence>
-        {showConfirmModal && (
+      <AnimatePresence mode="wait">
+        {showConfirmModal && isMounted && (
           <ModalOverlay
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -261,8 +265,8 @@ const Contacts: React.FC = () => {
       </AnimatePresence>
 
       {/* サンクスモーダル */}
-      <AnimatePresence>
-        {showThanksModal && (
+      <AnimatePresence mode="wait">
+        {showThanksModal && isMounted && (
           <ModalOverlay
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -310,11 +314,11 @@ const HeroSection = styled.section`
   padding: 2rem 2rem;
   text-align: center;
   background: linear-gradient(120deg,
-      rgba(255, 133, 202, 0.2) 0%,
-      rgba(193, 151, 255, 0.2) 50%,
-      rgba(133, 234, 255, 0.2) 70%,
-      rgba(177, 227, 59, 0.2) 90%,
-      rgba(243, 188, 22, 0.2) 100%
+    rgba(255, 133, 202, 0.2) 0%,
+    rgba(193, 151, 255, 0.2) 50%,
+    rgba(133, 234, 255, 0.2) 70%,
+    rgba(177, 227, 59, 0.2) 90%,
+    rgba(243, 188, 22, 0.2) 100%
   );
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
@@ -510,14 +514,14 @@ const FAQItem = styled.div`
   padding: 1.5rem;
   border-radius: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-
 `;
 
 const FAQQuestion = styled.h3`
   font-size: 1.1rem;
   color: #333;
   margin-bottom: 0.5rem;
-    @media (max-width: 768px) {
+
+  @media (max-width: 768px) {
     font-size: 0.9rem;
   }
 
@@ -715,29 +719,6 @@ const CustomLineButton = styled.a`
   }
 `;
 
-const LineIcon = styled(({ className }: LineIconProps) => (
-  <svg
-    className={className}
-    width="40"
-    height="40"
-    viewBox="0 0 32 32"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M16 2C8.28 2 2 7.48 2 14.23c0 6.12 5.43 11.23 12.77 12.19.5.11 1.17.33 1.34.76.15.39.1.99.05 1.38l-.22 1.31c-.07.39-.31 1.54 1.35.84 1.65-.7 8.94-5.27 12.2-9.01C31.11 19.41 32 16.95 32 14.23 32 7.48 25.72 2 16 2zM9.84 17.45h-2.5c-.37 0-.67-.3-.67V11.7c0-.37.3-.67.67-.67s.67.3.67.67v4.41h1.83c.37 0 .67.3.67.67s-.3.67-.67.67zm3.67-.67c0 .37-.3.67-.67.67s-.67-.3-.67-.67V11.7c0-.37.3-.67.67-.67s.67.3.67.67v5.08zm7.33 0c0 .28-.17.53-.43.63-.07.03-.15.04-.23.04-.2 0-.39-.09-.52-.24l-2.55-3.47v3.04c0 .37-.3.67-.67.67s-.67-.3-.67-.67V11.7c0-.28.17-.53.43-.63.07-.03.15-.04.23-.04.2 0 .39.09.52.24l2.55 3.47V11.7c0-.37.3-.67.67-.67s.67.3.67.67v5.08zm4.33-3.33h-1.83v.91h1.83c.37 0 .67.3.67.67s-.3.67-.67.67h-1.83v.91h1.83c.37 0 .67.3.67.67s-.3.67-.67.67h-2.5c-.37 0-.67-.3-.67-.67V11.7c0-.37.3-.67.67-.67h2.5c.37 0 .67.3.67.67s-.3.67-.67.67z"
-      fill="white"
-    />
-  </svg>
-))`
-  width: 32px;
-  height: 32px;
-
-  @media (max-width: 768px) {
-    width: 24px;
-    height: 24px;
-  }
-`;
 
 const FormTitle = styled.h2`
 font-size: 2rem;
@@ -768,6 +749,22 @@ font-size: 2rem;
     font-size: 1.2rem;
     margin: 0 0 2rem 0;
     padding: 0 0 0.3rem 0;
+
+      &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 230px;
+    height: 3px;
+    background: linear-gradient(90deg,
+      rgba(255, 133, 202, 0.5) 0%,
+      rgba(193, 151, 255, 0.5) 50%,
+      rgba(133, 234, 255, 0.5) 70%,
+      rgba(177, 227, 59, 0.5) 90%,
+      rgba(243, 188, 22, 0.5) 100%
+    );
   }
 `;
 const QATitle = styled.h2`
@@ -799,6 +796,22 @@ font-size: 2rem;
     font-size: 1.2rem;
     margin: 0 0 2rem 0;
     padding: 0 0 0.3rem 0;
+
+    &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 3px;
+    background: linear-gradient(90deg,
+      rgba(255, 133, 202, 0.5) 0%,
+      rgba(193, 151, 255, 0.5) 50%,
+      rgba(133, 234, 255, 0.5) 70%,
+      rgba(177, 227, 59, 0.5) 90%,
+      rgba(243, 188, 22, 0.5) 100%
+    );
   }
 `;
 

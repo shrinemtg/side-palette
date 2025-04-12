@@ -12,76 +12,55 @@ const OrderProcess = () => {
     <Container>
       <Title>ご注文の流れ</Title>
       <ProcessContainer>
-        <Section>
-          <StepNumber>0</StepNumber>
-          <StepTitle>お問い合わせ</StepTitle>
-          <StepDescription>
-            ご質問やご相談やお見積もりなど無料で行っておりますので
-            当サイトContactページよりご連絡いただくか
-            お気軽にお問い合わせください。
-          </StepDescription>
-        </Section>
-
-        <Section>
-          <StepNumber>1</StepNumber>
-          <StepTitle>ヒアリング</StepTitle>
-          <StepDescription>
-            メールまたは公式LINEにて
-            ご希望のお日にちやご予算をご予約をとっていただき
-            ご予約日当日、公式LINEのお電話にて
-            お客様のご要望や詳しい内容について
-            お伺いいたします
-          </StepDescription>
-        </Section>
-
-        <Section>
-          <StepNumber>2</StepNumber>
-          <StepTitle>ご提案</StepTitle>
-          <StepDescription>
-            ヒアリングに合ったデザイン・イラストの構成案を作成し、
-            ご提案させていただきます。
-            <Note>
-              ※ご提案以降の修正は1回無料
-              2回目以降別途料金がかかりますのでご了承下さい
-            </Note>
-          </StepDescription>
-        </Section>
-
-        <Section>
-          <StepNumber>3</StepNumber>
-          <StepTitle>お支払い</StepTitle>
-          <StepDescription>
-            ご提案させていただいた内容にご納得いただけたら
-            お見積もりした料金を制作前にお支払いいただきます。
-          </StepDescription>
-        </Section>
-
-        <Section>
-          <StepNumber>4</StepNumber>
-          <StepTitle>制作</StepTitle>
-          <StepDescription>
-            お支払い確認次第、制作の方に移らせていただきます。
-            <Note>
-              ※デザインは制作後の大幅な修正、
-              イラストは修正自体が出来ませんのでご了承ください。
-            </Note>
-          </StepDescription>
-        </Section>
-
-        <Section>
-          <StepNumber>5</StepNumber>
-          <StepTitle>納品</StepTitle>
-          <StepDescription>
-            出来上がった完成品をご確認いただいた後
-            納品させていただきます。
-          </StepDescription>
-        </Section>
+        {orderSteps.map((step) => (
+          <Section key={step.number}>
+            <StepNumber>{step.number}</StepNumber>
+            <StepTitle>{step.title}</StepTitle>
+            <StepDescription>
+              {step.description}
+              {step.note && <Note>{step.note}</Note>}
+            </StepDescription>
+          </Section>
+        ))}
       </ProcessContainer>
     </Container>
   );
 };
 
-export default OrderProcess;
+const orderSteps = [
+  {
+    number: 0,
+    title: 'お問い合わせ',
+    description: 'ご質問やご相談やお見積もりなど無料で行っておりますので\n当サイトContactページよりご連絡いただくか\nお気軽にお問い合わせください。'
+  },
+  {
+    number: 1,
+    title: 'ヒアリング',
+    description: 'メールまたは公式LINEにて\nご希望のお日にちやご予算をご予約をとっていただき\nご予約日当日、公式LINEのお電話にて\nお客様のご要望や詳しい内容について\nお伺いいたします'
+  },
+  {
+    number: 2,
+    title: 'ご提案',
+    description: 'ヒアリングに合ったデザイン・イラストの構成案を作成し、\nご提案させていただきます。',
+    note: '※ご提案以降の修正は1回無料\n2回目以降別途料金がかかりますのでご了承下さい'
+  },
+  {
+    number: 3,
+    title: 'お支払い',
+    description: 'ご提案させていただいた内容にご納得いただけたら\nお見積もりした料金を制作前にお支払いいただきます。'
+  },
+  {
+    number: 4,
+    title: '制作',
+    description: 'お支払い確認次第、制作の方に移らせていただきます。',
+    note: '※デザインは制作後の大幅な修正、\nイラストは修正自体が出来ませんのでご了承ください。'
+  },
+  {
+    number: 5,
+    title: '納品',
+    description: '出来上がった完成品をご確認いただいた後\n納品させていただきます。'
+  }
+];
 
 const Container = styled.div`
   max-width: 800px;
@@ -108,13 +87,19 @@ const Title = styled.h1`
     transform: translateX(-50%);
     width: 11rem;
     height: 3px;
-    background: linear-gradient(90deg,
+    background: linear-gradient(
+      90deg,
       rgba(255, 133, 202, 0.5) 0%,
       rgba(193, 151, 255, 0.5) 50%,
       rgba(133, 234, 255, 0.5) 70%,
       rgba(177, 227, 59, 0.5) 90%,
       rgba(243, 188, 22, 0.5) 100%
     );
+  }
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: 2rem;
   }
 `;
 
@@ -123,6 +108,10 @@ const ProcessContainer = styled.div`
   border-radius: 20px;
   padding: 3rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 2rem;
+  }
 `;
 
 const Section = styled.div`
@@ -153,6 +142,10 @@ const StepTitle = styled.h2`
   font-family: ${kleeOne.style.fontFamily};
   font-weight: 600;
   letter-spacing: -0.02em;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const StepDescription = styled.p`
@@ -163,6 +156,11 @@ const StepDescription = styled.p`
   white-space: pre-line;
   font-family: ${kleeOne.style.fontFamily};
   letter-spacing: 0.02em;
+
+  @media (max-width: 768px) {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+  }
 `;
 
 const Note = styled.p`
@@ -173,4 +171,10 @@ const Note = styled.p`
   white-space: pre-line;
   font-family: ${kleeOne.style.fontFamily};
   letter-spacing: 0.02em;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
+
+export default OrderProcess;

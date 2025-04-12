@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
 
 const StyledImage = styled(Image)`
   filter: brightness(0) invert(1);
@@ -26,7 +25,7 @@ const HeaderContainer = styled.header`
     #ffaf80 35%,
     #c197ff 50%,
     #85eaff 65%,
-    rgba(186, 220, 91, 0.9) 80%,
+    #BADC5BE6 80%,
     #ffd96a 100%
   );
   padding: 3px;
@@ -73,8 +72,9 @@ const LogoLink = styled(Link)`
   gap: 1rem;
   text-decoration: none;
   cursor: url("/images/hude.svg") 0 20, pointer;
-    @media (max-width: 767px) {
-     gap: 0.2rem;
+
+  @media (max-width: 767px) {
+    gap: 0.2rem;
   }
 `;
 
@@ -85,7 +85,7 @@ const Logo = styled.h1`
   color: white;
 
   @media (max-width: 767px) {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 `;
 
@@ -96,16 +96,16 @@ const Nav = styled.nav<{ $isOpen: boolean }>`
     right: ${props => props.$isOpen ? '0' : '-100%'};
     width: 100%;
     height: 100vh;
-  background: linear-gradient(120deg,
-    #ff85ca 0%,
-    #ff826a 15%,
-    #ff9b60 25%,
-    #ffaf80 35%,
-    #c197ff 50%,
-    #85eaff 65%,
-    rgba(186, 220, 91, 0.9) 80%,
-    #ffd96a 100%
-  );
+    background: linear-gradient(120deg,
+      #ff85ca 0%,
+      #ff826a 15%,
+      #ff9b60 25%,
+      #ffaf80 35%,
+      #c197ff 50%,
+      #85eaff 65%,
+ #BADC5BE6 80%,
+      #ffd96a 100%
+    );
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -196,8 +196,10 @@ const MenuButton = styled.button<{ $isOpen: boolean }>`
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -219,16 +221,14 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    if (!mounted) return;
+
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
 
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen]);
+  }, [isOpen, mounted]);
 
   return (
     <HeaderContainer>

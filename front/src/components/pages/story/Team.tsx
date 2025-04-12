@@ -23,7 +23,7 @@ const Team = () => {
                                 height={200}
                                 style={{
                                     objectPosition: member.name === "佐藤 文胤" ? "center 0%" : "center 40%",
-                                    objectFit: member.name === "谷口 瑞季" ? "cover" : "cover",
+                                    objectFit: "cover",
                                     transform: member.name === "谷口 瑞季" ? "scale(1.3)" : "scale(1)"
                                 }}
                             />
@@ -80,13 +80,13 @@ const TeamSectionTitle = styled.h2`
         transform: translateX(-50%);
         width: 250px;
         height: 3px;
-    background: linear-gradient(90deg,
-      rgba(255, 133, 202, 0.5) 0%,
-      rgba(193, 151, 255, 0.5) 50%,
-      rgba(133, 234, 255, 0.5) 70%,
-      rgba(177, 227, 59, 0.5) 90%,
-      rgba(243, 188, 22, 0.5) 100%
-    );
+        background: linear-gradient(90deg,
+          rgba(255, 133, 202, 0.5) 0%,
+          rgba(193, 151, 255, 0.5) 50%,
+          rgba(133, 234, 255, 0.5) 70%,
+          rgba(177, 227, 59, 0.5) 90%,
+          rgba(243, 188, 22, 0.5) 100%
+        );
     }
 `;
 
@@ -113,7 +113,6 @@ const TeamMemberCard = styled(motion.div)`
     transition: box-shadow 0.3s ease;
     text-align: center;
     padding: 1rem 0;
-
 `;
 
 const ImageContainer = styled.div`
@@ -186,6 +185,6 @@ const BioText = styled.p`
     color: #666;
     font-size: 0.8rem;
     line-height: 1.8;
-    margin :1.2rem ;
+    margin: 1.2rem;
 `;
 

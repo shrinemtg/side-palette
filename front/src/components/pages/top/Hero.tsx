@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
-import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,7 +32,13 @@ const artworks = [
   '/portfolios/welcome-board/welcome-board-01.jpg',
   '/portfolios/youtube/yorusizi-01.jpg',
   '/portfolios/youtube/yorusizi-03.jpg',
-];
+] as const;
+
+// 初期状態として固定の配列を使用
+const initialGridItems = artworks.map((url, index) => ({
+  id: index,
+  imageUrl: url
+}));
 
 interface GridItemData {
   id: number;
@@ -47,35 +53,27 @@ interface StyledGridItemProps {
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const [gridItems, setGridItems] = useState<GridItemData[]>([]);
+  const [gridItems, setGridItems] = useState<GridItemData[]>(initialGridItems);
+  const [mounted, setMounted] = useState(false);
 
+  // マウント状態の管理
   useEffect(() => {
-    // 画像配列をシャッフルする関数
-    const shuffleArray = (array: string[]) => {
-      const shuffled = [...array];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled;
-    };
-
-    // シャッフルした画像配列を設定
-    const shuffledArtworks = shuffleArray(artworks);
-    setGridItems(shuffledArtworks.map((url, index) => ({
-      id: index,
-      imageUrl: url
-    })));
+    setMounted(true);
   }, []);
 
-  useEffect(() => {
+  // アニメーションの初期化
+  useIsomorphicLayoutEffect(() => {
+    if (!mounted) return;
+
     const container = containerRef.current;
     const title = titleRef.current;
     if (!container || !title) return;
 
+    gsap.registerPlugin(ScrollTrigger);
+
     // グリッドアイテムのアニメーション
     const gridElements = container.querySelectorAll('.grid-item');
-    gsap.fromTo(gridElements,
+    const gridAnimation = gsap.fromTo(gridElements,
       { opacity: 0, scale: 0.8 },
       {
         opacity: 1,
@@ -86,8 +84,8 @@ const HeroSection = () => {
       }
     );
 
-    // タイトルのアニメーション（フェードインのみ）
-    gsap.fromTo(title,
+    // タイトルのアニメーション
+    const titleAnimation = gsap.fromTo(title,
       { y: 100, opacity: 0 },
       {
         y: 0,
@@ -96,23 +94,31 @@ const HeroSection = () => {
         ease: "power4.out"
       }
     );
-  }, []);
 
-  // マウスが領域から出た時のハンドラを修正
-  const handleMouseLeave = () => {
-    const gridElements = document.querySelectorAll('.grid-item');
-    gridElements.forEach((element) => {
-      gsap.to(element, {
-        x: 0,
-        y: 0,
-        duration: 1.5,
-        ease: "power2.inOut",
-      });
-    });
-  };
+    return () => {
+      gridAnimation.kill();
+      titleAnimation.kill();
+    };
+  }, [mounted]);
 
-  // マウス移動時のアニメーション
+  // シャッフル処理
+  useEffect(() => {
+    if (!mounted) return;
+
+    // クライアントサイドでのみシャッフルを実行
+    const shuffledItems = [...initialGridItems];
+    for (let i = shuffledItems.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledItems[i], shuffledItems[j]] = [shuffledItems[j], shuffledItems[i]];
+    }
+
+    setGridItems(shuffledItems);
+  }, [mounted]);
+
+  // マウスイベントハンドラ
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (!mounted) return;
+
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
     const x = (clientX / innerWidth) * 2 - 1;
@@ -129,7 +135,21 @@ const HeroSection = () => {
     });
   };
 
-    return (
+  const handleMouseLeave = () => {
+    if (!mounted) return;
+
+    const gridElements = document.querySelectorAll('.grid-item');
+    gridElements.forEach((element) => {
+      gsap.to(element, {
+        x: 0,
+        y: 0,
+        duration: 1.5,
+        ease: "power2.inOut",
+      });
+    });
+  };
+
+  const content = (
     <HeroContainer
       ref={containerRef}
       onMouseMove={handleMouseMove}
@@ -167,13 +187,17 @@ const HeroSection = () => {
         </ClipTitle>
       </TitleWrapper>
 
-      <ScrollDownIcon>
-        <span></span>
-        <span></span>
-        <span></span>
-      </ScrollDownIcon>
+      {mounted && (
+        <ScrollDownIcon>
+          <span></span>
+          <span></span>
+          <span></span>
+        </ScrollDownIcon>
+      )}
     </HeroContainer>
   );
+
+  return content;
 };
 
 // コンテナのスタイル
@@ -318,7 +342,7 @@ const ClipTitle = styled.h1`
   font-size: 10vw;
   font-weight: 700;
   color: transparent;
-  background: linear-gradient(45deg,rgba(255, 255, 255),rgba(255, 255, 255));
+  background: linear-gradient(45deg, rgba(255, 255, 255), rgba(255, 255, 255));
   -webkit-background-clip: text;
   background-clip: text;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);
@@ -327,10 +351,10 @@ const ClipTitle = styled.h1`
   line-height: 1.2;
   letter-spacing: 0.1em;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
-      user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 
   @media (max-width: 768px) {
     font-size: 15vw;

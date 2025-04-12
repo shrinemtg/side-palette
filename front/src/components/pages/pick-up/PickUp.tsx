@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Image from 'next/image';
 
+// 型定義
 interface WorkDetailsType {
   title: string;
   summary: string;
@@ -10,6 +11,19 @@ interface WorkDetailsType {
   images?: string[];
 }
 
+interface SlideshowProps {
+  images: string[];
+}
+
+interface ActiveProps {
+  $isActive: boolean;
+}
+
+interface ReverseProps {
+  $isReverse?: boolean;
+}
+
+// ポートフォリオデータ
 const portfolioData: WorkDetailsType[] = [
   {
     title: "スナック喫茶 モンキー&バード",
@@ -51,173 +65,7 @@ const portfolioData: WorkDetailsType[] = [
   }
 ];
 
-const Portfolio: React.FC = () => {
-  const [selectedWork, setSelectedWork] = useState<WorkDetailsType | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const handleDetailClick = (work: WorkDetailsType) => {
-    setSelectedWork(work);
-    setCurrentImageIndex(0);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedWork(null);
-    setCurrentImageIndex(0);
-  };
-
-  const handleImageClick = () => {
-    if (selectedWork?.images) {
-      setCurrentImageIndex((prev) => (prev + 1) % selectedWork.images!.length);
-    }
-  };
-
-  const handleIndicatorClick = (index: number) => {
-    setCurrentImageIndex(index);
-  };
-
-  useEffect(() => {
-    if (selectedWork?.images) {
-      const timer = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % selectedWork.images!.length);
-      }, 5000);
-
-      return () => {
-        clearInterval(timer);
-      };
-    }
-    return () => {};
-  }, [selectedWork]);
-
-  return (
-    <PortfolioContainer id="pick-up">
-      <PageTitle>Pick Up</PageTitle>
-      {portfolioData.map((work, index) => (
-        <WorkSection key={work.title} $isReverse={index % 2 !== 0}>
-          <ImageContainer>
-            {work.images ? (
-              <Slideshow images={work.images} />
-            ) : (
-              <Image
-                src={work.thumbnail}
-                alt={work.title}
-                width={600}
-                height={400}
-                objectFit="cover"
-              />
-            )}
-          </ImageContainer>
-          <WorkDetails>
-            <WorkTitle>
-              {work.title === "スナック喫茶 モンキー&バード" ? (
-                <>
-                  <SubTitle>スナック喫茶</SubTitle>
-                  モンキー&バード
-                </>
-              ) : (
-                work.title
-              )}
-            </WorkTitle>
-            <Summary>{work.summary}</Summary>
-            <DetailButton onClick={() => handleDetailClick(work)}>
-              詳細を見る
-            </DetailButton>
-          </WorkDetails>
-        </WorkSection>
-      ))}
-
-      {selectedWork && (
-        <ModalOverlay onClick={handleCloseModal}>
-          <ModalContent onClick={e => e.stopPropagation()}>
-            <CloseButton onClick={handleCloseModal}>×</CloseButton>
-            <ModalImageContainer onClick={handleImageClick}>
-              <ModalImage
-                src={selectedWork.images?.[currentImageIndex] || selectedWork.thumbnail}
-                alt={`${selectedWork.title} - 画像${currentImageIndex + 1}`}
-                fill
-                style={{ objectFit: selectedWork.title === "スナック喫茶 モンキー&バード" ? "contain" : "cover" }}
-              />
-              {selectedWork.images && selectedWork.images.length > 1 && (
-                <SlideshowIndicators>
-                  {selectedWork.images.map((_, index) => (
-                    <Indicator
-                      key={index}
-                      $isActive={index === currentImageIndex}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleIndicatorClick(index);
-                      }}
-                    />
-                  ))}
-                </SlideshowIndicators>
-              )}
-            </ModalImageContainer>
-            <ModalTitle>
-              {selectedWork.title === "スナック喫茶 モンキー&バード" ? (
-                <>
-                  <ModalSubTitle>スナック喫茶</ModalSubTitle>
-                  モンキー&バード
-                </>
-              ) : (
-                selectedWork.title
-              )}
-            </ModalTitle>
-            <ModalQuote>
-              {selectedWork.description.split('<strong>')[1]?.split('</strong>')[0]}
-            </ModalQuote>
-            <ModalDescription>
-              {selectedWork.description.split('</strong>')[1]}
-            </ModalDescription>
-          </ModalContent>
-        </ModalOverlay>
-      )}
-    </PortfolioContainer>
-  );
-};
-
-interface SlideshowProps {
-  images: string[];
-}
-
-const Slideshow: React.FC<SlideshowProps> = ({ images }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
-
-    return () => clearInterval(timer);
-  }, [images.length]);
-
-  return (
-    <SlideshowContainer>
-      {images.map((image, index) => (
-        <SlideImage
-          key={image}
-          $isActive={index === currentIndex}
-          style={{ zIndex: index === currentIndex ? 1 : 0 }}
-        >
-          <Image
-            src={image}
-            alt={`slide-${index + 1}`}
-            fill
-            style={{ objectFit: image.includes('rogo') ? 'contain' : 'cover' }}
-          />
-        </SlideImage>
-      ))}
-      <SlideshowIndicators>
-        {images.map((_, index) => (
-          <Indicator
-            key={index}
-            $isActive={index === currentIndex}
-            onClick={() => setCurrentIndex(index)}
-          />
-        ))}
-      </SlideshowIndicators>
-    </SlideshowContainer>
-  );
-};
-
+// アニメーション
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -227,60 +75,11 @@ const fadeIn = keyframes`
   }
 `;
 
-const SlideshowContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-`;
-
-const SlideImage = styled.div<{ $isActive: boolean }>`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: ${props => props.$isActive ? 1 : 0};
-  transition: opacity 0.5s ease-in-out;
-  animation: ${props => props.$isActive ? fadeIn : 'none'} 0.5s ease-in-out;
-
-  img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-const SlideshowIndicators = styled.div`
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  z-index: 2;
-`;
-
-const Indicator = styled.button<{ $isActive: boolean }>`
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: none;
-  background-color: ${props => props.$isActive ? '#fff' : 'rgba(255, 255, 255, 0.5)'};
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  padding: 0;
-
-  &:hover {
-    background-color: ${props => props.$isActive ? '#fff' : 'rgba(255, 255, 255, 0.7)'};
-  }
-`;
-
+// スタイルコンポーネント
 const PortfolioContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 2rem;
+  padding: 2rem;
 `;
 
 const PageTitle = styled.h1`
@@ -297,7 +96,8 @@ const PageTitle = styled.h1`
     transform: translateX(-50%);
     width: 180px;
     height: 3px;
-    background: linear-gradient(90deg,
+    background: linear-gradient(
+      90deg,
       rgba(255, 133, 202, 0.5) 0%,
       rgba(193, 151, 255, 0.5) 50%,
       rgba(133, 234, 255, 0.5) 70%,
@@ -307,7 +107,7 @@ const PageTitle = styled.h1`
   }
 `;
 
-const WorkSection = styled.section<{ $isReverse: boolean }>`
+const WorkSection = styled.section<ReverseProps>`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
@@ -325,7 +125,7 @@ const WorkSection = styled.section<{ $isReverse: boolean }>`
     grid-template-columns: 1fr;
     gap: 3rem;
     direction: ltr;
-    margin-bottom:4rem;
+    margin-bottom: 4rem;
   }
 `;
 
@@ -398,7 +198,8 @@ const DetailButton = styled.button`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     rgba(255, 133, 202, 0.8) 0%,
     rgba(193, 151, 255, 0.8) 50%,
     rgba(133, 234, 255, 0.8) 100%
@@ -442,7 +243,7 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   background: white;
-  padding: 1rem 2rem 1rem 2rem;
+  padding: 1rem 2rem;
   border-radius: 12px;
   max-width: 1000px;
   width: 100%;
@@ -469,20 +270,6 @@ const CloseButton = styled.button`
   }
 `;
 
-const ModalSubTitle = styled.span`
-display: block;
-font-size: 0.9rem;
-color: #333;
-`;
-
-const ModalTitle = styled.h2`
-  font-size: 1.1rem;
-  margin-bottom: 0.6rem;
-  color: #333;
-  text-align: center;
-  position: relative;
-`;
-
 const ModalImageContainer = styled.div`
   position: relative;
   width: 100%;
@@ -506,6 +293,20 @@ const ModalImage = styled(Image)`
   }
 `;
 
+const ModalTitle = styled.h2`
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+  color: #333;
+  text-align: center;
+  position: relative;
+`;
+
+const ModalSubTitle = styled.span`
+  display: block;
+  font-size: 0.9rem;
+  color: #333;
+`;
+
 const ModalQuote = styled.div`
   max-width: 720px;
   font-size: 0.9rem;
@@ -527,4 +328,238 @@ const ModalDescription = styled.div`
   padding: 1rem;
 `;
 
-export default Portfolio;
+const SlideshowContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+`;
+
+const SlideImage = styled.div<ActiveProps>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: ${props => props.$isActive ? 1 : 0};
+  transition: opacity 0.5s ease-in-out;
+  animation: ${props => props.$isActive ? fadeIn : 'none'} 0.5s ease-in-out;
+`;
+
+const SlideshowIndicators = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 2;
+`;
+
+const Indicator = styled.button<ActiveProps>`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background-color: ${props => props.$isActive ? '#fff' : 'rgba(255, 255, 255, 0.5)'};
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 0;
+
+  &:hover {
+    background-color: ${props => props.$isActive ? '#fff' : 'rgba(255, 255, 255, 0.7)'};
+  }
+`;
+
+// スライドショーコンポーネント
+const Slideshow: React.FC<SlideshowProps> = ({ images }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  return (
+    <SlideshowContainer>
+      {images.map((image, index) => (
+        <SlideImage
+          key={image}
+          $isActive={index === currentIndex}
+          style={{ zIndex: index === currentIndex ? 1 : 0 }}
+        >
+          <Image
+            src={image}
+            alt={`slide-${index + 1}`}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            priority={index === 0}
+            style={{ objectFit: image.includes('rogo') ? 'contain' : 'cover' }}
+          />
+        </SlideImage>
+      ))}
+      <SlideshowIndicators>
+        {images.map((_, index) => (
+          <Indicator
+            key={index}
+            $isActive={index === currentIndex}
+            onClick={() => setCurrentIndex(index)}
+            type="button"
+            aria-label={`スライド ${index + 1} へ移動`}
+          />
+        ))}
+      </SlideshowIndicators>
+    </SlideshowContainer>
+  );
+};
+
+// メインコンポーネント
+const PickUp: React.FC = () => {
+  const [selectedWork, setSelectedWork] = useState<WorkDetailsType | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleDetailClick = (work: WorkDetailsType) => {
+    setSelectedWork(work);
+    setCurrentImageIndex(0);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedWork(null);
+    setCurrentImageIndex(0);
+  };
+
+  const handleImageClick = () => {
+    if (selectedWork?.images) {
+      setCurrentImageIndex((prev) => (prev + 1) % selectedWork.images!.length);
+    }
+  };
+
+  const handleIndicatorClick = (index: number) => {
+    setCurrentImageIndex(index);
+  };
+
+  useEffect(() => {
+    if (selectedWork?.images) {
+      const timer = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % selectedWork.images!.length);
+      }, 5000);
+
+      return () => clearInterval(timer);
+    }
+    return undefined;
+  }, [selectedWork]);
+
+  return (
+    <PortfolioContainer id="pick-up">
+      <PageTitle>Pick Up</PageTitle>
+      {portfolioData.map((work, index) => (
+        <WorkSection key={work.title} $isReverse={index % 2 !== 0}>
+          <ImageContainer>
+            {work.images ? (
+              <Slideshow images={work.images} />
+            ) : (
+              <Image
+                src={work.thumbnail}
+                alt={work.title}
+                width={600}
+                height={400}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority={index === 0}
+                style={{ objectFit: 'cover' }}
+              />
+            )}
+          </ImageContainer>
+          <WorkDetails>
+            <WorkTitle>
+              {work.title === "スナック喫茶 モンキー&バード" ? (
+                <>
+                  <SubTitle>スナック喫茶</SubTitle>
+                  モンキー&バード
+                </>
+              ) : (
+                work.title
+              )}
+            </WorkTitle>
+            <Summary>{work.summary}</Summary>
+            <DetailButton
+              onClick={() => handleDetailClick(work)}
+              type="button"
+              aria-label={`${work.title}の詳細を見る`}
+            >
+              詳細を見る
+            </DetailButton>
+          </WorkDetails>
+        </WorkSection>
+      ))}
+
+      {selectedWork && (
+        <ModalOverlay onClick={handleCloseModal}>
+          <ModalContent
+            onClick={e => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+          >
+            <CloseButton
+              onClick={handleCloseModal}
+              type="button"
+              aria-label="モーダルを閉じる"
+            >
+              ×
+            </CloseButton>
+            <ModalImageContainer onClick={handleImageClick}>
+              <ModalImage
+                src={selectedWork.images?.[currentImageIndex] || selectedWork.thumbnail}
+                alt={`${selectedWork.title} - 画像${currentImageIndex + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, 80vw"
+                priority
+                style={{
+                  objectFit: selectedWork.title === "スナック喫茶 モンキー&バード" ? "contain" : "cover"
+                }}
+              />
+              {selectedWork.images && selectedWork.images.length > 1 && (
+                <SlideshowIndicators>
+                  {selectedWork.images.map((_, index) => (
+                    <Indicator
+                      key={index}
+                      $isActive={index === currentImageIndex}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleIndicatorClick(index);
+                      }}
+                      type="button"
+                      aria-label={`画像 ${index + 1} へ移動`}
+                    />
+                  ))}
+                </SlideshowIndicators>
+              )}
+            </ModalImageContainer>
+            <ModalTitle id="modal-title">
+              {selectedWork.title === "スナック喫茶 モンキー&バード" ? (
+                <>
+                  <ModalSubTitle>スナック喫茶</ModalSubTitle>
+                  モンキー&バード
+                </>
+              ) : (
+                selectedWork.title
+              )}
+            </ModalTitle>
+            <ModalQuote>
+              {selectedWork.description.split('<strong>')[1]?.split('</strong>')[0]}
+            </ModalQuote>
+            <ModalDescription>
+              {selectedWork.description.split('</strong>')[1]}
+            </ModalDescription>
+          </ModalContent>
+        </ModalOverlay>
+      )}
+    </PortfolioContainer>
+  );
+};
+
+export default PickUp;
