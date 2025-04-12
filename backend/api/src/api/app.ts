@@ -6,7 +6,7 @@ import contactRouter from './routes/contact'
 dotenv.config()
 
 const app = express()
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3002
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
+  'http://localhost:3002',
   'https://side-palette.com',
   'https://www.side-palette.com',
   'https://side-palette.vercel.app',

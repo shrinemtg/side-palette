@@ -173,6 +173,20 @@ export const handleContactForm = async (req: Request, res: Response): Promise<vo
     const formData = req.body;
     console.log('Received form data:', JSON.stringify(formData, null, 2));
 
+    // 必須フィールドの検証
+    if (!formData.name || !formData.email || !formData.message) {
+      console.error('Missing required fields:', {
+        name: !!formData.name,
+        email: !!formData.email,
+        message: !!formData.message
+      });
+      res.status(400).json({
+        success: false,
+        message: '必須フィールドが不足しています'
+      });
+      return;
+    }
+
     // ユーザーへの確認メール送信
     try {
       console.log('Attempting to send user confirmation email...');
@@ -191,7 +205,8 @@ export const handleContactForm = async (req: Request, res: Response): Promise<vo
           stack: emailError.stack,
         });
       }
-      throw new Error('ユーザーへの確認メール送信に失敗しました');
+      // メール送信エラーは全体の処理を中断しない
+      console.log('Continuing despite email error');
     }
 
     // 管理者への通知メール送信
@@ -199,15 +214,10 @@ export const handleContactForm = async (req: Request, res: Response): Promise<vo
       console.log('Attempting to send admin notification email...');
       await sendAdminNotificationEmail(formData);
       console.log('Admin notification email sent successfully');
-    } catch (adminEmailError) {
-      console.error('Error sending admin notification email:', adminEmailError);
-      if (adminEmailError instanceof Error) {
-        console.error('Error details:', {
-          message: adminEmailError.message,
-          stack: adminEmailError.stack,
-        });
-      }
-      throw new Error('管理者への通知メール送信に失敗しました');
+    } catch (emailError) {
+      console.error('Error sending admin notification email:', emailError);
+      // メール送信エラーは全体の処理を中断しない
+      console.log('Continuing despite admin email error');
     }
 
     // Notionにデータを保存

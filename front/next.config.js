@@ -18,7 +18,7 @@ const nextConfig = {
               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
               img-src 'self' data: https: blob:;
               font-src 'self' https://fonts.gstatic.com;
-              connect-src 'self' https://api.side-palette.com https://side-palette.vercel.app https://side-palette-git-develop-ub-mtg.vercel.app https://www.side-palette.com wss://side-palette.vercel.app wss://side-palette-git-develop-ub-mtg.vercel.app;
+              connect-src 'self' http://localhost:3002 https://api.side-palette.com https://side-palette.vercel.app https://side-palette-git-develop-ub-mtg.vercel.app https://www.side-palette.com wss://side-palette.vercel.app wss://side-palette-git-develop-ub-mtg.vercel.app;
               frame-src 'self' https://vercel.live https://side-palette.vercel.app https://side-palette-git-develop-ub-mtg.vercel.app https://www.side-palette.com;
               worker-src 'self' blob:;
               manifest-src 'self';
