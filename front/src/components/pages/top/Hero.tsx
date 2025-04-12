@@ -5,7 +5,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
-gsap.registerPlugin(ScrollTrigger);
+// GSAPプラグインの登録
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // 固定のアートワーク画像配列
 const artworks = [
@@ -69,9 +72,6 @@ const HeroSection = () => {
     const title = titleRef.current;
     if (!container || !title) return;
 
-    gsap.registerPlugin(ScrollTrigger);
-
-    // グリッドアイテムのアニメーション
     const gridElements = container.querySelectorAll('.grid-item');
     const gridAnimation = gsap.fromTo(gridElements,
       { opacity: 0, scale: 0.8 },
