@@ -1,26 +1,15 @@
 import styled from 'styled-components';
+import React from 'react';
 
-const OrderProcess = () => {
-  return (
-    <Container>
-      <Title>ご注文の流れ</Title>
-      <ProcessContainer>
-        {orderSteps.map((step) => (
-          <Section key={step.number}>
-            <StepNumber>{step.number}</StepNumber>
-            <StepTitle>{step.title}</StepTitle>
-            <StepDescription>
-              <DescriptionText>{step.description}</DescriptionText>
-              {step.note && <Note>{step.note}</Note>}
-            </StepDescription>
-          </Section>
-        ))}
-      </ProcessContainer>
-    </Container>
-  );
-};
+// 型定義
+interface OrderStep {
+  number: number;
+  title: string;
+  description: string;
+  note?: string;
+}
 
-const orderSteps = [
+const orderSteps: OrderStep[] = [
   {
     number: 0,
     title: 'お問い合わせ',
@@ -54,6 +43,28 @@ const orderSteps = [
     description: '出来上がった完成品をご確認いただいた後\n納品させていただきます。'
   }
 ];
+
+const OrderProcess: React.FC = React.memo(() => {
+  return (
+    <Container>
+      <Title>ご注文の流れ</Title>
+      <ProcessContainer>
+        {orderSteps.map((step) => (
+          <Section key={step.number}>
+            <StepNumber>{step.number}</StepNumber>
+            <StepTitle>{step.title}</StepTitle>
+            <StepDescription>
+              <DescriptionText>{step.description}</DescriptionText>
+              {step.note && <Note>{step.note}</Note>}
+            </StepDescription>
+          </Section>
+        ))}
+      </ProcessContainer>
+    </Container>
+  );
+});
+
+OrderProcess.displayName = 'OrderProcess';
 
 const Container = styled.div`
   max-width: 800px;

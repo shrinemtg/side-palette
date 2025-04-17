@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Image from 'next/image';
 
@@ -67,12 +67,8 @@ const portfolioData: WorkDetailsType[] = [
 
 // アニメーション
 const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 `;
 
 // スタイルコンポーネント
@@ -373,16 +369,19 @@ const Indicator = styled.button<ActiveProps>`
 `;
 
 // スライドショーコンポーネント
-const Slideshow: React.FC<SlideshowProps> = ({ images }) => {
+const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 5000);
-
     return () => clearInterval(timer);
   }, [images.length]);
+
+  const handleIndicatorClick = useCallback((index: number) => {
+    setCurrentIndex(index);
+  }, []);
 
   return (
     <SlideshowContainer>
@@ -407,7 +406,7 @@ const Slideshow: React.FC<SlideshowProps> = ({ images }) => {
           <Indicator
             key={index}
             $isActive={index === currentIndex}
-            onClick={() => setCurrentIndex(index)}
+            onClick={() => handleIndicatorClick(index)}
             type="button"
             aria-label={`スライド ${index + 1} へ移動`}
           />
@@ -415,39 +414,42 @@ const Slideshow: React.FC<SlideshowProps> = ({ images }) => {
       </SlideshowIndicators>
     </SlideshowContainer>
   );
-};
+});
+
+Slideshow.displayName = 'Slideshow';
 
 // メインコンポーネント
 const PickUp: React.FC = () => {
   const [selectedWork, setSelectedWork] = useState<WorkDetailsType | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const handleDetailClick = (work: WorkDetailsType) => {
+  // useCallbackで関数の再生成を防止
+  const handleDetailClick = useCallback((work: WorkDetailsType) => {
     setSelectedWork(work);
     setCurrentImageIndex(0);
-  };
+  }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setSelectedWork(null);
     setCurrentImageIndex(0);
-  };
+  }, []);
 
-  const handleImageClick = () => {
-    if (selectedWork?.images) {
-      setCurrentImageIndex((prev) => (prev + 1) % selectedWork.images!.length);
+  const handleImageClick = useCallback(() => {
+    if (selectedWork?.images && selectedWork.images.length > 0) {
+      const images = selectedWork.images;
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
     }
-  };
+  }, [selectedWork]);
 
-  const handleIndicatorClick = (index: number) => {
+  const handleIndicatorClick = useCallback((index: number) => {
     setCurrentImageIndex(index);
-  };
+  }, []);
 
   useEffect(() => {
-    if (selectedWork?.images) {
+    if (selectedWork?.images && selectedWork.images.length > 0) {
       const timer = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % selectedWork.images!.length);
+        setCurrentImageIndex((prev) => (prev + 1) % (selectedWork.images ? selectedWork.images.length : 1));
       }, 5000);
-
       return () => clearInterval(timer);
     }
     return undefined;
@@ -561,5 +563,8 @@ const PickUp: React.FC = () => {
     </PortfolioContainer>
   );
 };
+
+// displayNameをexport defaultの直前で明示的に設定
+PickUp.displayName = 'PickUp';
 
 export default PickUp;

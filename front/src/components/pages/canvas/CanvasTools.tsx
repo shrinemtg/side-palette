@@ -4,14 +4,14 @@ import { useRouter } from 'next/router';
 
 interface CanvasToolsProps {
   $isDrawingEnabled: boolean;
-  setIsDrawingEnabled: (enabled: boolean) => void;
+  setIsDrawingEnabled: (_enabled: boolean) => void;
   isPaletteOpen: boolean;
-  setIsPaletteOpen: (open: boolean) => void;
+  setIsPaletteOpen: (_open: boolean) => void;
   lineWidth: number;
-  setLineWidth: (width: number) => void;
+  setLineWidth: (_width: number) => void;
   currentColor: string;
   isEraser: boolean;
-  handleToolChange: (color: string | null) => void;
+  handleToolChange: (_color: string | null) => void;
   handleReset: () => void;
 }
 
