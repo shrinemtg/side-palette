@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';

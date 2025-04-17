@@ -64,6 +64,8 @@ const OrderProcess: React.FC = React.memo(() => {
   );
 });
 
+OrderProcess.displayName = 'OrderProcess';
+
 const Container = styled.div`
   max-width: 800px;
   margin: 5rem auto;

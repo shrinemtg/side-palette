@@ -416,6 +416,8 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
   );
 });
 
+Slideshow.displayName = 'Slideshow';
+
 // メインコンポーネント
 const PickUp: React.FC = () => {
   const [selectedWork, setSelectedWork] = useState<WorkDetailsType | null>(null);
@@ -561,5 +563,8 @@ const PickUp: React.FC = () => {
     </PortfolioContainer>
   );
 };
+
+// displayNameをexport defaultの直前で明示的に設定
+PickUp.displayName = 'PickUp';
 
 export default PickUp;

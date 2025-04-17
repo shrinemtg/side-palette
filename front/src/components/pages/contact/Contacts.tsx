@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 // 型定義
 interface FormData {
@@ -110,7 +111,7 @@ const Contacts: React.FC = () => {
           </BookingDescription>
           <LineButtonContainer>
             <CustomLineButton href="https://lin.ee/BFEMIE0">
-              <img width="24" height="24" src="https://img.icons8.com/forma-thin-filled-sharp/24/FFFFFF/line-me.png" alt="line-me" />
+              <Image width={24} height={24} src="https://img.icons8.com/forma-thin-filled-sharp/24/FFFFFF/line-me.png" alt="line-me" />
               友だち追加
             </CustomLineButton>
           </LineButtonContainer>
