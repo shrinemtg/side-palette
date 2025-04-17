@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// 型定義
 interface FormData {
   name: string;
   email: string;
@@ -13,7 +14,6 @@ interface FormData {
 interface ModalContentProps {
   $isOpen: boolean;
 }
-
 
 const Contacts: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -44,38 +44,23 @@ const Contacts: React.FC = () => {
 
   const handleConfirmSubmit = async () => {
     try {
-      // 開発環境ではローカルAPIを使用し、本番環境では環境変数から取得
       const apiUrl = process.env.NODE_ENV === 'development'
         ? 'http://localhost:3002'
         : process.env.NEXT_PUBLIC_API_URL;
-
       if (!apiUrl) {
         throw new Error('API URLが設定されていません。環境変数を確認してください。');
       }
-
-      console.log('Sending request to:', `${apiUrl}/api/contact/submit`);
-      console.log('Form data:', formData);
-
       const response = await fetch(`${apiUrl}/api/contact/submit`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
         credentials: 'include',
       });
-
-      console.log('Response status:', response.status);
-
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ message: 'エラーの詳細を取得できませんでした' }));
-        console.error('Error response:', errorData);
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
-
       const data = await response.json();
-      console.log('Success response:', data);
-
       if (data.success) {
         setShowConfirmModal(false);
         setShowThanksModal(true);
@@ -83,14 +68,11 @@ const Contacts: React.FC = () => {
         throw new Error(data.message || '送信に失敗しました。もう一度お試しください。');
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
       alert(error instanceof Error ? error.message : '送信に失敗しました。もう一度お試しください。');
     }
   };
 
-  if (!isMounted) {
-    return null;
-  }
+  if (!isMounted) return null;
 
   return (
     <>
@@ -151,7 +133,6 @@ const Contacts: React.FC = () => {
                 autoComplete="name"
               />
             </FormGroup>
-
             <FormGroup>
               <Label htmlFor="email">メールアドレス <Required>*</Required></Label>
               <Input
@@ -165,7 +146,6 @@ const Contacts: React.FC = () => {
                 autoComplete="email"
               />
             </FormGroup>
-
             <FormGroup>
               <Label htmlFor="phone">電話番号</Label>
               <Input
@@ -178,7 +158,6 @@ const Contacts: React.FC = () => {
                 autoComplete="tel"
               />
             </FormGroup>
-
             <FormGroup>
               <Label htmlFor="company">会社名</Label>
               <Input
@@ -191,7 +170,6 @@ const Contacts: React.FC = () => {
                 autoComplete="organization"
               />
             </FormGroup>
-
             <FormGroup>
               <Label htmlFor="message">メッセージ <Required>*</Required></Label>
               <Textarea
@@ -205,7 +183,6 @@ const Contacts: React.FC = () => {
                 autoComplete="off"
               />
             </FormGroup>
-
             <PrivacyCheck>
               <input
                 id="privacy"
@@ -216,7 +193,6 @@ const Contacts: React.FC = () => {
               />
               <Label htmlFor="privacy">プライバシーポリシーに同意する</Label>
             </PrivacyCheck>
-
             <SubmitButton type="submit" disabled={!privacyChecked}>
               確認画面へ
             </SubmitButton>
@@ -279,10 +255,10 @@ const Contacts: React.FC = () => {
                 </ConfirmItem>
               </ConfirmContent>
               <ModalButtons>
-                <BackButton onClick={() => setShowConfirmModal(false)}>
+                <BackButton type="button" onClick={() => setShowConfirmModal(false)}>
                   修正する
                 </BackButton>
-                <SubmitButton onClick={handleConfirmSubmit}>
+                <SubmitButton as="button" type="button" onClick={handleConfirmSubmit}>
                   送信する
                 </SubmitButton>
               </ModalButtons>
@@ -326,7 +302,8 @@ const Contacts: React.FC = () => {
   );
 };
 
-// スタイルコンポーネント
+// --- styled-components（ファイル下部に配置） ---
+
 const ContactContainer = styled.div`
   max-width: 1200px;
   margin: 2rem auto;
@@ -341,11 +318,11 @@ const HeroSection = styled.section`
   padding: 2rem 2rem;
   text-align: center;
   background: linear-gradient(120deg,
-    rgba(255, 133, 202, 0.2) 0%,
-    rgba(193, 151, 255, 0.2) 50%,
-    rgba(133, 234, 255, 0.2) 70%,
-    rgba(177, 227, 59, 0.2) 90%,
-    rgba(243, 188, 22, 0.2) 100%
+      rgba(255, 133, 202, 0.2) 0%,
+      rgba(193, 151, 255, 0.2) 50%,
+      rgba(133, 234, 255, 0.2) 70%,
+      rgba(177, 227, 59, 0.2) 90%,
+      rgba(243, 188, 22, 0.2) 100%
   );
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
@@ -362,7 +339,6 @@ const PageTitle = styled.h1`
   margin: 2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-
   &::after {
     content: '';
     position: absolute;
@@ -390,6 +366,118 @@ const LeadText = styled.p`
   line-height: 2.2;
   font-weight: 500;
   letter-spacing: 0.02em;
+`;
+
+const SectionTitle = styled.h2`
+  font-size: 2rem;
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  position: relative;
+  padding: 0 0 0.5rem 0;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 3px;
+    background: linear-gradient(90deg,
+      rgba(255, 133, 202, 0.5) 0%,
+      rgba(193, 151, 255, 0.5) 50%,
+      rgba(133, 234, 255, 0.5) 70%,
+      rgba(177, 227, 59, 0.5) 90%,
+      rgba(243, 188, 22, 0.5) 100%
+    );
+  }
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    margin: 0 0 2rem 0;
+    padding: 0 0 0.3rem 0;
+  }
+`;
+
+const BookingSection = styled.section`
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto 4rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+`;
+
+const BookingDescription = styled.p`
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.8;
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+`;
+
+const LineButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+`;
+
+const CustomLineButton = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(120deg, #ff85ca, #85eaff);
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  &:hover {
+    transform: scale(1.05);
+  }
+  @media (max-width: 768px) {
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+  }
+`;
+
+const FormTitle = styled.h2`
+  font-size: 2rem;
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  position: relative;
+  padding: 0 0 0.5rem 0;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 350px;
+    height: 3px;
+    background: linear-gradient(90deg,
+      rgba(255, 133, 202, 0.5) 0%,
+      rgba(193, 151, 255, 0.5) 50%,
+      rgba(133, 234, 255, 0.5) 70%,
+      rgba(177, 227, 59, 0.5) 90%,
+      rgba(243, 188, 22, 0.5) 100%
+    );
+  }
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    margin: 0 0 2rem 0;
+    padding: 0 0 0.3rem 0;
+  }
 `;
 
 const FormSection = styled.section`
@@ -433,7 +521,6 @@ const Input = styled.input`
   border-radius: 10px;
   font-size: 1rem;
   transition: all 0.3s ease;
-
   &:focus {
     outline: none;
     border-color: #c197ff;
@@ -448,7 +535,6 @@ const Textarea = styled.textarea`
   font-size: 1rem;
   resize: vertical;
   transition: all 0.3s ease;
-
   &:focus {
     outline: none;
     border-color: #c197ff;
@@ -461,13 +547,11 @@ const PrivacyCheck = styled.label`
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-
   input {
     width: 1.2rem;
     height: 1.2rem;
   }
-
-  span {
+  span, label {
     color: #666;
   }
 `;
@@ -482,11 +566,9 @@ const SubmitButton = styled.button`
   font-weight: bold;
   cursor: url("/images/hude.svg") 0 20, pointer;
   transition: transform 0.3s ease;
-
   &:hover {
     transform: translateY(-2px);
   }
-
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
@@ -498,21 +580,20 @@ const FAQSection = styled.section`
   margin-top: 4rem;
 `;
 
-const SectionTitle = styled.h2`
+const QATitle = styled.h2`
   font-size: 2rem;
   text-align: center;
   margin: 0 0 1.5rem 0;
   color: #333;
   position: relative;
   padding: 0 0 0.5rem 0;
-
   &::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 130px;
+    width: 230px;
     height: 3px;
     background: linear-gradient(90deg,
       rgba(255, 133, 202, 0.5) 0%,
@@ -522,7 +603,6 @@ const SectionTitle = styled.h2`
       rgba(243, 188, 22, 0.5) 100%
     );
   }
-
   @media (max-width: 768px) {
     font-size: 1.2rem;
     margin: 0 0 2rem 0;
@@ -547,11 +627,9 @@ const FAQQuestion = styled.h3`
   font-size: 1.1rem;
   color: #333;
   margin-bottom: 0.5rem;
-
   @media (max-width: 768px) {
     font-size: 0.9rem;
   }
-
   &::before {
     content: "Q. ";
     color: #ff85ca;
@@ -562,7 +640,6 @@ const FAQQuestion = styled.h3`
 const FAQAnswer = styled.p`
   color: #666;
   line-height: 1.6;
-
   &::before {
     content: "A. ";
     color: #85eaff;
@@ -640,7 +717,6 @@ const BackButton = styled.button`
   font-weight: bold;
   cursor: url("/images/hude.svg") 0 20, pointer;
   transition: background-color 0.3s ease;
-
   &:hover {
     background: #d1d5db;
   }
@@ -655,7 +731,6 @@ const ActionButton = styled.a`
   font-weight: bold;
   cursor: url("/images/hude.svg") 0 20, pointer;
   transition: transform 0.3s ease;
-
   &:hover {
     transform: translateY(-2px);
   }
@@ -688,159 +763,5 @@ const faqs = [
     answer: "銀行振込、クレジットカード、でのお支払いに対応しております。"
   }
 ];
-
-// スタイルコンポーネントの更新
-const BookingSection = styled.section`
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto 4rem;
-  padding: 2rem;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-
-`;
-
-const BookingDescription = styled.p`
-  text-align: center;
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 2rem;
-  line-height: 1.8;
-
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-`;
-
-const LineButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-`;
-
-const CustomLineButton = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: linear-gradient(120deg, #ff85ca, #85eaff);
-  color: white;
-  padding: 0.8rem 2rem;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.2rem;
-  transition: transform 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    transform: scale(1.05);
-  }
-
-  @media (max-width: 768px) {
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
-  }
-`;
-
-
-const FormTitle = styled.h2`
-font-size: 2rem;
-  text-align: center;
-  margin: 0 0 1.5rem 0;
-  color: #333;
-  position: relative;
-  padding: 0 0 0.5rem 0;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 350px;
-    height: 3px;
-    background: linear-gradient(90deg,
-      rgba(255, 133, 202, 0.5) 0%,
-      rgba(193, 151, 255, 0.5) 50%,
-      rgba(133, 234, 255, 0.5) 70%,
-      rgba(177, 227, 59, 0.5) 90%,
-      rgba(243, 188, 22, 0.5) 100%
-    );
-  }
-
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
-    margin: 0 0 2rem 0;
-    padding: 0 0 0.3rem 0;
-
-      &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 230px;
-    height: 3px;
-    background: linear-gradient(90deg,
-      rgba(255, 133, 202, 0.5) 0%,
-      rgba(193, 151, 255, 0.5) 50%,
-      rgba(133, 234, 255, 0.5) 70%,
-      rgba(177, 227, 59, 0.5) 90%,
-      rgba(243, 188, 22, 0.5) 100%
-    );
-  }
-`;
-const QATitle = styled.h2`
-font-size: 2rem;
-  text-align: center;
-  margin: 0 0 1.5rem 0;
-  color: #333;
-  position: relative;
-  padding: 0 0 0.5rem 0;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 230px;
-    height: 3px;
-    background: linear-gradient(90deg,
-      rgba(255, 133, 202, 0.5) 0%,
-      rgba(193, 151, 255, 0.5) 50%,
-      rgba(133, 234, 255, 0.5) 70%,
-      rgba(177, 227, 59, 0.5) 90%,
-      rgba(243, 188, 22, 0.5) 100%
-    );
-  }
-
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
-    margin: 0 0 2rem 0;
-    padding: 0 0 0.3rem 0;
-
-    &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 140px;
-    height: 3px;
-    background: linear-gradient(90deg,
-      rgba(255, 133, 202, 0.5) 0%,
-      rgba(193, 151, 255, 0.5) 50%,
-      rgba(133, 234, 255, 0.5) 70%,
-      rgba(177, 227, 59, 0.5) 90%,
-      rgba(243, 188, 22, 0.5) 100%
-    );
-  }
-`;
-
 
 export default Contacts;

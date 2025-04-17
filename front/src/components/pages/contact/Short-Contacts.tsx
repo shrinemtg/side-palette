@@ -2,33 +2,26 @@ import styled from 'styled-components';
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-const ShortContact = () => {
+const ShortContact: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const buttonRef = useRef<HTMLAnchorElement>(null);
   const router = useRouter();
   const isHomePage = router.pathname === '/';
 
   useEffect(() => {
-    // ホームページ以外では常に表示
     if (!isHomePage) {
       setIsVisible(true);
       return;
     }
-
     const handleScroll = () => {
       if (buttonRef.current) {
         const scrollPosition = window.scrollY;
         const windowHeight = window.innerHeight;
-        // 画面の高さの50%以上スクロールしたら表示
         setIsVisible(scrollPosition > windowHeight * 0.5);
       }
     };
-
-    // スクロールイベントの登録
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // 初期表示時にもチェック
-
-    // クリーンアップ関数
+    handleScroll();
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -98,7 +91,7 @@ const FixedCTAButton = styled.a`
         bottom: 1rem;
         writing-mode: vertical-rl;
         text-orientation: upright;
-        padding: 1.5rem 0.75rem;
+        padding: 0.8rem 0.75rem;
     font-size: 0.8rem;
         letter-spacing: 0.2em;
     }

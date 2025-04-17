@@ -5,11 +5,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
-// GSAPプラグインの登録
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
 // 固定のアートワーク画像配列
 const artworks = [
   '/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-01.png',
@@ -37,7 +32,6 @@ const artworks = [
   '/portfolios/youtube/yorusizi-03.jpg',
 ] as const;
 
-// 初期状態として固定の配列を使用
 const initialGridItems = artworks.map((url, index) => ({
   id: index,
   imageUrl: url
@@ -48,30 +42,24 @@ interface GridItemData {
   imageUrl: string;
 }
 
-interface StyledGridItemProps {
-  $isActive: boolean;
-  $isReverse: boolean;
-}
-
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [gridItems, setGridItems] = useState<GridItemData[]>(initialGridItems);
-  const [mounted, setMounted] = useState(false);
 
-  // マウント状態の管理
+  // GSAPプラグイン登録（クライアントのみ）
   useEffect(() => {
-    setMounted(true);
+    if (typeof window !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+    }
   }, []);
 
   // アニメーションの初期化
   useIsomorphicLayoutEffect(() => {
-    if (!mounted) return;
-
+    if (typeof window === 'undefined') return;
     const container = containerRef.current;
     const title = titleRef.current;
     if (!container || !title) return;
-
     const gridElements = container.querySelectorAll('.grid-item');
     const gridAnimation = gsap.fromTo(gridElements,
       { opacity: 0, scale: 0.8 },
@@ -83,8 +71,6 @@ const HeroSection = () => {
         ease: "power3.out"
       }
     );
-
-    // タイトルのアニメーション
     const titleAnimation = gsap.fromTo(title,
       { y: 100, opacity: 0 },
       {
@@ -94,36 +80,30 @@ const HeroSection = () => {
         ease: "power4.out"
       }
     );
-
     return () => {
       gridAnimation.kill();
       titleAnimation.kill();
     };
-  }, [mounted]);
+  }, []);
 
-  // シャッフル処理
+  // シャッフル処理（クライアントのみ）
   useEffect(() => {
-    if (!mounted) return;
-
-    // クライアントサイドでのみシャッフルを実行
+    if (typeof window === 'undefined') return;
     const shuffledItems = [...initialGridItems];
     for (let i = shuffledItems.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffledItems[i], shuffledItems[j]] = [shuffledItems[j], shuffledItems[i]];
     }
-
     setGridItems(shuffledItems);
-  }, [mounted]);
+  }, []);
 
   // マウスイベントハンドラ
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!mounted) return;
-
+    if (typeof window === 'undefined') return;
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
     const x = (clientX / innerWidth) * 2 - 1;
     const y = (clientY / innerHeight) * 2 - 1;
-
     const gridElements = document.querySelectorAll('.grid-item');
     gridElements.forEach((element, i) => {
       gsap.to(element, {
@@ -136,8 +116,7 @@ const HeroSection = () => {
   };
 
   const handleMouseLeave = () => {
-    if (!mounted) return;
-
+    if (typeof window === 'undefined') return;
     const gridElements = document.querySelectorAll('.grid-item');
     gridElements.forEach((element) => {
       gsap.to(element, {
@@ -149,7 +128,10 @@ const HeroSection = () => {
     });
   };
 
-  const content = (
+  // priorityは最初の1枚だけtrue
+  let prioritySet = false;
+
+  return (
     <HeroContainer
       ref={containerRef}
       onMouseMove={handleMouseMove}
@@ -159,45 +141,44 @@ const HeroSection = () => {
         <CarouselInner>
           {[...Array(4)].map((_, index) => (
             <div key={`grid-set-${index}`} className="grid-set">
-              {gridItems.map((item) => (
-                <StyledGridItem
-                  key={`${index}-${item.id}`}
-                  className="grid-item"
-                  $isActive={false}
-                  $isReverse={false}
-                >
-                  <Image
-                    src={item.imageUrl}
-                    alt=""
-                    fill
-                    sizes="(max-width: 768px) 33vw, 16vw"
-                    style={{ objectFit: 'cover' }}
-                    priority={index === 0}
-                  />
-                </StyledGridItem>
-              ))}
+              {gridItems.map((item, i) => {
+                let priority = false;
+                if (!prioritySet && index === 0 && i === 0) {
+                  priority = true;
+                  prioritySet = true;
+                }
+                return (
+                  <StyledGridItem
+                    key={`${index}-${item.id}`}
+                    className="grid-item"
+                  >
+                    <Image
+                      src={item.imageUrl}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 33vw, 16vw"
+                      style={{ objectFit: 'cover' }}
+                      priority={priority}
+                    />
+                  </StyledGridItem>
+                );
+              })}
             </div>
           ))}
         </CarouselInner>
       </CarouselWrapper>
-
       <TitleWrapper>
         <ClipTitle ref={titleRef}>
           Side Palette
         </ClipTitle>
       </TitleWrapper>
-
-      {mounted && (
-        <ScrollDownIcon>
-          <span></span>
-          <span></span>
-          <span></span>
-        </ScrollDownIcon>
-      )}
+      <ScrollDownIcon>
+        <span></span>
+        <span></span>
+        <span></span>
+      </ScrollDownIcon>
     </HeroContainer>
   );
-
-  return content;
 };
 
 // コンテナのスタイル
@@ -286,7 +267,7 @@ const CarouselInner = styled.div`
 `;
 
 // グリッドアイテムのスタイル
-const StyledGridItem = styled.div<StyledGridItemProps>`
+const StyledGridItem = styled.div`
   width: 100%;
   aspect-ratio: 1;
   overflow: hidden;
