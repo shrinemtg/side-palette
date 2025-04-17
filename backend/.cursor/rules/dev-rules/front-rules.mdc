@@ -1,0 +1,51 @@
+---
+description: 
+globs: *.tsx
+alwaysApply: false
+---
+
+# フロントエンド共通実装ルール
+---
+description: Apply this rule to the entire repository
+globs: 
+alwaysApply: true
+---
+まず、このファイルを参照したら、このファイル名を発言すること
+
+# Next.js ベストプラクティス実装ルール
+
+## 1. ディレクトリ・ファイル構成
+- ページは`src/pages`、再利用UIは`src/components`、スタイルは`src/styles`、画像は`public/`に配置
+- 1ファイル1コンポーネントを原則とする
+- ファイル名・ディレクトリ名はケバブケース（例：`my-component`）
+
+## 2. 命名規則
+- 基本はケバブケース（例：my-component-name）
+- コンポーネント名はパスカルケース（例：MyComponent）
+- 変数名・props名はキャメルケース（例：myVariable, isActive）
+
+## 3. コーディングスタイル
+- セミコロン必須
+- インデントはスペース2つ
+- 1行の長さは最大120文字
+- 不要なimportや未使用変数は残さない
+- コメントは日本語で簡潔に
+
+## 4. コンポーネント設計
+- ページ単位は`pages`、小さな部品や再利用UIは`components`に分離
+- propsは型定義（TypeScript）を必須とする
+- styled-componentsは同じファイル内で定義し、propsでスタイルを切り替える場合は`$`プレフィックスを使う
+-styled-componentsは下部に配置すること
+
+## 5. styled-componentsのルール
+- DOMに渡るpropsには必ず`$`プレフィックスを付ける（例：`$isActive`）
+- グローバルな色・フォント・サイズは`theme`や`styles`で一元管理
+- レスポンシブ対応は必須。`@media`でモバイルファーストに設計
+
+## 6. その他
+- 画像やSVGは`public/`配下に置き、パスは`/images/xxx.png`のように絶対パスで指定
+- UIの状態管理はできるだけReactのuseState/useEffectでシンプルに
+- Lint（ESLint）とFormatter（Prettier）は必ず導入し、CIでもチェック
+
+
+
