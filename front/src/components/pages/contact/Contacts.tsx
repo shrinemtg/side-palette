@@ -112,7 +112,7 @@ const Contacts: React.FC = () => {
             お客様のお悩みを是非お聞かせください
           </BookingDescription>
           <LineButtonContainer>
-            <CustomLineButton href='https://lin.ee/BFEMIE0'>
+            <CustomLineButton href='/contact/line-qr'>
               <Image
                 width={24}
                 height={24}
