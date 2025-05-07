@@ -23,15 +23,24 @@ const nextConfig = {
               manifest-src 'self';
               base-uri 'self';
               form-action 'self';
-            `.replace(/\s+/g, ' ').trim()
-          }
-        ]
-      }
-    ];
+            `
+              .replace(/\s+/g, ' ')
+              .trim(),
+          },
+        ],
+      },
+    ]
   },
   images: {
-    domains: ['img.icons8.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'img.icons8.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

@@ -6,7 +6,7 @@ alwaysApply: false
  # nextjs-rules.mdc
 ---
 description: Apply this rule to the entire repository
-globs: 
+globs:
 alwaysApply: true
 ---
 まず、このファイルを参照したら、このファイル名を発言すること
@@ -16,22 +16,20 @@ alwaysApply: true
 
 ## 1. ルーティングとファイル構造
 
-### ディレクトリ構造例
+### 選択基準
+- 小中規模でCSR中心なら `pages` Router を採用
+- 初期表示速度やSEO、スケーラビリティが必要なら `app` Router を段階的に導入
+
+### ディレクトリ構造例（pages Routerベース）
 （ここにプロジェクトのディレクトリ構成例を記載）
 
 ## 2. コンポーネント設計
 
-### Server Components
-- **デフォルトで Server Components を使用**
-- **データフェッチングを含むコンポーネントは Server Components で実装**
-- SEO 対応が必要なコンポーネントは Server Components で実装
+### 基本原則
 
-### Client Components
-以下の場合のみ Client Components を使用:
-- ブラウザ API を使用する場合
-- イベントリスナーが必要な場合
-- React hooks を使用する場合
-- クライアントサイドの状態管理が必要な場合
+- デフォルトは **Client Components（CSR）**
+- SEOが必要 or 事前にデータ取得したいページは **getStaticProps** を使った SSG
+- App Router 導入時は SEOや初期表示に Server Components を活用
 
 ### 'use client' ディレクティブ
 ```typescript
@@ -40,11 +38,9 @@ alwaysApply: true
 ```
 
 ## 3. API実装
-- データフェッチ用のAPIはなるべく作成しないでください。サーバーコンポーネントでのデータフェッチを強く推奨します。
-- `app/api`ディレクトリ内に API エンドポイントを作成
-- HTTP メソッドごとに適切なハンドラーを実装:
-- GET の API はなるべく作らないでください。データフェッチはサーバーコンポーネントでお願いします。
-- API の仕様は POST/PATCH/PUT/DELETE のみに絞ってください。
+- GET APIはなるべく避け、SSG（静的生成）やISRを活用
+- POST/PATCH/PUT/DELETE のみ API Route で実装
+- 認証やフォーム処理など一部は `pages/api` または `app/api` を使用
 
 ```typescript
 // app/api/articles/route.ts
