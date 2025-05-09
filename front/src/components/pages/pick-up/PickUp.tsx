@@ -395,10 +395,17 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
   // スワイプ用の座標管理
   const touchStartX = React.useRef<number | null>(null)
   const touchEndX = React.useRef<number | null>(null)
+  // 画像ロード状態管理
+  const [loaded, setLoaded] = useState<boolean[]>(() => images.map(() => false))
+  // 表示中の画像index（アニメーション終了後に切り替え）
+  const [visibleIndex, setVisibleIndex] = useState(0)
 
-  const handleIndicatorClick = useCallback((index: number) => {
-    setCurrentIndex(index)
-  }, [])
+  const handleIndicatorClick = useCallback(
+    (index: number) => {
+      if (index !== currentIndex) setCurrentIndex(index)
+    },
+    [currentIndex],
+  )
 
   // スワイプ開始
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -424,23 +431,56 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
     touchEndX.current = null
   }
 
+  // 画像ロード時にstate更新
+  const handleImageLoad = (idx: number) => {
+    setLoaded((prev) => {
+      const next = [...prev]
+      next[idx] = true
+      return next
+    })
+  }
+
+  // フェードアニメーション終了時にvisibleIndexを切り替え
+  const handleTransitionEnd = (idx: number) => {
+    if (idx === currentIndex) {
+      setVisibleIndex(idx)
+    }
+  }
+
   return (
     <SlideshowContainer onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
-      {images.map((image, index) => (
-        <SlideImage key={image} $isActive={index === currentIndex}>
-          <Image
+      {images.map((image, index) => {
+        // アクティブまたは直前のvisibleIndexのみDOMに残す
+        if (index !== currentIndex && index !== visibleIndex) return null
+        const isActive = index === currentIndex
+        return (
+          <SlideImage
             key={image}
-            src={image}
-            alt={`slide-${index + 1}`}
-            fill
-            sizes='(max-width: 768px) 100vw, 50vw'
-            priority={index === 0}
-            placeholder='blur'
-            blurDataURL='/images/placeholder.png'
-            style={{ objectFit: image.includes('rogo') ? 'contain' : 'cover' }}
-          />
-        </SlideImage>
-      ))}
+            $isActive={isActive}
+            style={{
+              opacity: loaded[index] ? (isActive ? 1 : 0) : 0,
+              transition: 'opacity 0.5s ease-in-out',
+              zIndex: isActive ? 2 : 1,
+              pointerEvents: isActive ? 'auto' : 'none',
+              display: loaded[index] || isActive ? 'block' : 'none',
+            }}
+            onTransitionEnd={() => handleTransitionEnd(index)}
+          >
+            <Image
+              key={image}
+              src={image}
+              alt={`slide-${index + 1}`}
+              fill
+              sizes='(max-width: 768px) 100vw, 50vw'
+              priority={index === 0}
+              placeholder='blur'
+              blurDataURL='/images/placeholder.png'
+              style={{ objectFit: image.includes('rogo') ? 'contain' : 'cover' }}
+              onLoadingComplete={() => handleImageLoad(index)}
+            />
+          </SlideImage>
+        )
+      })}
       <SlideshowIndicators>
         {images.map((_, index) => (
           <Indicator
