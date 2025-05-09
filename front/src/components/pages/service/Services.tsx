@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Klee_One } from 'next/font/google'
@@ -251,6 +251,18 @@ const Services = () => {
     modalTouchStartX.current = null
     modalTouchEndX.current = null
   }
+
+  // モーダル表示中はbodyスクロール禁止
+  useEffect(() => {
+    if (selectedService) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [selectedService])
 
   return (
     <Container>
