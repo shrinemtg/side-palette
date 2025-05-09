@@ -461,8 +461,6 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
             key={image}
             $isActive={isActive}
             style={{
-              opacity: loaded[index] ? (isActive ? 1 : 0) : 0,
-              transition: 'opacity 0.5s ease-in-out',
               zIndex: isActive ? 2 : 1,
               pointerEvents: isActive ? 'auto' : 'none',
               display: loaded[index] || isActive ? 'block' : 'none',
