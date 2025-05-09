@@ -391,20 +391,17 @@ const Indicator = styled.button<ActiveProps>`
 
 // スライドショーコンポーネント
 const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  // スワイプ用の座標管理
+  const [visibleIndex, setVisibleIndex] = useState(0) // 現在表示中
+  const [nextIndex, setNextIndex] = useState<number | null>(null) // 次に表示したい画像
+  const [loaded, setLoaded] = useState<boolean[]>(() => images.map(() => false))
   const touchStartX = React.useRef<number | null>(null)
   const touchEndX = React.useRef<number | null>(null)
-  // 画像ロード状態管理
-  const [loaded, setLoaded] = useState<boolean[]>(() => images.map(() => false))
-  // 表示中の画像index（アニメーション終了後に切り替え）
-  const [visibleIndex, setVisibleIndex] = useState(0)
 
   const handleIndicatorClick = useCallback(
     (index: number) => {
-      if (index !== currentIndex) setCurrentIndex(index)
+      if (index !== visibleIndex) setNextIndex(index)
     },
-    [currentIndex],
+    [visibleIndex],
   )
 
   // スワイプ開始
@@ -421,11 +418,9 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
     const distance = touchStartX.current - touchEndX.current
     // しきい値（30px以上の移動でスワイプと判定）
     if (distance > 30) {
-      // 左スワイプ（次へ）
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+      setNextIndex((visibleIndex + 1) % images.length)
     } else if (distance < -30) {
-      // 右スワイプ（前へ）
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length)
+      setNextIndex((visibleIndex - 1 + images.length) % images.length)
     }
     touchStartX.current = null
     touchEndX.current = null
@@ -438,21 +433,19 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
       next[idx] = true
       return next
     })
-  }
-
-  // フェードアニメーション終了時にvisibleIndexを切り替え
-  const handleTransitionEnd = (idx: number) => {
-    if (idx === currentIndex) {
-      setVisibleIndex(idx)
+    // nextIndexの画像がロードされたらvisibleIndexを切り替え
+    if (nextIndex !== null && idx === nextIndex) {
+      setVisibleIndex(nextIndex)
+      setNextIndex(null)
     }
   }
 
   return (
     <SlideshowContainer onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
       {images.map((image, index) => {
-        // アクティブまたは直前のvisibleIndexのみDOMに残す
-        if (index !== currentIndex && index !== visibleIndex) return null
-        const isActive = index === currentIndex
+        // visibleIndexとnextIndexの画像のみDOMに残す
+        if (index !== visibleIndex && index !== nextIndex) return null
+        const isActive = index === (nextIndex !== null ? nextIndex : visibleIndex)
         return (
           <SlideImage
             key={image}
@@ -464,7 +457,6 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
               pointerEvents: isActive ? 'auto' : 'none',
               display: loaded[index] || isActive ? 'block' : 'none',
             }}
-            onTransitionEnd={() => handleTransitionEnd(index)}
           >
             <Image
               key={image}
@@ -486,7 +478,7 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
         {images.map((_, index) => (
           <Indicator
             key={index}
-            $isActive={index === currentIndex}
+            $isActive={index === visibleIndex}
             onClick={() => handleIndicatorClick(index)}
             type='button'
             aria-label={`スライド ${index + 1} へ移動`}
