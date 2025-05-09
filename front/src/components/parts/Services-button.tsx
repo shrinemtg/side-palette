@@ -1,31 +1,48 @@
 import Link from 'next/link'
 import styled from 'styled-components'
+import { useEffect, useState } from 'react'
 
 const workImages = [
   '/portfolios/rogo-design/rogo-design-01.jpg',
   '/portfolios/welcome-board/welcome-board-02.jpg',
   '/portfolios/business-card/side-palette-rogo.jpg',
   '/portfolios/order-illust/order-illust-01.jpg',
-  '/portfolios/graphic/label-asao.png',
+  '/portfolios/graphic/label-concon.png',
   '/portfolios/youtube/yorusizi-01.jpg',
+  '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-02.jpg',
+  '/portfolios/monkey-and-bird/monkey-and-bird-01.jpg',
+  '/portfolios/eto-ema-taishido/taishido-kigan-ema-01.jpg',
 ]
 
-const ServicesButtonBlock = () => (
-  <BlockContainer>
-    <ServiceTitle>Service</ServiceTitle>
-    <SliderWrapper>
-      <SliderTrack>
-        {[...workImages, ...workImages].map((src, idx) => (
-          <WorkImage key={src + idx} src={src} alt={`制作実績${(idx % workImages.length) + 1}`} />
-        ))}
-      </SliderTrack>
-    </SliderWrapper>
-    <CatchCopy>このような制作を行っています。詳細は各実績をご覧ください。</CatchCopy>
-    <Link href='/service' passHref legacyBehavior>
-      <ServiceButton>サービス一覧はこちら</ServiceButton>
-    </Link>
-  </BlockContainer>
-)
+const ServicesButtonBlock = () => {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 480)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  return (
+    <BlockContainer>
+      <ServiceTitle>Service</ServiceTitle>
+      <SliderWrapper>
+        <SliderTrack>
+          {[...workImages, ...workImages].map((src, idx) => (
+            <WorkImage key={src + idx} src={src} alt={`制作実績${(idx % workImages.length) + 1}`} />
+          ))}
+        </SliderTrack>
+      </SliderWrapper>
+      <CatchCopy>
+        このような制作を行っています。{isMobile && <br />}
+        詳細は各実績をご覧ください。
+      </CatchCopy>
+      <Link href='/service' passHref legacyBehavior>
+        <ServiceButton>サービス一覧はこちら</ServiceButton>
+      </Link>
+    </BlockContainer>
+  )
+}
 
 export default ServicesButtonBlock
 
@@ -102,8 +119,9 @@ const CatchCopy = styled.div`
   @media (max-width: 480px) {
     font-size: 0.92rem;
     margin: 1.2rem 0.5rem 1.2rem 0.5rem;
-    word-break: keep-all;
-    line-break: strict;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-all;
   }
 `
 
