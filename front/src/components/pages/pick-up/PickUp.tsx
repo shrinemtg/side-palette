@@ -425,13 +425,15 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
   return (
     <SlideshowContainer onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
       {images.map((image, index) => (
-        <SlideImage key={image} $isActive={index === currentIndex}>
+        <SlideImage key={index} $isActive={index === currentIndex}>
           <Image
             src={image}
             alt={`slide-${index + 1}`}
             fill
             sizes='(max-width: 768px) 100vw, 50vw'
             priority={index === 0}
+            placeholder='blur'
+            blurDataURL='/images/placeholder.png'
             style={{ objectFit: image.includes('rogo') ? 'contain' : 'cover' }}
           />
         </SlideImage>
