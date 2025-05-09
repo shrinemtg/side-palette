@@ -136,13 +136,14 @@ const WorkSection = styled.section<ReverseProps>`
 const ImageContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 26rem;
+  aspect-ratio: 3/2;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
-    height: 20rem;
+    aspect-ratio: 3/2;
+    max-height: 300px;
   }
 `
 
