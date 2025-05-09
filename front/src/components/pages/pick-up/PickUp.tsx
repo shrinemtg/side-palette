@@ -136,14 +136,13 @@ const WorkSection = styled.section<ReverseProps>`
 const ImageContainer = styled.div`
   position: relative;
   width: 100%;
-  aspect-ratio: 3/2;
+  height: 26rem;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
-    aspect-ratio: 3/2;
-    max-height: 300px;
+    height: 20rem;
   }
 `
 
@@ -428,8 +427,9 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
   return (
     <SlideshowContainer onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
       {images.map((image, index) => (
-        <SlideImage key={index} $isActive={index === currentIndex}>
+        <SlideImage key={image} $isActive={index === currentIndex}>
           <Image
+            key={image}
             src={image}
             alt={`slide-${index + 1}`}
             fill
