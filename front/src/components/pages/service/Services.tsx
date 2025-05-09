@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Klee_One } from 'next/font/google'
@@ -200,7 +200,9 @@ const services: ServiceItem[] = [
 const Services = () => {
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [imageLoaded, setImageLoaded] = useState(false)
+  // スワイプ用の座標管理
+  const modalTouchStartX = useRef<number | null>(null)
+  const modalTouchEndX = useRef<number | null>(null)
 
   // サービス選択時のコールバック
   const handleSelectService = useCallback((service: ServiceItem) => {
@@ -220,26 +222,34 @@ const Services = () => {
     setCurrentImageIndex(index)
   }, [])
 
-  // スライドショー自動切り替え
-  useEffect(() => {
-    if (selectedService && selectedService.images.length > 1) {
-      const timer = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % selectedService.images.length)
-      }, 5000)
-      return () => clearInterval(timer)
+  // スワイプ開始
+  const handleModalTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    modalTouchStartX.current = e.touches[0].clientX
+  }
+  // スワイプ移動
+  const handleModalTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    modalTouchEndX.current = e.touches[0].clientX
+  }
+  // スワイプ終了
+  const handleModalTouchEnd = () => {
+    if (
+      !selectedService?.images ||
+      selectedService.images.length <= 1 ||
+      modalTouchStartX.current === null ||
+      modalTouchEndX.current === null
+    )
+      return
+    const distance = modalTouchStartX.current - modalTouchEndX.current
+    if (distance > 30) {
+      // 左スワイプ（次へ）
+      setCurrentImageIndex((prev) => (prev + 1) % selectedService.images!.length)
+    } else if (distance < -30) {
+      // 右スワイプ（前へ）
+      setCurrentImageIndex((prev) => (prev - 1 + selectedService.images!.length) % selectedService.images!.length)
     }
-    return undefined
-  }, [selectedService])
-
-  // 画像プリロード
-  useEffect(() => {
-    setImageLoaded(false)
-    if (selectedService) {
-      const img = new window.Image()
-      img.src = selectedService.images[currentImageIndex]
-      img.onload = () => setImageLoaded(true)
-    }
-  }, [selectedService, currentImageIndex])
+    modalTouchStartX.current = null
+    modalTouchEndX.current = null
+  }
 
   return (
     <Container>
@@ -289,16 +299,18 @@ const Services = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <ModalCloseButton onClick={() => setSelectedService(null)}>×</ModalCloseButton>
-              <ModalImageContainer>
-                {imageLoaded ? (
-                  <ModalImage
-                    src={selectedService.images[currentImageIndex]}
-                    alt={selectedService.title}
-                    onClick={nextImage}
-                  />
-                ) : (
-                  <ImagePlaceholder>画像を読み込み中...</ImagePlaceholder>
-                )}
+              <ModalImageContainer
+                onTouchStart={handleModalTouchStart}
+                onTouchMove={handleModalTouchMove}
+                onTouchEnd={handleModalTouchEnd}
+              >
+                {selectedService.images && selectedService.images.length > 0
+                  ? selectedService.images.map((img, idx) => (
+                      <ModalFadeImage key={img} $isActive={idx === currentImageIndex}>
+                        <ModalImage src={img} alt={selectedService.title} onClick={nextImage} />
+                      </ModalFadeImage>
+                    ))
+                  : null}
                 <SlideshowIndicators>
                   {selectedService.images.map((_, idx) => (
                     <Indicator
@@ -533,6 +545,7 @@ const ModalImageContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 300px;
   margin-bottom: 1.5rem;
   display: flex;
   justify-content: center;
@@ -652,14 +665,13 @@ const ProcessItem = styled.li`
   }
 `
 
-const ImagePlaceholder = styled.div`
+const ModalFadeImage = styled.div<{ $isActive: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5f5f5;
-  color: #666;
-  font-size: 1rem;
-  border-radius: 12px;
+  height: 100%;
+  opacity: ${(props) => (props.$isActive ? 1 : 0)};
+  transition: opacity 0.4s ease;
+  pointer-events: ${(props) => (props.$isActive ? 'auto' : 'none')};
 `
