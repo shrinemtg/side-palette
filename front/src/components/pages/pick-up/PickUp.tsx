@@ -486,6 +486,41 @@ const PickUp: React.FC = () => {
     return undefined
   }, [selectedWork])
 
+  // --- ここからモーダル用スワイプロジック追加 ---
+  // モーダル画像用スワイプ座標管理
+  const modalTouchStartX = React.useRef<number | null>(null)
+  const modalTouchEndX = React.useRef<number | null>(null)
+
+  // モーダル画像: スワイプ開始
+  const handleModalTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    modalTouchStartX.current = e.touches[0].clientX
+  }
+  // モーダル画像: スワイプ移動
+  const handleModalTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    modalTouchEndX.current = e.touches[0].clientX
+  }
+  // モーダル画像: スワイプ終了
+  const handleModalTouchEnd = () => {
+    if (
+      !selectedWork?.images ||
+      selectedWork.images.length <= 1 ||
+      modalTouchStartX.current === null ||
+      modalTouchEndX.current === null
+    )
+      return
+    const distance = modalTouchStartX.current - modalTouchEndX.current
+    if (distance > 30) {
+      // 左スワイプ（次へ）
+      setCurrentImageIndex((prev) => (prev + 1) % selectedWork.images!.length)
+    } else if (distance < -30) {
+      // 右スワイプ（前へ）
+      setCurrentImageIndex((prev) => (prev - 1 + selectedWork.images!.length) % selectedWork.images!.length)
+    }
+    modalTouchStartX.current = null
+    modalTouchEndX.current = null
+  }
+  // --- ここまで ---
+
   return (
     <PortfolioContainer id='pick-up'>
       <PageTitle>Pick Up</PageTitle>
@@ -540,7 +575,12 @@ const PickUp: React.FC = () => {
             <CloseButton onClick={handleCloseModal} type='button' aria-label='モーダルを閉じる'>
               ×
             </CloseButton>
-            <ModalImageContainer onClick={handleImageClick}>
+            <ModalImageContainer
+              onClick={handleImageClick}
+              onTouchStart={handleModalTouchStart}
+              onTouchMove={handleModalTouchMove}
+              onTouchEnd={handleModalTouchEnd}
+            >
               <ModalImage
                 src={selectedWork.images?.[currentImageIndex] || selectedWork.thumbnail}
                 alt={`${selectedWork.title} - 画像${currentImageIndex + 1}`}
