@@ -470,12 +470,13 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
               key={image}
               src={image}
               alt={`slide-${index + 1}`}
-              fill
+              width={600}
+              height={400}
               sizes='(max-width: 768px) 100vw, 50vw'
               priority={index === 0}
               placeholder='blur'
               blurDataURL='/images/placeholder.png'
-              style={{ objectFit: image.includes('rogo') ? 'contain' : 'cover' }}
+              style={{ objectFit: image.includes('rogo') ? 'contain' : 'cover', width: '100%', height: '100%' }}
               onLoadingComplete={() => handleImageLoad(index)}
             />
           </SlideImage>
@@ -626,7 +627,8 @@ const PickUp: React.FC = () => {
                     <ModalImage
                       src={img}
                       alt={`${selectedWork.title} - 画像${idx + 1}`}
-                      fill
+                      width={600}
+                      height={400}
                       sizes='(max-width: 768px) 100vw, 80vw'
                       priority={idx === 0}
                       style={{
@@ -639,7 +641,8 @@ const PickUp: React.FC = () => {
                 <ModalImage
                   src={selectedWork.thumbnail}
                   alt={selectedWork.title}
-                  fill
+                  width={600}
+                  height={400}
                   sizes='(max-width: 768px) 100vw, 80vw'
                   priority
                   style={{
