@@ -358,7 +358,7 @@ const SlideImage = styled.div<ActiveProps>`
   width: 100%;
   height: 100%;
   opacity: ${(props) => (props.$isActive ? 1 : 0)};
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
   animation: ${(props) => (props.$isActive ? fadeIn : 'none')} 0.5s ease-in-out;
   z-index: ${(props) => (props.$isActive ? 2 : 1)};
   pointer-events: ${(props) => (props.$isActive ? 'auto' : 'none')};
@@ -461,6 +461,8 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
             key={image}
             $isActive={isActive}
             style={{
+              opacity: loaded[index] ? (isActive ? 1 : 0) : 0,
+              transition: 'opacity 0.2s ease-in-out',
               zIndex: isActive ? 2 : 1,
               pointerEvents: isActive ? 'auto' : 'none',
               display: loaded[index] || isActive ? 'block' : 'none',
