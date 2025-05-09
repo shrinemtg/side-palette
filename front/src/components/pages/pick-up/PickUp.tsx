@@ -395,6 +395,8 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
   // スワイプ用の座標管理
   const touchStartX = React.useRef<number | null>(null)
   const touchEndX = React.useRef<number | null>(null)
+  // 画像ロード状態管理
+  const [loaded, setLoaded] = useState<boolean[]>(() => images.map(() => false))
 
   const handleIndicatorClick = useCallback((index: number) => {
     setCurrentIndex(index)
@@ -424,10 +426,23 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
     touchEndX.current = null
   }
 
+  // 画像ロード時にstate更新
+  const handleImageLoad = (idx: number) => {
+    setLoaded((prev) => {
+      const next = [...prev]
+      next[idx] = true
+      return next
+    })
+  }
+
   return (
     <SlideshowContainer onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
       {images.map((image, index) => (
-        <SlideImage key={image} $isActive={index === currentIndex}>
+        <SlideImage
+          key={image}
+          $isActive={index === currentIndex}
+          style={{ opacity: loaded[index] ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}
+        >
           <Image
             key={image}
             src={image}
@@ -438,6 +453,7 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
             placeholder='blur'
             blurDataURL='/images/placeholder.png'
             style={{ objectFit: image.includes('rogo') ? 'contain' : 'cover' }}
+            onLoadingComplete={() => handleImageLoad(index)}
           />
         </SlideImage>
       ))}
