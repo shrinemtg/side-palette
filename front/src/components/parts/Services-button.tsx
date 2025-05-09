@@ -66,7 +66,7 @@ const SliderTrack = styled.div`
   display: flex;
   align-items: center;
   width: fit-content;
-  animation: slide-left 18s linear infinite;
+  animation: slide-left 30s linear infinite;
   @keyframes slide-left {
     0% {
       transform: translateX(0);
@@ -81,7 +81,6 @@ const WorkImage = styled.img`
   width: 240px;
   height: 240px;
   object-fit: cover;
-  border-radius: 50%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border: 2px solid #fff;
   background: #eee;
@@ -99,13 +98,12 @@ const WorkImage = styled.img`
     height: 128px;
   }
   @media (max-width: 768px) {
-    width: 112px;
-    height: 112px;
+    width: 128px;
+    height: 128px;
   }
   @media (max-width: 480px) {
-    width: 80px;
-    height: 80px;
-    margin-right: 0.3rem;
+    width: 128px;
+    height: 128px;
   }
 `
 
