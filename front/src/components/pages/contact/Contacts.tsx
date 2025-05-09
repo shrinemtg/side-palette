@@ -76,17 +76,15 @@ const Contacts: React.FC = () => {
         <HeroSection>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <LeadText>
-              ご質問、お見積もり、ご相談等、
+              ご質問、お見積もり、ご相談等、お気軽にお問い合わせください。
               <br />
-              お気軽にお問い合わせください。
               <br />
-              営業時間外を除き
+              お問い合わせには、営業時間にもよりますが、 通常24時間以内に担当者よりご連絡いたします。
               <br />
-              24時間以内に担当者よりご連絡させていただきます。
               <br />
-              チャットまたは、お電話でのご相談は公式LINEより承っております
+              なお、チャットやお電話でのご相談をご希望の場合は、公式LINEをご利用ください。
               <br />
-              下記リンクよりお友達追加の方よろしくお願いいたします
+              下記リンクよりお友達追加をお願いいたします。
             </LeadText>
           </motion.div>
         </HeroSection>
@@ -95,21 +93,24 @@ const Contacts: React.FC = () => {
         <SectionTitle>公式LINE</SectionTitle>
         <BookingSection>
           <BookingDescription>
-            Side Palette公式LINEでは
+            Side Palette公式LINEでは、
             <br />
-            ご質問ご相談お見積もりがお電話でも可能です
+            お電話やチャットでのご質問、
             <br />
-            <br />
-            またLINEでしか得られない
-            <br />
-            お得な情報もございますので
-            <br />
-            ぜひ、公式LINEアカウントを
-            <br />
-            ご登録ください
+            ご相談、お見積もりがスムーズに行えます。
             <br />
             <br />
-            お客様のお悩みを是非お聞かせください
+            さらに、LINE友だち限定の
+            <br />
+            お得な情報もお届けします。
+            <br />
+            <br />
+            ぜひ、公式LINEアカウントへの
+            <br />
+            ご登録をお願いいたします！
+            <br />
+            <br />
+            どんな些細なことでも、お気軽にご相談ください。
           </BookingDescription>
           <LineButtonContainer>
             <CustomLineButton href='/contact/line-qr'>
@@ -316,9 +317,13 @@ const ContactContainer = styled.div`
 `
 
 const HeroSection = styled.section`
+  width: 100%;
   position: relative;
-  padding: 2rem 2rem;
+  margin: 0 auto 4rem;
+  padding: 1rem;
+  max-width: 800px;
   text-align: center;
+  border-radius: 20px;
   background: linear-gradient(
     120deg,
     rgba(255, 133, 202, 0.2) 0%,
@@ -328,10 +333,6 @@ const HeroSection = styled.section`
     rgba(243, 188, 22, 0.2) 100%
   );
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  margin: 0 auto 4rem auto;
-  max-width: 800px;
-  width: 100%;
 `
 
 const PageTitle = styled.h1`
@@ -373,7 +374,7 @@ const LeadText = styled.p`
 `
 
 const SectionTitle = styled.h2`
-  font-size: 2rem;
+  font-size: 2.5rem;
   text-align: center;
   margin: 0 0 1.5rem 0;
   color: #333;
@@ -385,8 +386,8 @@ const SectionTitle = styled.h2`
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 130px;
-    height: 3px;
+    width: 200px;
+    height: 2px;
     background: linear-gradient(
       90deg,
       rgba(255, 133, 202, 0.5) 0%,
@@ -397,9 +398,25 @@ const SectionTitle = styled.h2`
     );
   }
   @media (max-width: 768px) {
-    font-size: 1.2rem;
+    font-size: 2rem;
     margin: 0 0 2rem 0;
     padding: 0 0 0.3rem 0;
+     &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 133, 202, 0.5) 0%,
+      rgba(193, 151, 255, 0.5) 50%,
+      rgba(133, 234, 255, 0.5) 70%,
+      rgba(177, 227, 59, 0.5) 90%,
+      rgba(243, 188, 22, 0.5) 100%
+    );
   }
 `
 
@@ -421,7 +438,7 @@ const BookingDescription = styled.p`
   margin-bottom: 2rem;
   line-height: 1.8;
   @media (max-width: 768px) {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 `
 
@@ -483,6 +500,22 @@ const FormTitle = styled.h2`
     font-size: 1.2rem;
     margin: 0 0 2rem 0;
     padding: 0 0 0.3rem 0;
+      &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 133, 202, 0.5) 0%,
+      rgba(193, 151, 255, 0.5) 50%,
+      rgba(133, 234, 255, 0.5) 70%,
+      rgba(177, 227, 59, 0.5) 90%,
+      rgba(243, 188, 22, 0.5) 100%
+    );
   }
 `
 
@@ -617,6 +650,23 @@ const QATitle = styled.h2`
     font-size: 1.2rem;
     margin: 0 0 2rem 0;
     padding: 0 0 0.3rem 0;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 133, 202, 0.5) 0%,
+        rgba(193, 151, 255, 0.5) 50%,
+        rgba(133, 234, 255, 0.5) 70%,
+        rgba(177, 227, 59, 0.5) 90%,
+        rgba(243, 188, 22, 0.5) 100%
+      );
+    }
   }
 `
 
