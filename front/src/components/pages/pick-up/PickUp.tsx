@@ -1,82 +1,88 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
-import styled, { keyframes } from 'styled-components';
-import Image from 'next/image';
+import React, { useState, useEffect, useCallback, memo } from 'react'
+import styled, { keyframes } from 'styled-components'
+import Image from 'next/image'
 
 // 型定義
 interface WorkDetailsType {
-  title: string;
-  summary: string;
-  description: string;
-  thumbnail: string;
-  images?: string[];
+  title: string
+  summary: string
+  description: string
+  thumbnail: string
+  images?: string[]
 }
 
 interface SlideshowProps {
-  images: string[];
+  images: string[]
 }
 
 interface ActiveProps {
-  $isActive: boolean;
+  $isActive: boolean
 }
 
 interface ReverseProps {
-  $isReverse?: boolean;
+  $isReverse?: boolean
 }
 
 // ポートフォリオデータ
 const portfolioData: WorkDetailsType[] = [
   {
-    title: "スナック喫茶 モンキー&バード",
-    summary: "喫茶店・BARのキャラクターデザイン\nステンドグラスの鳥と壁紙の猿のオリジナルキャラクターを制作。レトロ調の色味で個性を出し、シンプルで親しみやすいデザインでキャラクターの性格が伝わるよう工夫しました。",
-    description: "<strong>「お店の核となるイメージキャラクターデザインが欲しい」</strong>喫茶店・BARを経営されているお客様からのご依頼で、Tシャツやグッズに使用するためのオリジナルキャラクターデザインを制作させていただきました。\n\nお客様のご希望により、色味はレトロ調にし、キャラクターに個性を持たせることを意識しました。リアルテイストではなく、イラストからキャラクターの簡単な性格や雰囲気が伝わるよう、シンプルで親しみやすいデザインに仕上げました。\n\nステンドグラスの鳥は、お店の雰囲気に合わせて色鮮やかながらも落ち着いたトーンで表現し、壁紙の猿のキャラクターは、遊び心がありつつもお店のコンセプトに合うようデザインしました。\n\nこれらのキャラクターが、お店の魅力をさらに引き立て、お客様に親しまれることを願っています。",
-    thumbnail: "/portfolios/monkey-and-bird/monkey-and-bird-01.jpg",
+    title: 'スナック喫茶 モンキー&バード',
+    summary:
+      '喫茶店・BARのキャラクターデザイン\nステンドグラスの鳥と壁紙の猿のオリジナルキャラクターを制作。レトロ調の色味で個性を出し、シンプルで親しみやすいデザインでキャラクターの性格が伝わるよう工夫しました。',
+    description:
+      '<strong>「お店の核となるイメージキャラクターデザインが欲しい」</strong>喫茶店・BARを経営されているお客様からのご依頼で、Tシャツやグッズに使用するためのオリジナルキャラクターデザインを制作させていただきました。\n\nお客様のご希望により、色味はレトロ調にし、キャラクターに個性を持たせることを意識しました。リアルテイストではなく、イラストからキャラクターの簡単な性格や雰囲気が伝わるよう、シンプルで親しみやすいデザインに仕上げました。\n\nステンドグラスの鳥は、お店の雰囲気に合わせて色鮮やかながらも落ち着いたトーンで表現し、壁紙の猿のキャラクターは、遊び心がありつつもお店のコンセプトに合うようデザインしました。\n\nこれらのキャラクターが、お店の魅力をさらに引き立て、お客様に親しまれることを願っています。',
+    thumbnail: '/portfolios/monkey-and-bird/monkey-and-bird-01.jpg',
     images: [
-      "/portfolios/monkey-and-bird/monkey-and-bird-01.jpg",
-      "/portfolios/monkey-and-bird/monkey-and-bird-02.jpg",
-      "/portfolios/monkey-and-bird/monkey-and-bird-character-01.jpg",
-      "/portfolios/monkey-and-bird/monkey-and-bird-character-02.jpg",
-      "/portfolios/monkey-and-bird/monkey-and-bird-character-03.jpg",
-      "/portfolios/monkey-and-bird/monkey-and-bird-rogo.jpg"
-    ]
+      '/portfolios/monkey-and-bird/monkey-and-bird-01.jpg',
+      '/portfolios/monkey-and-bird/monkey-and-bird-02.jpg',
+      '/portfolios/monkey-and-bird/monkey-and-bird-character-01.jpg',
+      '/portfolios/monkey-and-bird/monkey-and-bird-character-02.jpg',
+      '/portfolios/monkey-and-bird/monkey-and-bird-character-03.jpg',
+      '/portfolios/monkey-and-bird/monkey-and-bird-rogo.jpg',
+    ],
   },
   {
-    title: "大館神明社-絵馬デザイン",
-    summary: "大館神明社様の干支絵馬デザイン\n2024年と2025年の干支絵馬を制作。2024年は辰年の絵馬に参拝者を見守る思いを込め、2025年は災害から人々を守り、竹のように力強く成長する未来を願い、蛇をデザインしました。",
-    description: "<strong>「12年飾ることのできる大絵馬を描いてほしい」</strong>大館神明社様からのご依頼により、2024年からの干支絵馬のイラストを制作させていただきました。\n\n単なるイラストではなく、目的を持ったデザインにしてほしいというお客様の声を受け、辰年の絵馬には、新年の参拝者一人ひとりを正面から真っ直ぐに見つめ、2024年の1年間を見守り続けてくれるような思いを込めてデザインしました。\n\nまた、2025年の干支絵馬も制作させていただきました。2024年から続く予期せぬ自然災害の中、2025年には災害から人々を守り、竹のように力強く伸びていく人々の未来を守る願いを込め、要石を押さえつける蛇をデザインしました。\n\nこれらの絵馬が、参拝される方々の1年を見守り、災害から守る象徴となることを願っています。",
-    thumbnail: "/images/portfolio/eto-ema-shinmei/shinmei-eto-ema.jpg",
+    title: '大館神明社-絵馬デザイン',
+    summary:
+      '大館神明社様の干支絵馬デザイン\n2024年と2025年の干支絵馬を制作。2024年は辰年の絵馬に参拝者を見守る思いを込め、2025年は災害から人々を守り、竹のように力強く成長する未来を願い、蛇をデザインしました。',
+    description:
+      '<strong>「12年飾ることのできる大絵馬を描いてほしい」</strong>大館神明社様からのご依頼により、2024年からの干支絵馬のイラストを制作させていただきました。\n\n単なるイラストではなく、目的を持ったデザインにしてほしいというお客様の声を受け、辰年の絵馬には、新年の参拝者一人ひとりを正面から真っ直ぐに見つめ、2024年の1年間を見守り続けてくれるような思いを込めてデザインしました。\n\nまた、2025年の干支絵馬も制作させていただきました。2024年から続く予期せぬ自然災害の中、2025年には災害から人々を守り、竹のように力強く伸びていく人々の未来を守る願いを込め、要石を押さえつける蛇をデザインしました。\n\nこれらの絵馬が、参拝される方々の1年を見守り、災害から守る象徴となることを願っています。',
+    thumbnail: '/images/portfolio/eto-ema-shinmei/shinmei-eto-ema.jpg',
     images: [
-      "/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-01.png",
-      "/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-02.jpg",
-      "/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-03.jpg",
-      "/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-01.png",
-      "/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-02.jpg",
-      "/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-03.jpg",
-    ]
+      '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-01.png',
+      '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-02.jpg',
+      '/portfolios/eto-ema-shinmei/shinmei-eto-ema-tatu-03.jpg',
+      '/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-01.png',
+      '/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-02.jpg',
+      '/portfolios/eto-ema-shinmei/shinmei-eto-ema-mi-03.jpg',
+    ],
   },
   {
-    title: "太子堂八幡神社-絵馬デザイン",
-    summary: "太子堂八幡神社様の絵馬デザイン\n2025年の干支絵馬は折り紙をモチーフにした遊び心のある蛇をデザインし、縁起絵馬は御神木とお社を柔らかい水彩画風で表現。通年使用できる伝統的で落ち着いたデザインに仕上げました。",
-    description: "<strong>「一線を画す珍しいデザインにしたい」</strong>太子堂八幡神社様からのご依頼により、2025年からの干支絵馬と縁起絵馬のイラストを制作させていただきました。\n\n干支絵馬は、よくある白蛇のイラストではなく、遊び心のあるデザインにしたいというお客様のご要望を受け、折り紙をモチーフにしました。カラフルでありながらも落ち着いた色合いの蛇が、宝船のように皆様に縁起を運んでくるようなイメージでデザインしています。\n\nまた、縁起絵馬は、通年使用できるものとし、御神木を入れたデザインにしたいというご要望から、一目で太子堂八幡神社のものと分かるよう、お社と御神木を描きました。柔らかい水彩画風の色合いで、伝統的で落ち着いた雰囲気を表現しました。\n\nこれらの絵馬が、参拝される方々にとって特別なものとなることを願っています。",
-    thumbnail: "/images/portfolio/eto-ema-taishido/taishido-eto-ema.jpg",
+    title: '太子堂八幡神社-絵馬デザイン',
+    summary:
+      '太子堂八幡神社様の絵馬デザイン\n2025年の干支絵馬は折り紙をモチーフにした遊び心のある蛇をデザインし、縁起絵馬は御神木とお社を柔らかい水彩画風で表現。通年使用できる伝統的で落ち着いたデザインに仕上げました。',
+    description:
+      '<strong>「一線を画す珍しいデザインにしたい」</strong>太子堂八幡神社様からのご依頼により、2025年からの干支絵馬と縁起絵馬のイラストを制作させていただきました。\n\n干支絵馬は、よくある白蛇のイラストではなく、遊び心のあるデザインにしたいというお客様のご要望を受け、折り紙をモチーフにしました。カラフルでありながらも落ち着いた色合いの蛇が、宝船のように皆様に縁起を運んでくるようなイメージでデザインしています。\n\nまた、縁起絵馬は、通年使用できるものとし、御神木を入れたデザインにしたいというご要望から、一目で太子堂八幡神社のものと分かるよう、お社と御神木を描きました。柔らかい水彩画風の色合いで、伝統的で落ち着いた雰囲気を表現しました。\n\nこれらの絵馬が、参拝される方々にとって特別なものとなることを願っています。',
+    thumbnail: '/images/portfolio/eto-ema-taishido/taishido-eto-ema.jpg',
     images: [
-      "/portfolios/eto-ema-taishido/taishido-eto-ema-mi-01.jpg",
-      "/portfolios/eto-ema-taishido/taishido-kigan-ema-01.jpg",
-    ]
-  }
-];
+      '/portfolios/eto-ema-taishido/taishido-eto-ema-mi-01.jpg',
+      '/portfolios/eto-ema-taishido/taishido-kigan-ema-01.jpg',
+    ],
+  },
+]
 
 // アニメーション
 const fadeIn = keyframes`
   from { opacity: 0; }
   to { opacity: 1; }
-`;
+`
 
 // スタイルコンポーネント
 const PortfolioContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-`;
+`
 
 const PageTitle = styled.h1`
   font-size: 2.5rem;
@@ -101,7 +107,7 @@ const PageTitle = styled.h1`
       rgba(243, 188, 22, 0.5) 100%
     );
   }
-`;
+`
 
 const WorkSection = styled.section<ReverseProps>`
   display: grid;
@@ -110,7 +116,9 @@ const WorkSection = styled.section<ReverseProps>`
   margin-bottom: 8rem;
   align-items: center;
 
-  ${props => props.$isReverse && `
+  ${(props) =>
+    props.$isReverse &&
+    `
     direction: rtl;
     > * {
       direction: ltr;
@@ -123,7 +131,7 @@ const WorkSection = styled.section<ReverseProps>`
     direction: ltr;
     margin-bottom: 4rem;
   }
-`;
+`
 
 const ImageContainer = styled.div`
   position: relative;
@@ -136,7 +144,7 @@ const ImageContainer = styled.div`
   @media (max-width: 768px) {
     height: 20rem;
   }
-`;
+`
 
 const WorkDetails = styled.div`
   padding: 2rem;
@@ -153,7 +161,7 @@ const WorkDetails = styled.div`
     height: auto;
     min-height: 2rem;
   }
-`;
+`
 
 const WorkTitle = styled.h2`
   font-size: 1.5rem;
@@ -165,13 +173,13 @@ const WorkTitle = styled.h2`
     font-size: 1.2rem;
     margin-bottom: 1rem;
   }
-`;
+`
 
 const SubTitle = styled.span`
   display: block;
   font-size: 1rem;
   color: #333;
-`;
+`
 
 const Summary = styled.p`
   font-size: 1rem;
@@ -187,7 +195,7 @@ const Summary = styled.p`
     line-height: 1.8;
     margin-bottom: 1rem;
   }
-`;
+`
 
 const DetailButton = styled.button`
   display: flex;
@@ -221,7 +229,7 @@ const DetailButton = styled.button`
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
-`;
+`
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -235,7 +243,7 @@ const ModalOverlay = styled.div`
   align-items: center;
   z-index: 1000;
   padding: 2rem;
-`;
+`
 
 const ModalContent = styled.div`
   background: white;
@@ -246,7 +254,7 @@ const ModalContent = styled.div`
   max-height: 80vh;
   overflow-y: auto;
   position: relative;
-`;
+`
 
 const CloseButton = styled.button`
   position: absolute;
@@ -264,7 +272,7 @@ const CloseButton = styled.button`
   &:hover {
     color: #333;
   }
-`;
+`
 
 const ModalImageContainer = styled.div`
   position: relative;
@@ -279,7 +287,7 @@ const ModalImageContainer = styled.div`
   @media (max-width: 768px) {
     height: 300px;
   }
-`;
+`
 
 const ModalImage = styled(Image)`
   transition: transform 0.3s ease;
@@ -287,7 +295,7 @@ const ModalImage = styled(Image)`
   &:hover {
     transform: scale(1.02);
   }
-`;
+`
 
 const ModalTitle = styled.h2`
   font-size: 1.1rem;
@@ -295,13 +303,13 @@ const ModalTitle = styled.h2`
   color: #333;
   text-align: center;
   position: relative;
-`;
+`
 
 const ModalSubTitle = styled.span`
   display: block;
   font-size: 0.9rem;
   color: #333;
-`;
+`
 
 const ModalQuote = styled.div`
   max-width: 720px;
@@ -311,7 +319,7 @@ const ModalQuote = styled.div`
   font-weight: 620;
   line-height: 1.6;
   text-align: center;
-`;
+`
 
 const ModalDescription = styled.div`
   font-size: 0.9rem;
@@ -322,7 +330,7 @@ const ModalDescription = styled.div`
   margin: 0 auto;
   text-align: center;
   padding: 1rem;
-`;
+`
 
 const SlideshowContainer = styled.div`
   position: relative;
@@ -330,7 +338,7 @@ const SlideshowContainer = styled.div`
   height: 100%;
   border-radius: 12px;
   overflow: hidden;
-`;
+`
 
 const SlideImage = styled.div<ActiveProps>`
   position: absolute;
@@ -338,10 +346,10 @@ const SlideImage = styled.div<ActiveProps>`
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: ${props => props.$isActive ? 1 : 0};
+  opacity: ${(props) => (props.$isActive ? 1 : 0)};
   transition: opacity 0.5s ease-in-out;
-  animation: ${props => props.$isActive ? fadeIn : 'none'} 0.5s ease-in-out;
-`;
+  animation: ${(props) => (props.$isActive ? fadeIn : 'none')} 0.5s ease-in-out;
+`
 
 const SlideshowIndicators = styled.div`
   position: absolute;
@@ -351,51 +359,74 @@ const SlideshowIndicators = styled.div`
   display: flex;
   gap: 10px;
   z-index: 2;
-`;
+`
 
 const Indicator = styled.button<ActiveProps>`
   width: 10px;
   height: 10px;
   border-radius: 50%;
   border: none;
-  background-color: ${props => props.$isActive ? '#fff' : 'rgba(255, 255, 255, 0.5)'};
+  background-color: ${(props) => (props.$isActive ? '#fff' : 'rgba(255, 255, 255, 0.5)')};
   cursor: pointer;
   transition: background-color 0.3s ease;
   padding: 0;
 
   &:hover {
-    background-color: ${props => props.$isActive ? '#fff' : 'rgba(255, 255, 255, 0.7)'};
+    background-color: ${(props) => (props.$isActive ? '#fff' : 'rgba(255, 255, 255, 0.7)')};
   }
-`;
+`
 
 // スライドショーコンポーネント
 const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0)
+  // スワイプ用の座標管理
+  const touchStartX = React.useRef<number | null>(null)
+  const touchEndX = React.useRef<number | null>(null)
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [images.length]);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [images.length])
 
   const handleIndicatorClick = useCallback((index: number) => {
-    setCurrentIndex(index);
-  }, []);
+    setCurrentIndex(index)
+  }, [])
+
+  // スワイプ開始
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+  // スワイプ移動
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+  // スワイプ終了
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return
+    const distance = touchStartX.current - touchEndX.current
+    // しきい値（30px以上の移動でスワイプと判定）
+    if (distance > 30) {
+      // 左スワイプ（次へ）
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+    } else if (distance < -30) {
+      // 右スワイプ（前へ）
+      setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length)
+    }
+    touchStartX.current = null
+    touchEndX.current = null
+  }
 
   return (
-    <SlideshowContainer>
+    <SlideshowContainer onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
       {images.map((image, index) => (
-        <SlideImage
-          key={image}
-          $isActive={index === currentIndex}
-          style={{ zIndex: index === currentIndex ? 1 : 0 }}
-        >
+        <SlideImage key={image} $isActive={index === currentIndex} style={{ zIndex: index === currentIndex ? 1 : 0 }}>
           <Image
             src={image}
             alt={`slide-${index + 1}`}
             fill
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes='(max-width: 768px) 100vw, 50vw'
             priority={index === 0}
             style={{ objectFit: image.includes('rogo') ? 'contain' : 'cover' }}
           />
@@ -407,56 +438,56 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
             key={index}
             $isActive={index === currentIndex}
             onClick={() => handleIndicatorClick(index)}
-            type="button"
+            type='button'
             aria-label={`スライド ${index + 1} へ移動`}
           />
         ))}
       </SlideshowIndicators>
     </SlideshowContainer>
-  );
-});
+  )
+})
 
-Slideshow.displayName = 'Slideshow';
+Slideshow.displayName = 'Slideshow'
 
 // メインコンポーネント
 const PickUp: React.FC = () => {
-  const [selectedWork, setSelectedWork] = useState<WorkDetailsType | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [selectedWork, setSelectedWork] = useState<WorkDetailsType | null>(null)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   // useCallbackで関数の再生成を防止
   const handleDetailClick = useCallback((work: WorkDetailsType) => {
-    setSelectedWork(work);
-    setCurrentImageIndex(0);
-  }, []);
+    setSelectedWork(work)
+    setCurrentImageIndex(0)
+  }, [])
 
   const handleCloseModal = useCallback(() => {
-    setSelectedWork(null);
-    setCurrentImageIndex(0);
-  }, []);
+    setSelectedWork(null)
+    setCurrentImageIndex(0)
+  }, [])
 
   const handleImageClick = useCallback(() => {
     if (selectedWork?.images && selectedWork.images.length > 0) {
-      const images = selectedWork.images;
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+      const images = selectedWork.images
+      setCurrentImageIndex((prev) => (prev + 1) % images.length)
     }
-  }, [selectedWork]);
+  }, [selectedWork])
 
   const handleIndicatorClick = useCallback((index: number) => {
-    setCurrentImageIndex(index);
-  }, []);
+    setCurrentImageIndex(index)
+  }, [])
 
   useEffect(() => {
     if (selectedWork?.images && selectedWork.images.length > 0) {
       const timer = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % (selectedWork.images ? selectedWork.images.length : 1));
-      }, 5000);
-      return () => clearInterval(timer);
+        setCurrentImageIndex((prev) => (prev + 1) % (selectedWork.images ? selectedWork.images.length : 1))
+      }, 5000)
+      return () => clearInterval(timer)
     }
-    return undefined;
-  }, [selectedWork]);
+    return undefined
+  }, [selectedWork])
 
   return (
-    <PortfolioContainer id="pick-up">
+    <PortfolioContainer id='pick-up'>
       <PageTitle>Pick Up</PageTitle>
       {portfolioData.map((work, index) => (
         <WorkSection key={work.title} $isReverse={index % 2 !== 0}>
@@ -469,7 +500,7 @@ const PickUp: React.FC = () => {
                 alt={work.title}
                 width={600}
                 height={400}
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes='(max-width: 768px) 100vw, 50vw'
                 priority={index === 0}
                 style={{ objectFit: 'cover' }}
               />
@@ -477,7 +508,7 @@ const PickUp: React.FC = () => {
           </ImageContainer>
           <WorkDetails>
             <WorkTitle>
-              {work.title === "スナック喫茶 モンキー&バード" ? (
+              {work.title === 'スナック喫茶 モンキー&バード' ? (
                 <>
                   <SubTitle>スナック喫茶</SubTitle>
                   モンキー&バード
@@ -489,7 +520,7 @@ const PickUp: React.FC = () => {
             <Summary>{work.summary}</Summary>
             <DetailButton
               onClick={() => handleDetailClick(work)}
-              type="button"
+              type='button'
               aria-label={`${work.title}の詳細を見る`}
             >
               詳細を見る
@@ -501,16 +532,12 @@ const PickUp: React.FC = () => {
       {selectedWork && (
         <ModalOverlay onClick={handleCloseModal}>
           <ModalContent
-            onClick={e => e.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modal-title"
+            onClick={(e) => e.stopPropagation()}
+            role='dialog'
+            aria-modal='true'
+            aria-labelledby='modal-title'
           >
-            <CloseButton
-              onClick={handleCloseModal}
-              type="button"
-              aria-label="モーダルを閉じる"
-            >
+            <CloseButton onClick={handleCloseModal} type='button' aria-label='モーダルを閉じる'>
               ×
             </CloseButton>
             <ModalImageContainer onClick={handleImageClick}>
@@ -518,10 +545,10 @@ const PickUp: React.FC = () => {
                 src={selectedWork.images?.[currentImageIndex] || selectedWork.thumbnail}
                 alt={`${selectedWork.title} - 画像${currentImageIndex + 1}`}
                 fill
-                sizes="(max-width: 768px) 100vw, 80vw"
+                sizes='(max-width: 768px) 100vw, 80vw'
                 priority
                 style={{
-                  objectFit: selectedWork.title === "スナック喫茶 モンキー&バード" ? "contain" : "cover"
+                  objectFit: selectedWork.title === 'スナック喫茶 モンキー&バード' ? 'contain' : 'cover',
                 }}
               />
               {selectedWork.images && selectedWork.images.length > 1 && (
@@ -531,18 +558,18 @@ const PickUp: React.FC = () => {
                       key={index}
                       $isActive={index === currentImageIndex}
                       onClick={(e) => {
-                        e.stopPropagation();
-                        handleIndicatorClick(index);
+                        e.stopPropagation()
+                        handleIndicatorClick(index)
                       }}
-                      type="button"
+                      type='button'
                       aria-label={`画像 ${index + 1} へ移動`}
                     />
                   ))}
                 </SlideshowIndicators>
               )}
             </ModalImageContainer>
-            <ModalTitle id="modal-title">
-              {selectedWork.title === "スナック喫茶 モンキー&バード" ? (
+            <ModalTitle id='modal-title'>
+              {selectedWork.title === 'スナック喫茶 モンキー&バード' ? (
                 <>
                   <ModalSubTitle>スナック喫茶</ModalSubTitle>
                   モンキー&バード
@@ -551,20 +578,16 @@ const PickUp: React.FC = () => {
                 selectedWork.title
               )}
             </ModalTitle>
-            <ModalQuote>
-              {selectedWork.description.split('<strong>')[1]?.split('</strong>')[0]}
-            </ModalQuote>
-            <ModalDescription>
-              {selectedWork.description.split('</strong>')[1]}
-            </ModalDescription>
+            <ModalQuote>{selectedWork.description.split('<strong>')[1]?.split('</strong>')[0]}</ModalQuote>
+            <ModalDescription>{selectedWork.description.split('</strong>')[1]}</ModalDescription>
           </ModalContent>
         </ModalOverlay>
       )}
     </PortfolioContainer>
-  );
-};
+  )
+}
 
 // displayNameをexport defaultの直前で明示的に設定
-PickUp.displayName = 'PickUp';
+PickUp.displayName = 'PickUp'
 
-export default PickUp;
+export default PickUp
