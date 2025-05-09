@@ -394,6 +394,7 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
   const [visibleIndex, setVisibleIndex] = useState(0) // 現在表示中
   const [nextIndex, setNextIndex] = useState<number | null>(null) // 次に表示したい画像
   const [loaded, setLoaded] = useState<boolean[]>(() => images.map(() => false))
+  const [isFading, setIsFading] = useState(false) // フェードアニメーション中か
   const touchStartX = React.useRef<number | null>(null)
   const touchEndX = React.useRef<number | null>(null)
 
@@ -407,9 +408,9 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
 
   const handleIndicatorClick = useCallback(
     (index: number) => {
-      if (index !== visibleIndex && index !== nextIndex) setNextIndex(index)
+      if (index !== visibleIndex && index !== nextIndex && !isFading) setNextIndex(index)
     },
-    [visibleIndex, nextIndex],
+    [visibleIndex, nextIndex, isFading],
   )
 
   // スワイプ開始
@@ -427,10 +428,10 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
     // しきい値（30px以上の移動でスワイプと判定）
     if (distance > 30) {
       const next = (visibleIndex + 1) % images.length
-      if (next !== visibleIndex && next !== nextIndex) setNextIndex(next)
+      if (next !== visibleIndex && next !== nextIndex && !isFading) setNextIndex(next)
     } else if (distance < -30) {
       const next = (visibleIndex - 1 + images.length) % images.length
-      if (next !== visibleIndex && next !== nextIndex) setNextIndex(next)
+      if (next !== visibleIndex && next !== nextIndex && !isFading) setNextIndex(next)
     }
     touchStartX.current = null
     touchEndX.current = null
@@ -443,10 +444,14 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
       next[idx] = true
       return next
     })
-    // nextIndexの画像がロードされたらvisibleIndexを切り替え
-    if (nextIndex !== null && idx === nextIndex && nextIndex !== visibleIndex) {
-      setVisibleIndex(nextIndex)
-      setNextIndex(null)
+    // nextIndexの画像がロードされたらフェード開始
+    if (nextIndex !== null && idx === nextIndex && nextIndex !== visibleIndex && !isFading) {
+      setIsFading(true)
+      setTimeout(() => {
+        setVisibleIndex(nextIndex)
+        setNextIndex(null)
+        setIsFading(false)
+      }, 500) // 0.5秒フェード
     }
   }
 
@@ -455,17 +460,26 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
       {images.map((image, index) => {
         // visibleIndexとnextIndexの画像のみDOMに残す
         if (index !== visibleIndex && index !== nextIndex) return null
-        const isActive = index === (nextIndex !== null ? nextIndex : visibleIndex)
+        let opacity = 0
+        if (index === visibleIndex && (!isFading || nextIndex === null)) {
+          opacity = 1
+        } else if (index === visibleIndex && isFading) {
+          opacity = 0
+        } else if (index === nextIndex && isFading) {
+          opacity = 1
+        } else if (index === nextIndex && !isFading) {
+          opacity = 0
+        }
         return (
           <SlideImage
             key={image}
-            $isActive={isActive}
+            $isActive={index === (nextIndex !== null && isFading ? nextIndex : visibleIndex)}
             style={{
-              opacity: loaded[index] ? (isActive ? 1 : 0) : 0,
+              opacity,
               transition: 'opacity 0.5s ease-in-out',
-              zIndex: isActive ? 2 : 1,
-              pointerEvents: isActive ? 'auto' : 'none',
-              display: loaded[index] || isActive ? 'block' : 'none',
+              zIndex: index === (nextIndex !== null && isFading ? nextIndex : visibleIndex) ? 2 : 1,
+              pointerEvents: index === (nextIndex !== null && isFading ? nextIndex : visibleIndex) ? 'auto' : 'none',
+              display: loaded[index] || index === visibleIndex || index === nextIndex ? 'block' : 'none',
             }}
           >
             <Image
