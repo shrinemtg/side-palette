@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, memo } from 'react'
+import React, { useState, useCallback, memo } from 'react'
 import styled, { keyframes } from 'styled-components'
 import Image from 'next/image'
 
@@ -289,6 +289,17 @@ const ModalImageContainer = styled.div`
   }
 `
 
+const ModalFadeImage = styled.div<{ $isActive: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: ${(props) => (props.$isActive ? 1 : 0)};
+  transition: opacity 0.4s ease;
+  pointer-events: ${(props) => (props.$isActive ? 'auto' : 'none')};
+`
+
 const ModalImage = styled(Image)`
   transition: transform 0.3s ease;
 
@@ -383,13 +394,6 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
   const touchStartX = React.useRef<number | null>(null)
   const touchEndX = React.useRef<number | null>(null)
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [images.length])
-
   const handleIndicatorClick = useCallback((index: number) => {
     setCurrentIndex(index)
   }, [])
@@ -475,16 +479,6 @@ const PickUp: React.FC = () => {
   const handleIndicatorClick = useCallback((index: number) => {
     setCurrentImageIndex(index)
   }, [])
-
-  useEffect(() => {
-    if (selectedWork?.images && selectedWork.images.length > 0) {
-      const timer = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % (selectedWork.images ? selectedWork.images.length : 1))
-      }, 5000)
-      return () => clearInterval(timer)
-    }
-    return undefined
-  }, [selectedWork])
 
   // --- ここからモーダル用スワイプロジック追加 ---
   // モーダル画像用スワイプ座標管理
@@ -581,16 +575,33 @@ const PickUp: React.FC = () => {
               onTouchMove={handleModalTouchMove}
               onTouchEnd={handleModalTouchEnd}
             >
-              <ModalImage
-                src={selectedWork.images?.[currentImageIndex] || selectedWork.thumbnail}
-                alt={`${selectedWork.title} - 画像${currentImageIndex + 1}`}
-                fill
-                sizes='(max-width: 768px) 100vw, 80vw'
-                priority
-                style={{
-                  objectFit: selectedWork.title === 'スナック喫茶 モンキー&バード' ? 'contain' : 'cover',
-                }}
-              />
+              {selectedWork.images && selectedWork.images.length > 0 ? (
+                selectedWork.images.map((img, idx) => (
+                  <ModalFadeImage key={img} $isActive={idx === currentImageIndex}>
+                    <ModalImage
+                      src={img}
+                      alt={`${selectedWork.title} - 画像${idx + 1}`}
+                      fill
+                      sizes='(max-width: 768px) 100vw, 80vw'
+                      priority={idx === 0}
+                      style={{
+                        objectFit: selectedWork.title === 'スナック喫茶 モンキー&バード' ? 'contain' : 'cover',
+                      }}
+                    />
+                  </ModalFadeImage>
+                ))
+              ) : (
+                <ModalImage
+                  src={selectedWork.thumbnail}
+                  alt={selectedWork.title}
+                  fill
+                  sizes='(max-width: 768px) 100vw, 80vw'
+                  priority
+                  style={{
+                    objectFit: selectedWork.title === 'スナック喫茶 モンキー&バード' ? 'contain' : 'cover',
+                  }}
+                />
+              )}
               {selectedWork.images && selectedWork.images.length > 1 && (
                 <SlideshowIndicators>
                   {selectedWork.images.map((_, index) => (
