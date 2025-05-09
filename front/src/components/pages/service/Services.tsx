@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState, useCallback, useRef } from 'react'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
