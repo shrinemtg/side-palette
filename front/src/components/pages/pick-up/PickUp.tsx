@@ -360,6 +360,8 @@ const SlideImage = styled.div<ActiveProps>`
   opacity: ${(props) => (props.$isActive ? 1 : 0)};
   transition: opacity 0.5s ease-in-out;
   animation: ${(props) => (props.$isActive ? fadeIn : 'none')} 0.5s ease-in-out;
+  z-index: ${(props) => (props.$isActive ? 2 : 1)};
+  pointer-events: ${(props) => (props.$isActive ? 'auto' : 'none')};
 `
 
 const SlideshowIndicators = styled.div`
