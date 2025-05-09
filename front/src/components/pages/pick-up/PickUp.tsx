@@ -283,6 +283,9 @@ const ModalImageContainer = styled.div`
   margin-bottom: 1.5rem;
   background-color: #fff;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media (max-width: 768px) {
     height: 300px;
@@ -301,6 +304,9 @@ const ModalFadeImage = styled.div<{ $isActive: boolean }>`
 `
 
 const ModalImage = styled(Image)`
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
   transition: transform 0.3s ease;
 
   &:hover {
@@ -358,7 +364,7 @@ const SlideImage = styled.div<ActiveProps>`
   width: 100%;
   height: 100%;
   opacity: ${(props) => (props.$isActive ? 1 : 0)};
-  transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.05s ease-in-out;
   animation: ${(props) => (props.$isActive ? fadeIn : 'none')} 0.5s ease-in-out;
   z-index: ${(props) => (props.$isActive ? 2 : 1)};
   pointer-events: ${(props) => (props.$isActive ? 'auto' : 'none')};
@@ -462,7 +468,7 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
             $isActive={isActive}
             style={{
               opacity: loaded[index] ? (isActive ? 1 : 0) : 0,
-              transition: 'opacity 0.1s ease-in-out',
+              transition: 'opacity 0.05s ease-in-out',
               zIndex: isActive ? 2 : 1,
               pointerEvents: isActive ? 'auto' : 'none',
               display: loaded[index] || isActive ? 'block' : 'none',
