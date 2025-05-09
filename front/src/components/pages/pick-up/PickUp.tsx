@@ -427,8 +427,9 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
   return (
     <SlideshowContainer onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
       {images.map((image, index) => (
-        <SlideImage key={index} $isActive={index === currentIndex}>
+        <SlideImage key={image} $isActive={index === currentIndex}>
           <Image
+            key={image}
             src={image}
             alt={`slide-${index + 1}`}
             fill
