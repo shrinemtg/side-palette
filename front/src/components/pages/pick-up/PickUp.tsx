@@ -1,4 +1,4 @@
-import React, { useState, useCallback, memo } from 'react'
+import React, { useState, useCallback, memo, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
 import Image from 'next/image'
 
@@ -397,11 +397,19 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
   const touchStartX = React.useRef<number | null>(null)
   const touchEndX = React.useRef<number | null>(null)
 
+  // 全画像プリロード
+  useEffect(() => {
+    images.forEach((src) => {
+      const img = new window.Image()
+      img.src = src
+    })
+  }, [images])
+
   const handleIndicatorClick = useCallback(
     (index: number) => {
-      if (index !== visibleIndex) setNextIndex(index)
+      if (index !== visibleIndex && index !== nextIndex) setNextIndex(index)
     },
-    [visibleIndex],
+    [visibleIndex, nextIndex],
   )
 
   // スワイプ開始
@@ -418,9 +426,11 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
     const distance = touchStartX.current - touchEndX.current
     // しきい値（30px以上の移動でスワイプと判定）
     if (distance > 30) {
-      setNextIndex((visibleIndex + 1) % images.length)
+      const next = (visibleIndex + 1) % images.length
+      if (next !== visibleIndex && next !== nextIndex) setNextIndex(next)
     } else if (distance < -30) {
-      setNextIndex((visibleIndex - 1 + images.length) % images.length)
+      const next = (visibleIndex - 1 + images.length) % images.length
+      if (next !== visibleIndex && next !== nextIndex) setNextIndex(next)
     }
     touchStartX.current = null
     touchEndX.current = null
@@ -434,7 +444,7 @@ const Slideshow: React.FC<SlideshowProps> = memo(({ images }) => {
       return next
     })
     // nextIndexの画像がロードされたらvisibleIndexを切り替え
-    if (nextIndex !== null && idx === nextIndex) {
+    if (nextIndex !== null && idx === nextIndex && nextIndex !== visibleIndex) {
       setVisibleIndex(nextIndex)
       setNextIndex(null)
     }
