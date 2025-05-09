@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React from 'react'
+import React, { JSX } from 'react'
 
 // 型定義
 interface OrderStep {
