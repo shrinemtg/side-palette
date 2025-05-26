@@ -512,6 +512,18 @@ const PickUp: React.FC = () => {
   const [selectedWork, setSelectedWork] = useState<WorkDetailsType | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
+  // モーダル表示中はbodyスクロール禁止
+  useEffect(() => {
+    if (selectedWork) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [selectedWork])
+
   // useCallbackで関数の再生成を防止
   const handleDetailClick = useCallback((work: WorkDetailsType) => {
     setSelectedWork(work)

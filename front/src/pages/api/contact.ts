@@ -183,21 +183,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // ユーザーへの確認メール送信
     try {
       await sendUserConfirmationEmail(formData)
-    } catch (emailError) {
+    } catch {
       // メール送信エラーは全体の処理を中断しない
     }
 
     // 管理者への通知メール送信
     try {
       await sendAdminNotificationEmail(formData)
-    } catch (emailError) {
+    } catch {
       // エラー時も処理を継続するため何もしない
     }
 
     // Notionにデータを保存
     try {
       await saveToNotion(formData)
-    } catch (notionError) {
+    } catch {
       throw new Error('Notionへのデータ保存に失敗しました')
     }
 
