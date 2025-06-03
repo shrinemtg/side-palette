@@ -51,24 +51,30 @@ const services: ServiceItem[] = [
     },
   },
   {
-    title: 'ロゴデザイン',
-    description: 'お客様のブランドストーリーを、一目で語る、心が躍るロゴデザインを制作いたします',
+    title: 'ロゴ・パッケージ',
+    description: 'お客様のブランドストーリーを、一目で語る、心が躍るロゴ・パッケージデザインを制作いたします',
     imageUrl: '/portfolios/rogo-design/keyakidokoro-01.jpg',
     images: [
       '/portfolios/rogo-design/rogo-design-01.jpg',
       '/portfolios/rogo-design/rogo-design-02.jpg',
       '/portfolios/rogo-design/rogo-design-03.jpg',
       '/portfolios/rogo-design/rogo-design-04.jpg',
+      '/portfolios/package-poster/package-poster-01.png',
+      '/portfolios/package-poster/package-poster-02.png',
+      '/portfolios/package-poster/package-poster-03.png',
+      '/portfolios/package-poster/package-poster-04.png',
+      '/portfolios/package-poster/package-poster-05.png',
+      '/portfolios/package-poster/package-poster-06.png',
     ],
     content: {
       mainText:
-        'お店や会社のシンボルマークとなる\nロゴデザイン\n\nお客様の業種やスタイルに合わせ、\nかわいらしいキャラクターのロゴデザインから、\nスタイリッシュなロゴデザインまで、\nさまざまなスタイルのものを作っています。\n\nコンセプトはあるけどデザインが決まらない\n気に入ったものが見つからない\n\nSide Paletteでは\nお客様のご要望をお聞きしながら\nより良いデザインを制作させていただきます\n\nその他、\n人物ではなく、思い出の風景のイラストにしたい\nリアルではなくアニメ寄りにしたい等ございましたら\nお気軽にご相談ください\n\nお困りの際はお気軽にお問い合わせください。',
+        'お店や会社のシンボルマークとなる\nロゴデザインや商品をよりよく見せるための\nパッケージデザイン等\n\nお客様の業種やスタイルに合わせ、\nかわいらしいものから、\nスタイリッシュなデザイン、\nオリジナルのキャラクター入りデザインまで、\nさまざまなスタイルのものを作っています。\n\nコンセプトはあるけどデザインが決まらない\n気に入ったものが見つからない\n\nSide Paletteでは\nお客様のご要望をお聞きながら\nより良いデザインを制作させていただきます。\n\nお困りの際はお気軽にお問い合わせください。',
       process: [
-        'ヒアリング：企業理念やターゲット層について詳しくお伺いします',
-        'コンセプトの作成：ブランドの方向性を決定します',
+        'ヒアリング：企業理念やターゲット層についてお伺いします。(ロゴデザイン)',
+        'コンセプトの作成：ブランドの方向性や商品について詳しくお伺いします。',
         'デザイン案の作成：複数のデザイン案を提案します',
         'デザインの確定：お気に入りのデザインを選んでいただきます',
-        'データの納品：各種フォーマットでデータをお届けします',
+        'データの納品：各種フォーマットでデータをお届け、パッケージの場合はデザインを印刷してパッケージそのものも、お届け可能です。',
       ],
     },
   },
@@ -76,7 +82,11 @@ const services: ServiceItem[] = [
     title: 'ウェルカムボード',
     description: '訪れる方をお迎えする最初の印象を彩る、温かみのあるウェルカムボードを制作いたします。',
     imageUrl: '/portfolios/welcome-board/welcome-board-01.jpg',
-    images: ['/portfolios/welcome-board/welcome-board-02.jpg', '/portfolios/welcome-board/welcome-board-03.jpg'],
+    images: [
+      '/portfolios/welcome-board/welcome-board-02.jpg',
+      '/portfolios/welcome-board/welcome-board-03.jpg',
+      '/portfolios/welcome-board/welcome-board-04.jpg',
+    ],
     content: {
       mainText:
         '結婚式は、新郎新婦にとって一生に一度の特別な日。\n新郎新婦の個性やストーリーを反映したイラストで、\nゲストをもてなすwelcomeボードを制作します。',
@@ -642,7 +652,8 @@ const ModalSection = styled.div`
 const SectionTitle = styled.h3`
   font-size: 1.1rem;
   color: #333;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  margin-left: 2rem;
   font-weight: 600;
   font-family: ${kleeOne.style.fontFamily};
   letter-spacing: -0.02em;
@@ -651,7 +662,7 @@ const SectionTitle = styled.h3`
 const ProcessList = styled.ul`
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin-left: 2.5rem;
 `
 
 const ProcessItem = styled.li`
